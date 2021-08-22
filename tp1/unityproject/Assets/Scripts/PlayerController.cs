@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -19,13 +17,6 @@ public class PlayerController : MonoBehaviour
     public float deacceleration_rate = 0.9f;
     public float friction = 1f;
 
-    //  Map variables
-    float _endOfMapX;
-    float _startOfMapX;
-    float _startOFMapY;
-    float _endOfMapY;
-    
-
     // Movement variables
     private Vector3 _accel;
     private float _accel_module;
@@ -37,10 +28,6 @@ public class PlayerController : MonoBehaviour
     {
         _accel = new Vector3(0f,0f,0f);
         _speed = new Vector3(0f,0f,0f);
-        _endOfMapX = map.transform.position.x + map.transform.localScale.x / 2;
-        _startOfMapX = map.transform.position.x - map.transform.localScale.x / 2;
-        _startOFMapY = map.transform.position.y - map.transform.localScale.y / 2;
-        _endOfMapY = map.transform.position.y + map.transform.localScale.y / 2;
     }
 
     // Update is called once per frame
@@ -62,7 +49,6 @@ public class PlayerController : MonoBehaviour
         }
 
         if (Input.GetKey(UP)) {
-            Debug.Log("UP");
             _accel_module = acceleration;
         } else {
             _accel_module = 0f;
@@ -85,8 +71,6 @@ public class PlayerController : MonoBehaviour
         
         if (_accel_module != 0) {
             _accel = _accel + transform.right * dt * _accel_module;
-            Debug.Log(_accel_module);
-            Debug.Log(_accel);
         }
         _accel = _accel * 0.8f;
         if (_accel.magnitude < float.Epsilon) {
@@ -96,7 +80,6 @@ public class PlayerController : MonoBehaviour
 
     void UpdatePosition() {
         float dt = Time.deltaTime;
-        Debug.Log(_speed);
         // Friccion
         _speed = _speed - _speed * dt * friction;
         // Acceleration force

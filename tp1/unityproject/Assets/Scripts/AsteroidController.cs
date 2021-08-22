@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AsteroidController : MonoBehaviour
@@ -35,10 +33,6 @@ public class AsteroidController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
         Debug.Log("TIGGER ENTER");
-    }
-
-    void OnCollisionEnter2D(Collision2D col) {
-        Debug.Log("OnCollisionEnter2D");
     }
 
     // CUSTOM FUNCTIONS
