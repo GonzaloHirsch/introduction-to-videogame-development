@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 6603390885331567993}
   - component: {fileID: 6603390885331567998}
   - component: {fileID: 6603390885331567999}
-  - component: {fileID: 5596472530208140885}
   - component: {fileID: 7109054188137221568}
+  - component: {fileID: 152910817219444210}
   m_Layer: 0
-  m_Name: Asteroid
+  m_Name: Asteroid-Big
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 5390129371266227295, guid: 03600e0a4abd14e9683af1ed6d2e0d16, type: 3}
+  m_Sprite: {fileID: 1111231892956182058, guid: 03600e0a4abd14e9683af1ed6d2e0d16, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,10 +98,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e12881262f59404e9dfce0d3d91f989, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 75
+  minVelocity: 50
+  maxVelocity: 25
   rotation: 0
---- !u!61 &5596472530208140885
-BoxCollider2D:
+  rotationDelta: 20
+  state: 3
+  nextAsteroid: {fileID: 4612227700593367179, guid: 3de6eff4a7c534a47b7da97d5d2f0b16, type: 3}
+  velocity: 75
+--- !u!114 &7109054188137221568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6603390885331567997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ae9507592db4c768e308674be68e74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!60 &152910817219444210
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -117,24 +134,21 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 68, y: 68}
+    oldSize: {x: 62, y: 72}
     newSize: {x: 68, y: 68}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 68, y: 68}
-  m_EdgeRadius: 0
---- !u!114 &7109054188137221568
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6603390885331567997}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72ae9507592db4c768e308674be68e74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Points:
+    m_Paths:
+    - - {x: 15.75, y: 30.5}
+      - {x: -1.7568331, y: 16.642601}
+      - {x: -15.022787, y: 34.213673}
+      - {x: -29.637697, y: 19.945333}
+      - {x: -30.19806, y: -17.413357}
+      - {x: -19.3672, y: -32.821304}
+      - {x: 5.009801, y: -34.03223}
+      - {x: 26.610367, y: -14.5508}
+      - {x: 17.982466, y: -4.3749313}
+      - {x: 28.536098, y: 12.084072}

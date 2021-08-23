@@ -2,23 +2,36 @@ using UnityEngine;
 
 public class AsteroidController : MonoBehaviour
 {
-    public float velocity = 10f;
+    public float minVelocity = 50f;
+    public float maxVelocity = 25f;
     public int rotation;
+    public int rotationDelta = 15;
+    public int state = 3;
+    public GameObject nextAsteroid;
 
     // PRIVATE VARIABLES
     private GameObject player;
+    [SerializeField] private float velocity;
 
     // Start is called before the first frame update
     void Start()
     {
-        // Find player to determine position
-        // TODO: VER QUE ESTO NO FALLE SI NO HAY PLAYER
-        this.player = GameObject.FindGameObjectsWithTag("Player")[0];
-        // Initially rotate random degrees
-        this.rotation = Random.Range(0, 360);
-        transform.eulerAngles = Vector3.forward * this.rotation;
-        // Initial random position outside player area
-        transform.position = this.GetRandomInitialPosition();
+        // Set initial random velocity between the configured range
+        this.velocity = Random.Range(this.minVelocity, this.maxVelocity);
+        // Only do this if it is the first state of an asteroid
+        if (this.state == 3) {
+            // Find player to determine position
+            // TODO: VER QUE ESTO NO FALLE SI NO HAY PLAYER
+            this.player = GameObject.FindGameObjectsWithTag("Player")[0];
+            // Initially rotate random degrees
+            this.rotation = Random.Range(0, 360);
+            transform.eulerAngles = Vector3.forward * this.rotation;
+            // Initial random position outside player area
+            transform.position = this.GetRandomInitialPosition();
+        } else {
+            // Get rotation set by the asteroid parent that created it to be able to give it to the children created
+            this.rotation = (int)transform.rotation.eulerAngles.z;
+        }
     }
 
     // Update is called once per frame
@@ -33,6 +46,14 @@ public class AsteroidController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
         Debug.Log("TIGGER ENTER");
+        // If not in the last state, we can spawn the other 2 child asteroids
+        if (this.state > 1) {
+            // Create 2 new asteroids from this one with a slight change in rotation
+            Instantiate(this.nextAsteroid, transform.position, Quaternion.Euler(0f, 0f, this.rotation + this.rotationDelta));
+            Instantiate(this.nextAsteroid, transform.position, Quaternion.Euler(0f, 0f, this.rotation - this.rotationDelta));
+        } 
+        // In the end we end up destroying it
+        Destroy(this.gameObject);
     }
 
     // CUSTOM FUNCTIONS
