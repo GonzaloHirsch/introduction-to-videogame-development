@@ -8,6 +8,7 @@ public class AsteroidController : MonoBehaviour
     public int rotationDelta = 15;
     public int state = 3;
     public GameObject nextAsteroid;
+    public GameObject explosionSystem;
 
     // PRIVATE VARIABLES
     private GameObject player;
@@ -46,6 +47,8 @@ public class AsteroidController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
         Debug.Log("TIGGER ENTER");
+        // Create the explosion object
+        Instantiate(this.explosionSystem, transform.position, Quaternion.identity);
         // If not in the last state, we can spawn the other 2 child asteroids
         if (this.state > 1) {
             // Create 2 new asteroids from this one with a slight change in rotation
