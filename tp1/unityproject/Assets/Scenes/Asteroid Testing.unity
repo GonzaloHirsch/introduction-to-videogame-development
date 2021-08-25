@@ -136,11 +136,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6603390885331567993, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -42.7
       objectReference: {fileID: 0}
     - target: {fileID: 6603390885331567993, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 6603390885331567993, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
       propertyPath: m_LocalPosition.z
@@ -193,11 +193,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6603390885331567993, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 66.4
       objectReference: {fileID: 0}
     - target: {fileID: 6603390885331567993, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -36.1
       objectReference: {fileID: 0}
     - target: {fileID: 6603390885331567993, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
       propertyPath: m_LocalPosition.z
@@ -311,11 +311,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6603390885331567993, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -32
       objectReference: {fileID: 0}
     - target: {fileID: 6603390885331567993, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -51.5
       objectReference: {fileID: 0}
     - target: {fileID: 6603390885331567993, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
       propertyPath: m_LocalPosition.z
@@ -404,11 +404,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 1
   far clip plane: 100
   field of view: 60
   orthographic: 1
-  orthographic size: 240
+  orthographic size: 120
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -417,8 +417,8 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
+  m_HDR: 0
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
@@ -451,11 +451,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6603390885331567993, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 58.9
       objectReference: {fileID: 0}
     - target: {fileID: 6603390885331567993, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 51.9
       objectReference: {fileID: 0}
     - target: {fileID: 6603390885331567993, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
       propertyPath: m_LocalPosition.z

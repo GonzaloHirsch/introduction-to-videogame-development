@@ -1,52 +1,43 @@
 fileFormatVersion: 2
-guid: 0d06a657993e14bf4897509d9c027631
+guid: b1de562a1bf4841ed96170468e452366
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6640736302312887160
-    second: spritesheet_small_0
+      213: 7422402473719143832
+    second: asteroid-big
   - first:
-      213: -2202966637998041363
-    second: spritesheet_small_1
+      213: -7300762121850341582
+    second: asteroid-small
   - first:
-      213: -4521103179656230677
-    second: spritesheet_small_2
+      213: -1014808995079551545
+    second: asteroid-medium
   - first:
-      213: -794076188953640803
-    second: spritesheet_small_3
+      213: -5487043665720135763
+    second: ship
   - first:
-      213: 6730172785337176916
-    second: spritesheet_small_4
+      213: -7084988617863114330
+    second: enemy-ship
   - first:
-      213: -6645411740626249811
-    second: spritesheet_small_5
+      213: 9177535712733343274
+    second: life
   - first:
-      213: -5245109850960280974
-    second: spritesheet_small_6
+      213: 3459248741488470154
+    second: breakdown-ball
   - first:
-      213: -6035158845828544762
-    second: spritesheet_small_7
+      213: -8670320349719209410
+    second: enemy-breakdown-ball
   - first:
-      213: 7866408131372713909
-    second: spritesheet_small_8
+      213: 7137766915938183117
+    second: fire
   - first:
-      213: 5339116782573001828
-    second: spritesheet_small_9
+      213: 2804472224628717129
+    second: enemy-bullet
   - first:
-      213: 5405327845593495042
-    second: spritesheet_small_10
+      213: 1885127952980721434
+    second: breakdown-line
   - first:
-      213: -6216428507902993259
-    second: spritesheet_small_11
-  - first:
-      213: -6544753982246052645
-    second: spritesheet_small_12
-  - first:
-      213: -8757844871168346854
-    second: spritesheet_small_13
-  - first:
-      213: -7463698849360108106
-    second: spritesheet_small_14
+      213: 2165730897315925364
+    second: bullet
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -87,13 +78,13 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 1
+  spriteExtrude: 0
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 1
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 1
+  spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -160,13 +151,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: spritesheet_small_0
+      name: asteroid-big
       rect:
         serializedVersion: 2
-        x: 0
-        y: 104
-        width: 65
-        height: 65
+        x: 4
+        y: 54
+        width: 31
+        height: 35
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,104 +165,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 873966a9b72a82c50800000000000000
-      internalID: 6640736302312887160
+      spriteID: 89d920a69bba10760800000000000000
+      internalID: 7422402473719143832
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_small_1
+      name: asteroid-small
       rect:
         serializedVersion: 2
-        x: 66
-        y: 104
-        width: 65
-        height: 65
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: de6171ab38d7d61e0800000000000000
-      internalID: -2202966637998041363
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spritesheet_small_2
-      rect:
-        serializedVersion: 2
-        x: 132
-        y: 73
-        width: 82
-        height: 96
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: be883b7ac90d141c0800000000000000
-      internalID: -4521103179656230677
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spritesheet_small_3
-      rect:
-        serializedVersion: 2
-        x: 199
-        y: 121
-        width: 48
-        height: 49
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d9082d0d9efdaf4f0800000000000000
-      internalID: -794076188953640803
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spritesheet_small_4
-      rect:
-        serializedVersion: 2
-        x: 246
-        y: 155
-        width: 10
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 45316038d70666d50800000000000000
-      internalID: 6730172785337176916
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spritesheet_small_5
-      rect:
-        serializedVersion: 2
-        x: 213
-        y: 87
+        x: 48
+        y: 54
         width: 34
-        height: 29
+        height: 33
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -279,20 +186,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: da713c51b31c6c3a0800000000000000
-      internalID: -6645411740626249811
+      spriteID: 237bb71088b7eaa90800000000000000
+      internalID: -7300762121850341582
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_small_6
+      name: asteroid-medium
       rect:
         serializedVersion: 2
-        x: 231
-        y: 114
-        width: 7
-        height: 6
+        x: 94
+        y: 53
+        width: 31
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -300,20 +207,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2724c9d5160a537b0800000000000000
-      internalID: -5245109850960280974
+      spriteID: 7c5896d789caae1f0800000000000000
+      internalID: -1014808995079551545
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_small_7
+      name: ship
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 134
-        height: 103
+        x: 7
+        y: 28
+        width: 22
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -321,20 +228,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 607455f510fce3ca0800000000000000
-      internalID: -6035158845828544762
+      spriteID: dafa1bd8bda1ad3b0800000000000000
+      internalID: -5487043665720135763
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_small_8
+      name: enemy-ship
       rect:
         serializedVersion: 2
-        x: 248
-        y: 88
-        width: 8
-        height: 24
+        x: 46
+        y: 21
+        width: 38
+        height: 21
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -342,19 +249,40 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5b707b874881b2d60800000000000000
-      internalID: 7866408131372713909
+      spriteID: 6a15592d3601dad90800000000000000
+      internalID: -7084988617863114330
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_small_9
+      name: life
       rect:
         serializedVersion: 2
-        x: 223
-        y: 81
-        width: 23
+        x: 100
+        y: 28
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2eaee62b182d5f70800000000000000
+      internalID: 9177535712733343274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: breakdown-ball
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 36
+        width: 6
         height: 5
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -363,20 +291,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 46c17970d6a581a40800000000000000
-      internalID: 5339116782573001828
+      spriteID: a88232a0768b10030800000000000000
+      internalID: 3459248741488470154
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_small_10
+      name: enemy-breakdown-ball
       rect:
         serializedVersion: 2
-        x: 133
-        y: 24
-        width: 48
-        height: 49
+        x: 126
+        y: 25
+        width: 6
+        height: 5
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -384,40 +312,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 206b0237905930b40800000000000000
-      internalID: 5405327845593495042
+      spriteID: e3a552a4495dca780800000000000000
+      internalID: -8670320349719209410
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_small_11
+      name: fire
       rect:
         serializedVersion: 2
-        x: 182
-        y: 49
-        width: 28
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 59c94d6453fcab9a0800000000000000
-      internalID: -6216428507902993259
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spritesheet_small_12
-      rect:
-        serializedVersion: 2
-        x: 198
-        y: 47
-        width: 16
+        x: 10
+        y: 4
+        width: 8
         height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -426,20 +333,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bdc96e1cdec5c25a0800000000000000
-      internalID: -6544753982246052645
+      spriteID: dc7e70a41317e0360800000000000000
+      internalID: 7137766915938183117
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_small_13
+      name: enemy-bullet
       rect:
         serializedVersion: 2
-        x: 215
-        y: 2
-        width: 40
-        height: 78
+        x: 55
+        y: 7
+        width: 2
+        height: 2
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -447,20 +354,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a15b800ad72e57680800000000000000
-      internalID: -8757844871168346854
+      spriteID: 946b17b21ac7be620800000000000000
+      internalID: 2804472224628717129
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_small_14
+      name: breakdown-line
       rect:
         serializedVersion: 2
-        x: 182
-        y: 5
-        width: 37
-        height: 37
+        x: 31
+        y: 7
+        width: 11
+        height: 2
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -468,8 +375,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6b5266dd07d9b6890800000000000000
-      internalID: -7463698849360108106
+      spriteID: a1f3399a2e1592a10800000000000000
+      internalID: 1885127952980721434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bullet
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 7
+        width: 2
+        height: 2
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47d8a9dc6c83e0e10800000000000000
+      internalID: 2165730897315925364
       vertices: []
       indices: 
       edges: []
