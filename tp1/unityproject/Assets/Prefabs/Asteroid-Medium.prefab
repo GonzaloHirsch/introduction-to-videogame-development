@@ -15,6 +15,14 @@ PrefabInstance:
       propertyPath: nextAsteroid
       value: 
       objectReference: {fileID: 8186458083902872520, guid: 736e0376e3d844597b01f30ca1194298, type: 3}
+    - target: {fileID: 6129351626177592090, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 7031291128155931839, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1014808995079551545, guid: b1de562a1bf4841ed96170468e452366, type: 3}
     - target: {fileID: 8058070937125398220, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
       propertyPath: m_Name
       value: Asteroid-Medium
@@ -22,6 +30,14 @@ PrefabInstance:
     - target: {fileID: 8289397511830456724, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8289397511830456724, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8289397511830456724, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 8289397511830456724, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
       propertyPath: m_LocalPosition.x
