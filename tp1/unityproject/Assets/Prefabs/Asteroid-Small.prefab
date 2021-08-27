@@ -12,8 +12,24 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 331194894450993190, guid: 3de6eff4a7c534a47b7da97d5d2f0b16, type: 3}
+      propertyPath: scoreValue
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 331194894450993190, guid: 3de6eff4a7c534a47b7da97d5d2f0b16, type: 3}
+      propertyPath: maxVelocity
+      value: 85
+      objectReference: {fileID: 0}
+    - target: {fileID: 331194894450993190, guid: 3de6eff4a7c534a47b7da97d5d2f0b16, type: 3}
+      propertyPath: minVelocity
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 331194894450993190, guid: 3de6eff4a7c534a47b7da97d5d2f0b16, type: 3}
       propertyPath: nextAsteroid
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 331194894450993190, guid: 3de6eff4a7c534a47b7da97d5d2f0b16, type: 3}
+      propertyPath: rotationDelta
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4627268960160869296, guid: 3de6eff4a7c534a47b7da97d5d2f0b16, type: 3}
       propertyPath: m_Name

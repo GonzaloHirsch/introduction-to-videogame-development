@@ -99,12 +99,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e12881262f59404e9dfce0d3d91f989, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minVelocity: 50
+  minVelocity: 40
   maxVelocity: 25
   rotation: 0
   rotationDelta: 20
   state: 3
-  scoreValue: 50
+  scoreValue: 25
   nextAsteroid: {fileID: 4627268960160869296, guid: 3de6eff4a7c534a47b7da97d5d2f0b16, type: 3}
   explosionSystem: {fileID: 8468582526183567075, guid: 5a845e1fd39f9484eae532bdc135a806, type: 3}
   velocity: 75

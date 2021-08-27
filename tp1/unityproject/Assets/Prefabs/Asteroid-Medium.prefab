@@ -12,9 +12,25 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3133375355423483226, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
+      propertyPath: scoreValue
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3133375355423483226, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
+      propertyPath: maxVelocity
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3133375355423483226, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
+      propertyPath: minVelocity
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 3133375355423483226, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
       propertyPath: nextAsteroid
       value: 
       objectReference: {fileID: 8186458083902872520, guid: 736e0376e3d844597b01f30ca1194298, type: 3}
+    - target: {fileID: 3133375355423483226, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
+      propertyPath: rotationDelta
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 6129351626177592090, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 36
