@@ -30,29 +30,49 @@ public class GameController : MonoBehaviour
     // Big asteroid prefab used to instantiate asteroids
     public GameObject bigAsteroidPrefab;
     // Player lives kept here
-    public int playerLives = 3;
-    // Level of the game
-    public int level = 0;
+    public int initialPlayerLives = 3;
     // Number of asteroids initially, then it's base + level
     public int baseAsteroidsPerLevel = 4;
 
     [SerializeField]
     private bool isPaused = false;
+    private static int activeAsteroids = 0;
+    private int level = 0;
+    private int playerLives = 0;
 
     void Start()
     {
         // Set position to (0,0,0) initially
         this.transform.position = Vector3.zero;
-        // Instantiate the player
-        this.instantiatePlayer();
-        // Generate the asteroids
-        this.instantiateAsteroids(this.calculateNumberOfAsteroids());
+        // Start the game
+        this.startGame();
     }
 
     // Update is called once per frame
     void Update()
     {
         this.checkIfPause();
+        this.checkIfAsteroidSpawn();
+    }
+
+    /* ------------------------- GAME LIFECYCLE ------------------------- */
+
+    private void startGame() {
+        // Set variables to initial values
+        activeAsteroids = 0;
+        this.level = 0;
+        this.playerLives = this.initialPlayerLives;
+        // Instantiate the player
+        this.instantiatePlayer();
+        // Generate the asteroids
+        this.instantiateAsteroids(this.calculateNumberOfAsteroids());
+    }
+
+    private void startNextLevel() {
+        // Increment level
+        this.level++;
+        // Instantiate new asteroids
+        this.instantiateAsteroids(this.calculateNumberOfAsteroids());
     }
 
     /* ------------------------- PLAYER GENERATION ------------------------- */
@@ -63,15 +83,30 @@ public class GameController : MonoBehaviour
 
     /* ------------------------- ASTEROID GENERATION ------------------------- */
 
+    private void checkIfAsteroidSpawn() {
+        // If there are no more asteroids, move to the next level
+        if (activeAsteroids == 0) {
+            this.startNextLevel();
+        }
+    }
+
     private int calculateNumberOfAsteroids() {
         return this.baseAsteroidsPerLevel + this.level;
     }
 
     // Instantiates numberOfAsteroids asteroids
     private void instantiateAsteroids(int numberOfAsteroids) {
+        // Instantiate all asteroids
         for (int i = 0; i < numberOfAsteroids; i++) {
-            Instantiate(this.bigAsteroidPrefab, Vector3.zero, Quaternion.identity);
+            Instantiate(this.bigAsteroidPrefab);
         }
+        // Update the number of active asteroids
+        activeAsteroids += numberOfAsteroids;
+    }
+
+    public static void ChangeAsteroidCount(int count) {
+        activeAsteroids += count;
+        Debug.Log(activeAsteroids);
     }
     
     /* ------------------------- PAUSE ------------------------- */

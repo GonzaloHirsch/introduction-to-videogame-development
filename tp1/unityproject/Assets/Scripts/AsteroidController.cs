@@ -15,8 +15,7 @@ public class AsteroidController : MonoBehaviour
     private GameObject player;
     [SerializeField] private float velocity;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         // Set initial random velocity between the configured range
         this.velocity = Random.Range(this.minVelocity, this.maxVelocity);
@@ -26,17 +25,21 @@ public class AsteroidController : MonoBehaviour
             // Find player to determine position
             // TODO: VER QUE ESTO NO FALLE SI NO HAY PLAYER
             this.player = GameObject.FindGameObjectsWithTag("Player")[0];
+            // Initial random position outside player area
+            transform.position = this.GetRandomInitialPosition();
             // Initially rotate random degrees
             this.rotation = Random.Range(0, 360);
             transform.eulerAngles = Vector3.forward * this.rotation;
-            // Initial random position outside player area
-            transform.position = this.GetRandomInitialPosition();
         }
         else
         {
             // Get rotation set by the asteroid parent that created it to be able to give it to the children created
             this.rotation = (int)transform.rotation.eulerAngles.z;
         }
+    }
+
+    void Start()
+    {
     }
 
     // Update is called once per frame
@@ -50,8 +53,10 @@ public class AsteroidController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("TIGGER ENTER");
-        if (!other.gameObject.CompareTag("Asteroid")) {
+        if (!other.gameObject.CompareTag("Asteroid"))
+        {
+            // Number of asteroids
+            int asteroidDelta = -1;
             // Add the score to the counter
             ScoreCounter.AddScore(this.scoreValue);
             // Create the explosion object
@@ -62,7 +67,11 @@ public class AsteroidController : MonoBehaviour
                 // Create 2 new asteroids from this one with a slight change in rotation
                 Instantiate(this.nextAsteroid, transform.position, Quaternion.Euler(0f, 0f, this.rotation + this.rotationDelta));
                 Instantiate(this.nextAsteroid, transform.position, Quaternion.Euler(0f, 0f, this.rotation - this.rotationDelta));
+                // Notify of 2 more created
+                asteroidDelta += 2;
             }
+            // Notify GameController of changes in asteroids count
+            GameController.ChangeAsteroidCount(asteroidDelta);
             // In the end we end up destroying it
             Destroy(this.gameObject);
         }
