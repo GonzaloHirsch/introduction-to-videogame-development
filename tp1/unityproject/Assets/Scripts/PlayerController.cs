@@ -3,18 +3,19 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
-    public GameObject map;
+    public GameObject bulletPrefab;
 
     // Keyboard keys
     public KeyCode UP = KeyCode.UpArrow;
     public KeyCode DOWN = KeyCode.DownArrow;
     public KeyCode LEFT = KeyCode.LeftArrow;
     public KeyCode RIGHT = KeyCode.RightArrow;
+    public KeyCode SHOOT = KeyCode.Space;
 
     // Ship constants
-    public float angular_velocity = 200f;
+    public float angularVelocity = 200f;
     public float acceleration = 10000f;
-    public float deacceleration_rate = 0.9f;
+    public float deaccelerationRate = 0.9f;
     public float friction = 1f;
 
     // Movement variables
@@ -23,11 +24,18 @@ public class PlayerController : MonoBehaviour
     private Vector3 _speed;
     private float _rot;
 
+    //Declare a SpriteRenderer variable to holds our SpriteRenderer component
+    private SpriteRenderer sprite; 
+    private float _distanceFromCeterToTip;
+
+
     // Start is called before the first frame update
     void Start()
     {
         _accel = new Vector3(0f,0f,0f);
         _speed = new Vector3(0f,0f,0f);
+        sprite = GetComponent<SpriteRenderer>(); //Set the reference to our SpriteRenderer component
+        _distanceFromCeterToTip = sprite.bounds.size.y;
     }
 
     // Update is called once per frame
@@ -41,9 +49,9 @@ public class PlayerController : MonoBehaviour
 
     void UpdateInput() {
         if (Input.GetKey(LEFT)) {
-            _rot = angular_velocity;
+            _rot = angularVelocity;
         } else if (Input.GetKey(RIGHT)) {
-            _rot = -angular_velocity;
+            _rot = -angularVelocity;
         } else {
             _rot = 0;
         }
@@ -56,6 +64,10 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(DOWN)) {
             resetPlayer();
+        }
+
+        if (Input.GetKeyDown(SHOOT)) {
+            shoot();
         }
     }
 
@@ -93,6 +105,12 @@ public class PlayerController : MonoBehaviour
         _speed = new Vector3(0,0,0);
         _accel = new Vector3(0,0,0);
         transform.right = new Vector3(0,1,0);
+    }
+
+    void shoot() {
+        
+        Vector3 bulletPos = transform.position + transform.right * _distanceFromCeterToTip;
+        Instantiate(this.bulletPrefab, bulletPos, transform.rotation);
     }
 
 }

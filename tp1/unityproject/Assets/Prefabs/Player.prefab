@@ -99,11 +99,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ef84f0546e4e45e4901adb08b2e8efb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 0}
+  bulletPrefab: {fileID: 5286581433773345851, guid: 4bf6f3024299c814fb3c3935ac6b5c47, type: 3}
   UP: 273
   DOWN: 274
   LEFT: 276
   RIGHT: 275
+  SHOOT: 32
   angular_velocity: 200
   acceleration: 10000
   deacceleration_rate: 0.8
@@ -176,3 +177,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72ae9507592db4c768e308674be68e74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSeamlessInX: 1
+  isSeamlessInY: 1
