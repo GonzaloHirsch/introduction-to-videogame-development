@@ -102,7 +102,7 @@ public class GameController : MonoBehaviour
         {
             this.playerPendingSpawn = false;
             // GAME OVER
-            Debug.Log("GAME OVER");
+            this.gameOver();
         }
     }
 
@@ -145,6 +145,10 @@ public class GameController : MonoBehaviour
     private bool isGameobjectOutsidePlayerOriginRange(GameObject go)
     {
         return Vector3.Distance(Vector3.zero, go.transform.position) >= Constants.MIN_DISTANCE_FROM_PLAYER;
+    }
+
+    private void gameOver() {
+        SceneManager.LoadScene("Game Over", LoadSceneMode.Single);
     }
 
     /* ------------------------- ASTEROID GENERATION ------------------------- */
