@@ -23,10 +23,14 @@ public class AsteroidController : MonoBehaviour
         if (this.state == 3)
         {
             // Find player to determine position
-            // TODO: VER QUE ESTO NO FALLE SI NO HAY PLAYER
-            this.player = GameObject.FindGameObjectsWithTag(Constants.TAG_PLAYER)[0];
-            // Initial random position outside player area
-            transform.position = this.GetRandomInitialPosition();
+            // If there's no player, use the initial position given to the gameobject
+            GameObject[] playerList = GameObject.FindGameObjectsWithTag(Constants.TAG_PLAYER);
+            if (playerList.Length > 0)
+            {
+                this.player = playerList[0];
+                // Initial random position outside player area
+                transform.position = this.GetRandomInitialPosition();
+            }
             // Initially rotate random degrees
             this.rotation = Random.Range(0, 360);
             transform.eulerAngles = Vector3.forward * this.rotation;
