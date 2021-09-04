@@ -24,7 +24,7 @@ public class AsteroidController : MonoBehaviour
         {
             // Find player to determine position
             // TODO: VER QUE ESTO NO FALLE SI NO HAY PLAYER
-            this.player = GameObject.FindGameObjectsWithTag("Player")[0];
+            this.player = GameObject.FindGameObjectsWithTag(Constants.TAG_PLAYER)[0];
             // Initial random position outside player area
             transform.position = this.GetRandomInitialPosition();
             // Initially rotate random degrees
@@ -53,7 +53,7 @@ public class AsteroidController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.gameObject.CompareTag("Asteroid"))
+        if (!other.gameObject.CompareTag(Constants.TAG_ASTEROID))
         {
             // Number of asteroids
             int asteroidDelta = -1;

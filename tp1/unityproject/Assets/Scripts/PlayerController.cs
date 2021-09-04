@@ -26,14 +26,14 @@ public class PlayerController : MonoBehaviour
     private float timeBetweenHyperdrives = 0.0f;
 
     // Movement variables
-    private Vector3 _accel;
-    private float _accel_module;
-    private Vector3 _speed;
-    private float _rot;
+    private Vector3 accel;
+    private float accelModule;
+    private Vector3 speed;
+    private float rot;
 
     //Declare a SpriteRenderer variable to holds our SpriteRenderer component
-    private SpriteRenderer sprite;
-    private float _distanceFromCeterToTip;
+    private SpriteRenderer sprite; 
+    private float distanceFromCeterToTip;
     private GameController gameController;
 
     // Recover the instance of the Game Controller to be able to notify
@@ -46,10 +46,10 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _accel = new Vector3(0f, 0f, 0f);
-        _speed = new Vector3(0f, 0f, 0f);
-        sprite = GetComponent<SpriteRenderer>(); //Set the reference to our SpriteRenderer component
-        _distanceFromCeterToTip = sprite.bounds.size.y;
+        this.accel = new Vector3(0f,0f,0f);
+        this.speed = new Vector3(0f,0f,0f);
+        this.sprite = GetComponent<SpriteRenderer>(); //Set the reference to our SpriteRenderer component
+        this.distanceFromCeterToTip = this.sprite.bounds.size.y;
     }
 
     // Update is called once per frame
@@ -63,28 +63,19 @@ public class PlayerController : MonoBehaviour
         this.timeBetweenHyperdrives += Time.deltaTime;
     }
 
-    void UpdateInput()
-    {
-        if (Input.GetKey(LEFT))
-        {
-            _rot = angularVelocity;
-        }
-        else if (Input.GetKey(RIGHT))
-        {
-            _rot = -angularVelocity;
-        }
-        else
-        {
-            _rot = 0;
+    void UpdateInput() {
+        if (Input.GetKey(LEFT)) {
+            this.rot = angularVelocity;
+        } else if (Input.GetKey(RIGHT)) {
+            this.rot = -angularVelocity;
+        } else {
+            this.rot = 0;
         }
 
-        if (Input.GetKey(UP))
-        {
-            _accel_module = acceleration;
-        }
-        else
-        {
-            _accel_module = 0f;
+        if (Input.GetKey(UP)) {
+            this.accelModule = acceleration;
+        } else {
+            this.accelModule = 0f;
         }
 
         if (Input.GetKeyDown(DOWN))
@@ -101,24 +92,21 @@ public class PlayerController : MonoBehaviour
     void UpdateRotation()
     {
         float dt = Time.deltaTime;
-        if (_rot != 0)
-        {
-            transform.eulerAngles = transform.eulerAngles + Vector3.forward * dt * _rot;
+        if(this.rot != 0) {
+            transform.eulerAngles = transform.eulerAngles + Vector3.forward * dt * this.rot;  
         }
     }
 
     void UpdateAcceleration()
     {
         float dt = Time.deltaTime;
-
-        if (_accel_module != 0)
-        {
-            _accel = _accel + transform.right * dt * _accel_module;
+        
+        if (this.accelModule != 0) {
+            this.accel = this.accel + transform.right * dt * this.accelModule;
         }
-        _accel = _accel * 0.8f;
-        if (_accel.magnitude < float.Epsilon)
-        {
-            _accel = new Vector3(0f, 0f, 0f);
+        this.accel = this.accel * 0.8f;
+        if (this.accel.magnitude < float.Epsilon) {
+            this.accel = new Vector3(0f,0f,0f);
         }
     }
 
@@ -126,11 +114,11 @@ public class PlayerController : MonoBehaviour
     {
         float dt = Time.deltaTime;
         // Friccion
-        _speed = _speed - _speed * dt * friction;
+        this.speed -= this.speed * dt * friction;
         // Acceleration force
-        _speed = _speed + _accel * dt;
+        this.speed += this.accel * dt;
 
-        transform.position = transform.position + _speed * dt;
+        transform.position = transform.position + this.speed * dt;
     }
 
     void tryHyperdrive()
@@ -147,8 +135,8 @@ public class PlayerController : MonoBehaviour
                 float newY = Utils.GetRandomNumInRange(-Screen.height / 2, Screen.height / 2);
                 // Set the new variables
                 transform.position = new Vector3(newX, newY, 0);
-                _speed = new Vector3(0, 0, 0);
-                _accel = new Vector3(0, 0, 0);
+                this.speed = new Vector3(0, 0, 0);
+                this.accel = new Vector3(0, 0, 0);
             }
             // Reset the time between hyperdrives
             this.timeBetweenHyperdrives = 0.0f;
@@ -168,9 +156,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void shoot()
-    {
-        Vector3 bulletPos = transform.position + transform.right * _distanceFromCeterToTip;
+    void shoot() {
+        Vector3 bulletPos = transform.position + transform.right * this.distanceFromCeterToTip;
         Instantiate(this.bulletPrefab, bulletPos, transform.rotation);
     }
 
