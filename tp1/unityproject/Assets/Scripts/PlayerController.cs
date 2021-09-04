@@ -27,6 +27,12 @@ public class PlayerController : MonoBehaviour
     //Declare a SpriteRenderer variable to holds our SpriteRenderer component
     private SpriteRenderer sprite; 
     private float _distanceFromCeterToTip;
+    private GameController gameController;
+
+    // Recover the instance of the Game Controller to be able to notify
+    void Awake() {
+        this.gameController = GameObject.FindObjectOfType<GameController>();
+    }
 
 
     // Start is called before the first frame update
@@ -107,8 +113,18 @@ public class PlayerController : MonoBehaviour
         transform.right = new Vector3(0,1,0);
     }
 
+    // Destroy the player when it collides with something
+    void OnTriggerEnter2D(Collider2D other) {
+        // Check if collided with anything other than a player bullet
+        if (!other.gameObject.CompareTag(Constants.TAG_PLAYER_BULLET)) {
+            // Notify the gamecontroller of the death
+            this.gameController.notifyPlayerDeath();
+            // Destroy the object
+            Destroy(this.gameObject);
+        }
+    }
+
     void shoot() {
-        
         Vector3 bulletPos = transform.position + transform.right * _distanceFromCeterToTip;
         Instantiate(this.bulletPrefab, bulletPos, transform.rotation);
     }

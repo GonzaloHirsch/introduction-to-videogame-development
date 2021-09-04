@@ -6,5 +6,10 @@ public static class Constants
 
     public enum ENEMY_DIRECTION {UP, DOWN, FORWARD};
 
-    
+    public const string TAG_ASTEROID = "Asteroid";
+    public const string TAG_PLAYER = "Player";
+    public const string TAG_ENEMY = "Enemy";
+    public const string TAG_PLAYER_BULLET = "Player Bullet";
+    public const string TAG_ENEMY_BULLET = "Enemy Bullet";
+    public const string TAG_GAME_CONTROLLER = "GameController";
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
+    public string[] collisionTags = new string[] {Constants.TAG_ASTEROID};
     public float speed = 800f;
     public float timeToLive = 0.8f;
     private Vector3 velocity;
@@ -22,8 +23,7 @@ public class BulletController : MonoBehaviour
     }
 
     void destroyIfExpired() {
-        float dt = Time.deltaTime;
-        this.timeToLive -= dt;
+        this.timeToLive -= Time.deltaTime;
         if (timeToLive <= 0) {
             Destroy(this.gameObject);
         }
@@ -38,5 +38,14 @@ public class BulletController : MonoBehaviour
 
     void initializeVelocityVector() {
         this.velocity = transform.right * this.speed;
+    }
+
+    // Destroy
+    void OnTriggerEnter2D(Collider2D other) {
+        foreach(var tag in this.collisionTags) {
+            if (other.gameObject.CompareTag(tag)) {
+                Destroy(this.gameObject);
+            }
+        }
     }
 }
