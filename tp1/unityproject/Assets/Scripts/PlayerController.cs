@@ -18,6 +18,13 @@ public class PlayerController : MonoBehaviour
     public float deaccelerationRate = 0.9f;
     public float friction = 1f;
 
+    // Hyperdrive variables
+
+    [Range(0.0f, 1.0f)]
+    public float hyperdriveSuccessPossibility = 0.5f;
+    public float hyperdriveCooldownTime = 4.0f;
+    private float timeBetweenHyperdrives = 0.0f;
+
     // Movement variables
     private Vector3 _accel;
     private float _accel_module;
@@ -25,12 +32,13 @@ public class PlayerController : MonoBehaviour
     private float _rot;
 
     //Declare a SpriteRenderer variable to holds our SpriteRenderer component
-    private SpriteRenderer sprite; 
+    private SpriteRenderer sprite;
     private float _distanceFromCeterToTip;
     private GameController gameController;
 
     // Recover the instance of the Game Controller to be able to notify
-    void Awake() {
+    void Awake()
+    {
         this.gameController = GameObject.FindObjectOfType<GameController>();
     }
 
@@ -38,8 +46,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _accel = new Vector3(0f,0f,0f);
-        _speed = new Vector3(0f,0f,0f);
+        _accel = new Vector3(0f, 0f, 0f);
+        _speed = new Vector3(0f, 0f, 0f);
         sprite = GetComponent<SpriteRenderer>(); //Set the reference to our SpriteRenderer component
         _distanceFromCeterToTip = sprite.bounds.size.y;
     }
@@ -51,52 +59,71 @@ public class PlayerController : MonoBehaviour
         UpdateRotation();
         UpdateAcceleration();
         UpdatePosition();
+        // Update hyperdrive cooldown time
+        this.timeBetweenHyperdrives += Time.deltaTime;
     }
 
-    void UpdateInput() {
-        if (Input.GetKey(LEFT)) {
+    void UpdateInput()
+    {
+        if (Input.GetKey(LEFT))
+        {
             _rot = angularVelocity;
-        } else if (Input.GetKey(RIGHT)) {
+        }
+        else if (Input.GetKey(RIGHT))
+        {
             _rot = -angularVelocity;
-        } else {
+        }
+        else
+        {
             _rot = 0;
         }
 
-        if (Input.GetKey(UP)) {
+        if (Input.GetKey(UP))
+        {
             _accel_module = acceleration;
-        } else {
+        }
+        else
+        {
             _accel_module = 0f;
         }
 
-        if (Input.GetKey(DOWN)) {
-            resetPlayer();
+        if (Input.GetKeyDown(DOWN))
+        {
+            tryHyperdrive();
         }
 
-        if (Input.GetKeyDown(SHOOT)) {
+        if (Input.GetKeyDown(SHOOT))
+        {
             shoot();
         }
     }
 
-    void UpdateRotation() {
+    void UpdateRotation()
+    {
         float dt = Time.deltaTime;
-        if(_rot != 0) {
-            transform.eulerAngles = transform.eulerAngles + Vector3.forward * dt * _rot;  
+        if (_rot != 0)
+        {
+            transform.eulerAngles = transform.eulerAngles + Vector3.forward * dt * _rot;
         }
     }
 
-    void UpdateAcceleration() {
+    void UpdateAcceleration()
+    {
         float dt = Time.deltaTime;
-        
-        if (_accel_module != 0) {
+
+        if (_accel_module != 0)
+        {
             _accel = _accel + transform.right * dt * _accel_module;
         }
         _accel = _accel * 0.8f;
-        if (_accel.magnitude < float.Epsilon) {
-            _accel = new Vector3(0f,0f,0f);
+        if (_accel.magnitude < float.Epsilon)
+        {
+            _accel = new Vector3(0f, 0f, 0f);
         }
     }
 
-    void UpdatePosition() {
+    void UpdatePosition()
+    {
         float dt = Time.deltaTime;
         // Friccion
         _speed = _speed - _speed * dt * friction;
@@ -106,17 +133,34 @@ public class PlayerController : MonoBehaviour
         transform.position = transform.position + _speed * dt;
     }
 
-    void resetPlayer() {
-        transform.position = new Vector3(0,0,0);
-        _speed = new Vector3(0,0,0);
-        _accel = new Vector3(0,0,0);
-        transform.right = new Vector3(0,1,0);
+    void tryHyperdrive()
+    {
+        // Check if the cooldown period has passed
+        if (this.timeBetweenHyperdrives >= this.hyperdriveCooldownTime)
+        {
+            // Get random number to determine the hyperdrive success
+            float rnd = Utils.GetRandomNumInRange(0.0f, 1.0f);
+            if (rnd <= this.hyperdriveSuccessPossibility)
+            {
+                // Calculate a new position
+                float newX = Utils.GetRandomNumInRange(-Screen.width / 2, Screen.width / 2);
+                float newY = Utils.GetRandomNumInRange(-Screen.height / 2, Screen.height / 2);
+                // Set the new variables
+                transform.position = new Vector3(newX, newY, 0);
+                _speed = new Vector3(0, 0, 0);
+                _accel = new Vector3(0, 0, 0);
+            }
+            // Reset the time between hyperdrives
+            this.timeBetweenHyperdrives = 0.0f;
+        }
     }
 
     // Destroy the player when it collides with something
-    void OnTriggerEnter2D(Collider2D other) {
+    void OnTriggerEnter2D(Collider2D other)
+    {
         // Check if collided with anything other than a player bullet
-        if (!other.gameObject.CompareTag(Constants.TAG_PLAYER_BULLET)) {
+        if (!other.gameObject.CompareTag(Constants.TAG_PLAYER_BULLET))
+        {
             // Notify the gamecontroller of the death
             this.gameController.notifyPlayerDeath();
             // Destroy the object
@@ -124,7 +168,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void shoot() {
+    void shoot()
+    {
         Vector3 bulletPos = transform.position + transform.right * _distanceFromCeterToTip;
         Instantiate(this.bulletPrefab, bulletPos, transform.rotation);
     }

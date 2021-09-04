@@ -61,7 +61,7 @@ public class EnemyController : MonoBehaviour
             : -this.width;
         
         float x = getScreenWidthBound(this.startBound);
-        float y = Utils.getRandomNumInRange(
+        float y = Utils.GetRandomNumInRange(
             getScreenHeightBound(Constants.SCREEN_BOUNDS.LOWER), 
             getScreenHeightBound(Constants.SCREEN_BOUNDS.UPPER)
         );
@@ -114,10 +114,10 @@ public class EnemyController : MonoBehaviour
     }
 
     Constants.ENEMY_DIRECTION getRandomDirection() {
-        return Utils.getRandomEnumValue<Constants.ENEMY_DIRECTION>();
+        return Utils.GetRandomEnumValue<Constants.ENEMY_DIRECTION>();
     }
     Constants.SCREEN_BOUNDS getRandomScreenBound() {
-        return Utils.getRandomEnumValue<Constants.SCREEN_BOUNDS>();
+        return Utils.GetRandomEnumValue<Constants.SCREEN_BOUNDS>();
     }
 
     float getScreenHeightBound(Constants.SCREEN_BOUNDS bound) {

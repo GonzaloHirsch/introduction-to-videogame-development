@@ -109,6 +109,8 @@ MonoBehaviour:
   acceleration: 10000
   deaccelerationRate: 0.9
   friction: 1
+  hyperdriveSuccessPossibility: 0.99
+  hyperdriveCooldownTime: 4
 --- !u!50 &1543252445072020609
 Rigidbody2D:
   serializedVersion: 4
