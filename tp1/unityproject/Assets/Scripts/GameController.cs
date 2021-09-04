@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
@@ -210,5 +211,13 @@ public class GameController : MonoBehaviour
         this.isPaused = false;
         Time.timeScale = 1f;
         this.pausePanel.SetActive(false);
+    }
+
+    public void goToMainMenu() {
+        // Unpausing the game to not break it
+        this.isPaused = false;
+        Time.timeScale = 1f;
+        // Load the new scene
+        SceneManager.LoadScene("Main Menu", LoadSceneMode.Single);
     }
 }

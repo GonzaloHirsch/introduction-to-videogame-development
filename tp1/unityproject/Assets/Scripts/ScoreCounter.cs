@@ -49,6 +49,6 @@ public class ScoreCounter : MonoBehaviour
 
     // Instance methods
     public void updateScoreText() {
-        this.scoreText.text = score + " Points";
+        this.scoreText.text = score.ToString();
     }
 }

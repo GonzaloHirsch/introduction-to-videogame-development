@@ -8,7 +8,13 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Asteroid Testing.unity
     guid: 167b9597ce5214a79b445a3035675815
+  - enabled: 1
+    path: Assets/Scenes/Main Menu.unity
+    guid: 73ca31fc4b14a43b495ad84c53d16e38
+  - enabled: 1
+    path: Assets/Scenes/Game Play.unity
+    guid: df9090556567f472096903f70a288fa5
   m_configObjects: {}
