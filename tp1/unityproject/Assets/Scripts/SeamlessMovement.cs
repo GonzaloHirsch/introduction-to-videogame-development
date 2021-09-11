@@ -18,8 +18,8 @@ public class SeamlessMovement : MonoBehaviour
         // Recover Sprite Renderer for size
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         // Keep sizes in class
-        this.width = spriteRenderer.bounds.size.x;
-        this.height = spriteRenderer.bounds.size.y;
+        this.width = spriteRenderer.bounds.size.x / 2;
+        this.height = spriteRenderer.bounds.size.y / 2;
     }
 
     // Called when object stops being visible by crossing screen limits
@@ -35,32 +35,32 @@ public class SeamlessMovement : MonoBehaviour
         float screenXLimit = Screen.width / 2;
         float screenYLimit = Screen.height / 2;
         // Movement updates
-        Vector3 xMovement = Vector3.zero;
-        Vector3 yMovement = Vector3.zero;
+        Vector3 pos = transform.position;
         // Checking positions
         if (this.isSeamlessInX)
         {
             if (transform.position.x > screenXLimit)
             {
-                xMovement -= new Vector3(Screen.width + this.width, 0f, 0f);
+                pos.x -= Screen.width + this.width;
             }
             else if (transform.position.x < -screenXLimit)
             {
-                xMovement += new Vector3(Screen.width + this.width, 0f, 0f);
+                pos.x += Screen.width + this.width;
             }
         }
         if (this.isSeamlessInY)
         {
             if (transform.position.y > screenYLimit)
             {
-                yMovement -= new Vector3(0f, Screen.height + this.height, 0f);
+                pos.y -= Screen.height + this.height;
             }
             else if (transform.position.y < -screenYLimit)
             {
-                yMovement += new Vector3(0f, Screen.height + this.height, 0f);
+                pos.y += Screen.height + this.height;
             }
         }
         // Updating transform
-        transform.position += (xMovement + yMovement);
+        transform.position = pos;
+        Debug.Log(transform.position + "---" + (transform.position.y > screenYLimit || transform.position.y < -screenYLimit) + "-" + (transform.position.x > screenXLimit || transform.position.x < -screenXLimit));
     }
 }
