@@ -18,12 +18,18 @@ public class EnemyController : MonoBehaviour
     public float dtBetweenShooting = 1.5f;
     public float timeSinceLastShooting = 0f;
 
-    // Start is called before the first frame update
+    private AudioSource audioSource;
+
+    void Awake() {
+        this.audioSource = this.GetComponent<AudioSource>();
+    }
+
     void Start()
     {
         setupSpriteSize();
         setupStartingPosition();
         updateVelocityVector();
+        this.audioSource.Play();
         Debug.Log(this.velocity + " " + this.speedSign + " " + this.startBound);
     }
 
