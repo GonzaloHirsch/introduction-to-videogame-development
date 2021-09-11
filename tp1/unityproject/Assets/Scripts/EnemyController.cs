@@ -177,7 +177,10 @@ public class EnemyController : MonoBehaviour
     void shootAccurately() {
         // Bullet rotation
         Vector3 targetDir = this.player.transform.position - transform.position;
-        float rotAngle = Vector3.Angle(targetDir, transform.forward);
+        float rotAngle = Vector3.Angle(Vector3.right, targetDir);
+        if (this.player.transform.position.y < transform.position.y) {
+            rotAngle = 360 - rotAngle;
+        }
         shootBulletAtAngle(rotAngle);
     }
 
@@ -189,9 +192,10 @@ public class EnemyController : MonoBehaviour
         float rotRadian = (degreeAngle * Mathf.PI)/180;
         // Bullet position
         Quaternion rotQuaternion = Quaternion.AngleAxis(degreeAngle, Vector3.right);
-        Vector3 angleVector = new Vector3(Mathf.Cos(rotRadian), Mathf.Sin(rotRadian), 0f) * this.width/2;
+        Quaternion rotQuaternionOnZ = Quaternion.AngleAxis(degreeAngle, Vector3.forward);
+        Vector3 angleVector = new Vector3(Mathf.Cos(rotRadian), Mathf.Sin(rotRadian), 0f) * this.width/1.5f;
         Vector3 position = angleVector + this.transform.position;
         // Get bullet from pool
-        ObjectPooler.SharedInstance.ActivatePooledObject(Constants.TAG_ENEMY_BULLET, position, rotQuaternion);
+        ObjectPooler.SharedInstance.ActivatePooledObject(Constants.TAG_ENEMY_BULLET, position, rotQuaternionOnZ);
     }
 }

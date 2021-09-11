@@ -8,6 +8,7 @@ public class BulletController : MonoBehaviour
     public AudioSource audioSource;
     public float speed = 800f;
     public float timeToLive = 0.8f;
+    private float currentTime;
     private Vector3 velocity;
 
     
@@ -29,12 +30,12 @@ public class BulletController : MonoBehaviour
     }
 
     void restartTimeToLive() {
-        this.timeToLive = 0.8f;
+        this.currentTime = this.timeToLive;
     }
 
     void destroyIfExpired() {
-        this.timeToLive -= Time.deltaTime;
-        if (timeToLive <= 0) {
+        this.currentTime -= Time.deltaTime;
+        if (currentTime <= 0) {
             this.gameObject.SetActive(false);
         }
     }
@@ -48,7 +49,6 @@ public class BulletController : MonoBehaviour
 
     void initializeVelocityVector() {
         this.velocity = transform.right * this.speed;
-        Debug.Log(this.velocity);
     }
 
     // Destroy
