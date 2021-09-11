@@ -17,11 +17,13 @@ public class EnemyController : MonoBehaviour
     public bool bulletsAreAccurate = false;
     public float dtBetweenShooting = 1.5f;
     public float timeSinceLastShooting = 0f;
+    public GameObject player;
 
     private AudioSource audioSource;
 
     void Awake() {
         this.audioSource = this.GetComponent<AudioSource>();
+        findPlayerGameObject();
     }
 
     void Start()
@@ -30,7 +32,6 @@ public class EnemyController : MonoBehaviour
         setupStartingPosition();
         updateVelocityVector();
         this.audioSource.Play();
-        Debug.Log(this.velocity + " " + this.speedSign + " " + this.startBound);
     }
 
     // Update is called once per frame
@@ -39,6 +40,12 @@ public class EnemyController : MonoBehaviour
         updatePosition();
         changeDirection();
         shoot();
+    }
+    void findPlayerGameObject() {
+        GameObject[] playerList = GameObject.FindGameObjectsWithTag(Constants.TAG_PLAYER);
+        if (playerList.Length > 0) {
+            this.player = playerList[0];
+        }
     }
     void updatePosition() {
         // Multiply the time with the velocity to know the next position
@@ -155,7 +162,10 @@ public class EnemyController : MonoBehaviour
         this.timeSinceLastShooting += Time.deltaTime;
         // Shoot if time transcurred is greater then the dt
         if (this.timeSinceLastShooting >= this.dtBetweenShooting) {
-            if (this.bulletsAreAccurate) {
+            if (!this.player) {
+                findPlayerGameObject();
+            }
+            if (this.bulletsAreAccurate && this.player != null) {
                 this.shootAccurately();
             } else {
                 this.shootRandomly();
@@ -165,18 +175,23 @@ public class EnemyController : MonoBehaviour
     }
 
     void shootAccurately() {
-        //  todo
+        // Bullet rotation
+        Vector3 targetDir = this.player.transform.position - transform.position;
+        float rotAngle = Vector3.Angle(targetDir, transform.forward);
+        shootBulletAtAngle(rotAngle);
     }
 
     void shootRandomly() {
-        // Bullet rotation
-        int rotAngle = (int) Utils.GetRandomNumInRange(0, 360);
-        float rotRadian = (rotAngle * Mathf.PI)/180;
+        shootBulletAtAngle(Utils.GetRandomNumInRange(0, 360));
+    }
+
+    void shootBulletAtAngle(float degreeAngle) {
+        float rotRadian = (degreeAngle * Mathf.PI)/180;
         // Bullet position
-        Quaternion rotQuaternion = Quaternion.AngleAxis(rotAngle, Vector3.right);
+        Quaternion rotQuaternion = Quaternion.AngleAxis(degreeAngle, Vector3.right);
         Vector3 angleVector = new Vector3(Mathf.Cos(rotRadian), Mathf.Sin(rotRadian), 0f) * this.width/2;
         Vector3 position = angleVector + this.transform.position;
-        
+        // Get bullet from pool
         ObjectPooler.SharedInstance.ActivatePooledObject(Constants.TAG_ENEMY_BULLET, position, rotQuaternion);
     }
 }
