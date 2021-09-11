@@ -1,3 +1,4 @@
+using UnityEngine;
 public static class Constants
 {
     public const float MIN_DISTANCE_FROM_PLAYER = 50f;
@@ -12,4 +13,6 @@ public static class Constants
     public const string TAG_PLAYER_BULLET = "Player Bullet";
     public const string TAG_ENEMY_BULLET = "Enemy Bullet";
     public const string TAG_GAME_CONTROLLER = "GameController";
+
+    public static Vector2 DESIGN_SIZE = new Vector2(320, 200);
 }

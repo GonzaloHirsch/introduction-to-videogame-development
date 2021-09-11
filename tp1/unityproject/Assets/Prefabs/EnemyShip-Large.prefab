@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 78962884810506696}
   - component: {fileID: -4999263290686834194}
   - component: {fileID: -8410577414747405447}
+  - component: {fileID: 8028396437990721028}
   m_Layer: 0
   m_Name: EnemyShip-Large
   m_TagString: Untagged
@@ -273,3 +274,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &8028396437990721028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3726587190655027659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60ca881f6894846e5ae02c2e22bd6f41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

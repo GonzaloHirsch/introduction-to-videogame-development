@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4357400656042292096}
   - component: {fileID: 1069446384650156156}
   - component: {fileID: -1756941712300127797}
+  - component: {fileID: 5924235402907453782}
   m_Layer: 0
   m_Name: EnemyShip-Small
   m_TagString: Untagged
@@ -107,6 +108,7 @@ MonoBehaviour:
   bulletsAreAccurate: 1
   dtBetweenShooting: 1.5
   timeSinceLastShooting: 0
+  player: {fileID: 0}
 --- !u!114 &4193864398523001037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,3 +275,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5924235402907453782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1069446384650156931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60ca881f6894846e5ae02c2e22bd6f41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
