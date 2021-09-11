@@ -31,6 +31,10 @@ PrefabInstance:
       propertyPath: rotationDelta
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 331194894450993190, guid: 3de6eff4a7c534a47b7da97d5d2f0b16, type: 3}
+      propertyPath: explosionSystem
+      value: 
+      objectReference: {fileID: 8494167916042142747, guid: bace54e3714f94afc821b1a30b3d2a35, type: 3}
     - target: {fileID: 4627268960160869296, guid: 3de6eff4a7c534a47b7da97d5d2f0b16, type: 3}
       propertyPath: m_Name
       value: Asteroid-Small

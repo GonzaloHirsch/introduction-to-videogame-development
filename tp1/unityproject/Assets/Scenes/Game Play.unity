@@ -881,6 +881,7 @@ MonoBehaviour:
   bgSoundDeltaMaxLimit: 1
   bgSoundDeltaMinLimit: 0.2
   isBgReproducing: 1
+  bgSoundVolume: 0.5
   currentBgSoundDelta: 0
 --- !u!4 &1694461180
 Transform:

@@ -5,18 +5,23 @@ using UnityEngine;
 public class BulletController : MonoBehaviour
 {
     public string[] collisionTags = new string[] {Constants.TAG_ASTEROID};
+    public AudioSource audioSource;
     public float speed = 800f;
     public float timeToLive = 0.8f;
     private Vector3 velocity;
 
-    // Start is called before the first frame update
+    
+    void Awake() {
+        this.audioSource = this.GetComponent<AudioSource>();
+    }
+    
     void OnEnable()
     {
         initializeVelocityVector();
         restartTimeToLive();
+        this.playShootingSound();
     }
 
-    // Update is called once per frame
     void Update()
     {
         updatePosition();
@@ -53,5 +58,10 @@ public class BulletController : MonoBehaviour
                 this.gameObject.SetActive(false);
             }
         }
+    }
+
+    // Sound
+    void playShootingSound() {
+        this.audioSource.Play();
     }
 }

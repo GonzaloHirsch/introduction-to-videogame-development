@@ -8,6 +8,8 @@ public class MusicController : MonoBehaviour
     public float bgSoundDeltaMaxLimit = 1f;
     public float bgSoundDeltaMinLimit = 0.2f;
     public bool isBgReproducing = true;
+    [Range(0.0f, 1.0f)]
+    public float bgSoundVolume = 0.5f;
 
     private int bgSoundIndex = 0;
     private float bgSoundTime = 0f;
@@ -22,6 +24,8 @@ public class MusicController : MonoBehaviour
         this.currentBgSoundDelta = this.bgSoundDeltaMaxLimit;
         // Recover the audio component
         this.audioSource = GetComponent<AudioSource>();
+        // Set the volume
+        this.audioSource.volume = this.bgSoundVolume;
     }
 
     void Update()

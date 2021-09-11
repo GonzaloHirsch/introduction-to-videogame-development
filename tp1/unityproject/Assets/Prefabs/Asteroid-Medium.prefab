@@ -31,6 +31,10 @@ PrefabInstance:
       propertyPath: rotationDelta
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 3133375355423483226, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
+      propertyPath: explosionSystem
+      value: 
+      objectReference: {fileID: 3593544492218305083, guid: 6a18ad96526204281b7e0b8fa9c4a3a1, type: 3}
     - target: {fileID: 6129351626177592090, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 36

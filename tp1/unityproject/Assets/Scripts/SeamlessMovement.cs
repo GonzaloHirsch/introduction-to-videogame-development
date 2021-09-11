@@ -61,6 +61,5 @@ public class SeamlessMovement : MonoBehaviour
         }
         // Updating transform
         transform.position = pos;
-        Debug.Log(transform.position + "---" + (transform.position.y > screenYLimit || transform.position.y < -screenYLimit) + "-" + (transform.position.x > screenXLimit || transform.position.x < -screenXLimit));
     }
 }

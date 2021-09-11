@@ -106,7 +106,7 @@ MonoBehaviour:
   state: 3
   scoreValue: 25
   nextAsteroid: {fileID: 4627268960160869296, guid: 3de6eff4a7c534a47b7da97d5d2f0b16, type: 3}
-  explosionSystem: {fileID: 8468582526183567075, guid: 5a845e1fd39f9484eae532bdc135a806, type: 3}
+  explosionSystem: {fileID: 6081661811716739526, guid: 372886e258a0d4e3281137cbefd80fff, type: 3}
   velocity: 75
 --- !u!114 &1116376693605594396
 MonoBehaviour:
@@ -120,6 +120,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72ae9507592db4c768e308674be68e74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSeamlessInX: 1
+  isSeamlessInY: 1
 --- !u!60 &6129351626177592090
 PolygonCollider2D:
   m_ObjectHideFlags: 0
