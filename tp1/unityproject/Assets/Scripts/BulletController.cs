@@ -10,9 +10,10 @@ public class BulletController : MonoBehaviour
     private Vector3 velocity;
 
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         initializeVelocityVector();
+        restartTimeToLive();
     }
 
     // Update is called once per frame
@@ -22,10 +23,14 @@ public class BulletController : MonoBehaviour
         destroyIfExpired();
     }
 
+    void restartTimeToLive() {
+        this.timeToLive = 0.8f;
+    }
+
     void destroyIfExpired() {
         this.timeToLive -= Time.deltaTime;
         if (timeToLive <= 0) {
-            Destroy(this.gameObject);
+            this.gameObject.SetActive(false);
         }
     }
 
@@ -38,13 +43,14 @@ public class BulletController : MonoBehaviour
 
     void initializeVelocityVector() {
         this.velocity = transform.right * this.speed;
+        Debug.Log(this.velocity);
     }
 
     // Destroy
     void OnTriggerEnter2D(Collider2D other) {
         foreach(var tag in this.collisionTags) {
             if (other.gameObject.CompareTag(tag)) {
-                Destroy(this.gameObject);
+                this.gameObject.SetActive(false);
             }
         }
     }

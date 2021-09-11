@@ -158,7 +158,7 @@ public class PlayerController : MonoBehaviour
 
     void shoot() {
         Vector3 bulletPos = transform.position + transform.right * this.distanceFromCeterToTip;
-        Instantiate(this.bulletPrefab, bulletPos, transform.rotation);
+        ObjectPooler.SharedInstance.ActivatePooledObject(Constants.TAG_PLAYER_BULLET, bulletPos, transform.rotation);
     }
 
 }

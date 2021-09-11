@@ -24,6 +24,7 @@ public class EnemyController : MonoBehaviour
         setupSpriteSize();
         setupStartingPosition();
         updateVelocityVector();
+        Debug.Log(this.velocity + " " + this.speedSign + " " + this.startBound);
     }
 
     // Update is called once per frame
@@ -169,6 +170,7 @@ public class EnemyController : MonoBehaviour
         Quaternion rotQuaternion = Quaternion.AngleAxis(rotAngle, Vector3.right);
         Vector3 angleVector = new Vector3(Mathf.Cos(rotRadian), Mathf.Sin(rotRadian), 0f) * this.width/2;
         Vector3 position = angleVector + this.transform.position;
-        Instantiate(this.enemyBulletPrefab, position, rotQuaternion);
+        
+        ObjectPooler.SharedInstance.ActivatePooledObject(Constants.TAG_ENEMY_BULLET, position, rotQuaternion);
     }
 }
