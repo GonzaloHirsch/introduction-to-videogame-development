@@ -4,6 +4,10 @@ public class PlayerController : MonoBehaviour
 {
 
     public GameObject bulletPrefab;
+    
+    // Thrust animation
+    public GameObject thrustObject;
+    private Animator thrustAnimator;
 
     // Keyboard keys
     public KeyCode UP = KeyCode.UpArrow;
@@ -47,6 +51,7 @@ public class PlayerController : MonoBehaviour
     {
         this.gameController = GameObject.FindObjectOfType<GameController>();
         this.audioSource = this.GetComponent<AudioSource>();
+        this.thrustAnimator = this.thrustObject.GetComponent<Animator>();
     }
 
 
@@ -89,11 +94,13 @@ public class PlayerController : MonoBehaviour
         {
             this.accelModule = acceleration;
             this.playThrustSound();
+            this.thrustAnimator.SetBool("IsAccelerating", true);
         }
         else
         {
             this.accelModule = 0f;
             this.stopThrustSound();
+            this.thrustAnimator.SetBool("IsAccelerating", false);
         }
 
         if (Input.GetKeyDown(DOWN))
