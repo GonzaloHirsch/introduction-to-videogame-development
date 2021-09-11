@@ -32,7 +32,6 @@ public class GameController : MonoBehaviour
 
     // FINISH --> Implementing the Singleton Pattern
 
-    public GameObject pausePanel;
     // Player prefab used to instantiate the player
     public GameObject playerPrefab;
     // Big asteroid prefab used to instantiate asteroids
@@ -42,8 +41,6 @@ public class GameController : MonoBehaviour
     // Number of asteroids initially, then it's base + level
     public int baseAsteroidsPerLevel = 4;
 
-    [SerializeField]
-    private bool isPaused = false;
     private static int activeAsteroids = 0;
     private static int expectedAsteroidDestructions = 0;
     private static int currentAsteroidDestructions = 0;
@@ -63,7 +60,6 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.checkIfPause();
         this.checkIfAsteroidSpawn();
         this.checkIfPlayerSpawn();
     }
@@ -202,45 +198,5 @@ public class GameController : MonoBehaviour
         currentAsteroidDestructions++;
         // Notify the music controller of speed acceleration
         GameController.Instance.musicController.updateBgSoundSpeed(((float)currentAsteroidDestructions)/expectedAsteroidDestructions);
-    }
-
-    /* ------------------------- PAUSE ------------------------- */
-    // Checks if the games needs pausing
-    private void checkIfPause()
-    {
-        // Detect PAUSE when the player presses P
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            if (this.isPaused)
-            {
-                this.unpause();
-            }
-            else
-            {
-                this.pause();
-            }
-        }
-    }
-
-    public void pause()
-    {
-        this.isPaused = true;
-        Time.timeScale = 0f;
-        this.pausePanel.SetActive(true);
-    }
-
-    public void unpause()
-    {
-        this.isPaused = false;
-        Time.timeScale = 1f;
-        this.pausePanel.SetActive(false);
-    }
-
-    public void goToMainMenu() {
-        // Unpausing the game to not break it
-        this.isPaused = false;
-        Time.timeScale = 1f;
-        // Load the new scene
-        SceneManager.LoadScene("Main Menu", LoadSceneMode.Single);
     }
 }
