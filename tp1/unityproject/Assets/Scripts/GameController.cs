@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour
 
     void Awake()
     {
+        // Singleton stuff
         if (_instance != null && _instance != this)
         {
             Destroy(this.gameObject);
@@ -20,6 +21,12 @@ public class GameController : MonoBehaviour
         else
         {
             _instance = this;
+        }
+        // Script stuff
+        MusicController[] musicControllers = GameObject.FindObjectsOfType<MusicController>();
+        if (musicControllers.Length > 0) {
+            // Take the first one, we expect it to be only one music controller
+            this.musicController = musicControllers[0];
         }
     }
 
@@ -38,9 +45,12 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private bool isPaused = false;
     private static int activeAsteroids = 0;
+    private static int expectedAsteroidDestructions = 0;
+    private static int currentAsteroidDestructions = 0;
     private int level = 0;
     private int playerLives = 0;
     private bool playerPendingSpawn = false;
+    private MusicController musicController;
 
     void Start()
     {
@@ -64,6 +74,8 @@ public class GameController : MonoBehaviour
     {
         // Set variables to initial values
         activeAsteroids = 0;
+        expectedAsteroidDestructions = 0;
+        currentAsteroidDestructions = 0;
         this.level = 0;
         this.playerLives = this.initialPlayerLives;
         // Instantiate the player
@@ -177,12 +189,19 @@ public class GameController : MonoBehaviour
         }
         // Update the number of active asteroids
         activeAsteroids += numberOfAsteroids;
+        // Update number of expected destructions, from 1 asteroid, 7 destructions are possible
+        expectedAsteroidDestructions = (numberOfAsteroids * 7);
+        currentAsteroidDestructions = 0;
+        GameController.Instance.musicController.updateBgSoundSpeed(((float)currentAsteroidDestructions)/expectedAsteroidDestructions);
     }
 
     public static void ChangeAsteroidCount(int count)
     {
         activeAsteroids += count;
-        // Debug.Log(activeAsteroids);
+        // Every time this count changes, it's due to an asteroid destruction
+        currentAsteroidDestructions++;
+        // Notify the music controller of speed acceleration
+        GameController.Instance.musicController.updateBgSoundSpeed(((float)currentAsteroidDestructions)/expectedAsteroidDestructions);
     }
 
     /* ------------------------- PAUSE ------------------------- */
