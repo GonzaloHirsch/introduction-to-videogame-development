@@ -105,7 +105,7 @@ MonoBehaviour:
   rotationDelta: 20
   state: 3
   scoreValue: 25
-  nextAsteroid: {fileID: 4627268960160869296, guid: 3de6eff4a7c534a47b7da97d5d2f0b16, type: 3}
+  nextAsteroid: {fileID: 8103169016431803175, guid: 3de6eff4a7c534a47b7da97d5d2f0b16, type: 3}
   explosionSystem: {fileID: 6081661811716739526, guid: 372886e258a0d4e3281137cbefd80fff, type: 3}
   velocity: 75
 --- !u!114 &1116376693605594396
