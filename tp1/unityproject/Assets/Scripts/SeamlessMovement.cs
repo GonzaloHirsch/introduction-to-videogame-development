@@ -20,9 +20,9 @@ public class SeamlessMovement : MonoBehaviour
         // Keep sizes in class
         this.width = spriteRenderer.bounds.size.x / 2;
         this.height = spriteRenderer.bounds.size.y / 2;
-        if (!spriteRenderer.isVisible) {
+        /* if (!spriteRenderer.isVisible) {
             this.UpdateSeamlessPosition();
-        }
+        } */
     }
 
     // Called when object stops being visible by crossing screen limits
