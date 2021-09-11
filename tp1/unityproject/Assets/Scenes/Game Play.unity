@@ -366,8 +366,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 1543252445072020611, guid: 25b361f93a54a4ef7a8d1dd9642c5af7, type: 3}
   bigAsteroidPrefab: {fileID: 8058070937125398220, guid: 7ce81d55d059f497683c2be59c4adc88, type: 3}
+  smallEnemyPrefab: {fileID: 1069446384650156931, guid: 422b97921176aa6f7aed64852b8f4ce4, type: 3}
+  largeEnemyPrefab: {fileID: 3726587190655027659, guid: 6180ea13a198c9e7fa707a94ab4cf958, type: 3}
   initialPlayerLives: 3
   baseAsteroidsPerLevel: 4
+  dtBetweenEnemies: 20
 --- !u!4 &1090774947
 Transform:
   m_ObjectHideFlags: 0

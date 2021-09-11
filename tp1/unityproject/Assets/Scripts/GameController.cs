@@ -48,6 +48,7 @@ public class GameController : MonoBehaviour
     public float dtBetweenEnemies = 25f;
     // Time transcurred since last enemy ship appearance
     private static float timeSinceLastEnemy = 0f;
+    private static int activeEnemies = 0;
     private static int activeAsteroids = 0;
     private static int expectedAsteroidDestructions = 0;
     private static int currentAsteroidDestructions = 0;
@@ -78,6 +79,7 @@ public class GameController : MonoBehaviour
     {
         // Set variables to initial values
         activeAsteroids = 0;
+        activeEnemies = 0;
         expectedAsteroidDestructions = 0;
         currentAsteroidDestructions = 0;
         this.level = 0;
@@ -92,6 +94,8 @@ public class GameController : MonoBehaviour
     {
         // Increment level
         this.level++;
+        // Restart enemy counter
+        timeSinceLastEnemy = 0f;
         // Instantiate new asteroids
         this.instantiateAsteroids(this.calculateNumberOfAsteroids());
     }
@@ -172,7 +176,7 @@ public class GameController : MonoBehaviour
     private void checkIfAsteroidSpawn()
     {
         // If there are no more asteroids, move to the next level
-        if (activeAsteroids == 0)
+        if (activeAsteroids == 0 && activeEnemies == 0)
         {
             this.startNextLevel();
         }
@@ -224,6 +228,7 @@ public class GameController : MonoBehaviour
     // Instantiates the enemy ship
     private void instantiateEnemyShip()
     {
+        activeEnemies += 1;
         // If score above limit, small ship. Else, random.
         Constants.ENEMY_SHIP enemyType = 
             ScoreCounter.GetScore() >= Constants.INCREASE_DIFFICULTY_SCORE  
@@ -235,5 +240,10 @@ public class GameController : MonoBehaviour
                 ? this.smallEnemyPrefab
                 : this.largeEnemyPrefab
         );
+    }
+
+    public static void ChangeEnemyCount(int count)
+    {
+        activeEnemies += count;
     }
 }

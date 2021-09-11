@@ -116,6 +116,8 @@ public class EnemyController : MonoBehaviour
     void destroyEnemyShip() {
         // Add the score to the counter
         ScoreCounter.AddScore(this.scoreValue);
+        // Remove 1 from the active enemy counter
+        GameController.ChangeEnemyCount(-1);
         // Destroy the object when it reaches the other side
         Destroy(this.gameObject);
     }

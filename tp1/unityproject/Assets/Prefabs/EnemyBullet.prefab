@@ -106,7 +106,7 @@ MonoBehaviour:
   - Player
   audioSource: {fileID: 0}
   speed: 300
-  timeToLive: 0.8
+  timeToLive: 0.3
 --- !u!114 &7419645375351526757
 MonoBehaviour:
   m_ObjectHideFlags: 0
