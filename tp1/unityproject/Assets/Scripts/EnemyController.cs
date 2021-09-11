@@ -177,6 +177,7 @@ public class EnemyController : MonoBehaviour
     }
 
     void shootAccurately() {
+        Debug.Log("Shooting Accurately!");
         // Bullet rotation
         Vector3 targetDir = this.player.transform.position - transform.position;
         float rotAngle = Vector3.Angle(Vector3.right, targetDir);
