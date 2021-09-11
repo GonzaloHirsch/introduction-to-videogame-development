@@ -36,11 +36,18 @@ public class GameController : MonoBehaviour
     public GameObject playerPrefab;
     // Big asteroid prefab used to instantiate asteroids
     public GameObject bigAsteroidPrefab;
+    // Small enemy ship prefab used to instantiate small enemies
+    public GameObject smallEnemyPrefab;
+    // Large enermy ship prefab used to instantiate large enemies
+    public GameObject largeEnemyPrefab;
     // Player lives kept here
     public int initialPlayerLives = 3;
     // Number of asteroids initially, then it's base + level
     public int baseAsteroidsPerLevel = 4;
-
+    // Time between each ship appearance
+    public float dtBetweenEnemies = 25f;
+    // Time transcurred since last enemy ship appearance
+    private static float timeSinceLastEnemy = 0f;
     private static int activeAsteroids = 0;
     private static int expectedAsteroidDestructions = 0;
     private static int currentAsteroidDestructions = 0;
@@ -61,6 +68,7 @@ public class GameController : MonoBehaviour
     void Update()
     {
         this.checkIfAsteroidSpawn();
+        this.checkIfEnemySpawn();
         this.checkIfPlayerSpawn();
     }
 
@@ -198,5 +206,34 @@ public class GameController : MonoBehaviour
         currentAsteroidDestructions++;
         // Notify the music controller of speed acceleration
         GameController.Instance.musicController.updateBgSoundSpeed(((float)currentAsteroidDestructions)/expectedAsteroidDestructions);
+    }
+
+    /* ------------------------- ENEMY GENERATION ------------------------- */
+
+    private void checkIfEnemySpawn()
+    {
+        // Creates a new enemy if the required time has passed
+        if (timeSinceLastEnemy >= this.dtBetweenEnemies) {
+            this.instantiateEnemyShip();
+            timeSinceLastEnemy = 0f;
+        }
+        timeSinceLastEnemy += Time.deltaTime;
+    }
+
+
+    // Instantiates the enemy ship
+    private void instantiateEnemyShip()
+    {
+        // If score above limit, small ship. Else, random.
+        Constants.ENEMY_SHIP enemyType = 
+            ScoreCounter.GetScore() >= Constants.INCREASE_DIFFICULTY_SCORE  
+                ? Constants.ENEMY_SHIP.SMALL
+                : Utils.GetRandomEnumValue<Constants.ENEMY_SHIP>();
+        
+        Instantiate(
+            enemyType == Constants.ENEMY_SHIP.SMALL
+                ? this.smallEnemyPrefab
+                : this.largeEnemyPrefab
+        );
     }
 }

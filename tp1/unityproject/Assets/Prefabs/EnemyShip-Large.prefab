@@ -102,9 +102,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyBulletPrefab: {fileID: 2150138398310276192, guid: b862cd32b058444c0bfdf0c9a0703fe7, type: 3}
-  speed: 50
-  dtBetweenDirChanges: 0.5
-  scoreValue: 100
+  speed: 40
+  dtBetweenDirChanges: 2
+  scoreValue: 40
   bulletsAreAccurate: 0
   dtBetweenShooting: 1.5
   timeSinceLastShooting: 0
