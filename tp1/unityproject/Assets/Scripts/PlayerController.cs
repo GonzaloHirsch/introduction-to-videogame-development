@@ -159,8 +159,8 @@ public class PlayerController : MonoBehaviour
             if (rnd <= this.hyperdriveSuccessPossibility)
             {
                 // Calculate a new position
-                float newX = Utils.GetRandomNumInRange(-Screen.width / 2, Screen.width / 2);
-                float newY = Utils.GetRandomNumInRange(-Screen.height / 2, Screen.height / 2);
+                float newX = Utils.GetRandomNumInRange(-ScreenSize.GetScreenToWorldWidth / 2, ScreenSize.GetScreenToWorldWidth / 2);
+                float newY = Utils.GetRandomNumInRange(-ScreenSize.GetScreenToWorldHeight / 2, ScreenSize.GetScreenToWorldHeight / 2);
                 // Set the new variables
                 transform.position = new Vector3(newX, newY, 0);
                 this.speed = new Vector3(0, 0, 0);

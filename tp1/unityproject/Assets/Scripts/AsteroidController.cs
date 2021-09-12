@@ -86,8 +86,8 @@ public class AsteroidController : MonoBehaviour
     Vector3 GetRandomInitialPosition()
     {
         bool isPositionOk = false;
-        float screenWidth = Screen.width;
-        float screenHeight = Screen.height;
+        float screenWidth = ScreenSize.GetScreenToWorldWidth;
+        float screenHeight = ScreenSize.GetScreenToWorldHeight;
         Vector3 position = Vector3.zero;
         while (!isPositionOk)
         {

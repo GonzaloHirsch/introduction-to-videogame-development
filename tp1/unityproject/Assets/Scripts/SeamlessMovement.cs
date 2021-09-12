@@ -35,8 +35,10 @@ public class SeamlessMovement : MonoBehaviour
     public void UpdateSeamlessPosition()
     {
         // Screen limits
-        float screenXLimit = Screen.width / 2;
-        float screenYLimit = Screen.height / 2;
+        float screenXLimit = ScreenSize.GetScreenToWorldWidth / 2;
+        float screenYLimit = ScreenSize.GetScreenToWorldHeight / 2;
+        float screenWidth = ScreenSize.GetScreenToWorldWidth;
+        float screenHeight = ScreenSize.GetScreenToWorldHeight;
         // Movement updates
         Vector3 pos = transform.position;
         // Checking positions
@@ -44,22 +46,22 @@ public class SeamlessMovement : MonoBehaviour
         {
             if (transform.position.x > screenXLimit)
             {
-                pos.x -= Screen.width + this.width;
+                pos.x -= screenWidth + this.width;
             }
             else if (transform.position.x < -screenXLimit)
             {
-                pos.x += Screen.width + this.width;
+                pos.x += screenWidth + this.width;
             }
         }
         if (this.isSeamlessInY)
         {
             if (transform.position.y > screenYLimit)
             {
-                pos.y -= Screen.height + this.height;
+                pos.y -= screenHeight + this.height;
             }
             else if (transform.position.y < -screenYLimit)
             {
-                pos.y += Screen.height + this.height;
+                pos.y += screenHeight + this.height;
             }
         }
         // Updating transform

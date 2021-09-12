@@ -6,9 +6,13 @@ public class ScreenSize
         get
         {
             Vector2 topRightCorner = new Vector2(1, 1);
-            Vector2 edgeVector = Camera.main.ViewportToWorldPoint(topRightCorner);
-            var height = edgeVector.y * 2;
-            return height;
+            if (Camera.main != null)
+            {
+                Vector2 edgeVector = Camera.main.ViewportToWorldPoint(topRightCorner);
+                var height = edgeVector.y * 2;
+                return height;
+            }
+            return Screen.height;
         }
     }
     public static float GetScreenToWorldWidth
@@ -16,9 +20,13 @@ public class ScreenSize
         get
         {
             Vector2 topRightCorner = new Vector2(1, 1);
-            Vector2 edgeVector = Camera.main.ViewportToWorldPoint(topRightCorner);
-            var width = edgeVector.x * 2;
-            return width;
+            if (Camera.main != null)
+            {
+                Vector2 edgeVector = Camera.main.ViewportToWorldPoint(topRightCorner);
+                var width = edgeVector.x * 2;
+                return width;
+            }
+            return Screen.width;
         }
     }
 }

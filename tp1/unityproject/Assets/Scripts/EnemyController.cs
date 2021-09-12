@@ -21,6 +21,9 @@ public class EnemyController : MonoBehaviour
 
     private AudioSource audioSource;
 
+    // Explosion system
+    public GameObject explosionSystem;
+
     void Awake() {
         this.audioSource = this.GetComponent<AudioSource>();
         findPlayerGameObject();
@@ -118,6 +121,8 @@ public class EnemyController : MonoBehaviour
         ScoreCounter.AddScore(this.scoreValue);
         // Remove 1 from the active enemy counter
         GameController.ChangeEnemyCount(-1);
+        // Create the explosion object
+        Instantiate(this.explosionSystem, transform.position, Quaternion.identity);
         // Destroy the object when it reaches the other side
         Destroy(this.gameObject);
     }
@@ -150,13 +155,13 @@ public class EnemyController : MonoBehaviour
 
     float getScreenHeightBound(Constants.SCREEN_BOUNDS bound) {
         return bound == Constants.SCREEN_BOUNDS.UPPER 
-            ? Screen.height/2 
-            : -Screen.height/2;
+            ? ScreenSize.GetScreenToWorldHeight/2 
+            : -ScreenSize.GetScreenToWorldHeight/2;
     }
     float getScreenWidthBound(Constants.SCREEN_BOUNDS bound) {
         return bound == Constants.SCREEN_BOUNDS.UPPER 
-            ? Screen.width/2 
-            : -Screen.width/2;
+            ? ScreenSize.GetScreenToWorldWidth/2 
+            : -ScreenSize.GetScreenToWorldWidth/2;
     }
 
     void shoot() {
