@@ -112,6 +112,11 @@ public class GameController : MonoBehaviour
         Instantiate(this.playerPrefab, Vector3.zero, Quaternion.identity);
     }
 
+    public void addLife() {
+        this.playerLives++;
+        this.firstLifeController.setLives(this.playerLives);
+    }
+
     // Used by the player to notify the controller of it's death
     public void notifyPlayerDeath()
     {
@@ -122,6 +127,7 @@ public class GameController : MonoBehaviour
         {
             // TRY TO SPAWN PLAYER
             this.playerPendingSpawn = true;
+            this.firstLifeController.setLives(this.playerLives);
         }
         else
         {

@@ -27,11 +27,22 @@ public class LifeController : MonoBehaviour
     	if (n > 1) {
     		if( nextLife == null) {
     			this.nextLife = createLife();
-    			LifeController nextLifeController = this.nextLife.GetComponent<LifeController>();
-                nextLifeController.nextLifeDistance = this.nextLifeDistance;
-    			nextLifeController.setLives(n-1);
     		}
-    	}
+            LifeController nextLifeController = this.nextLife.GetComponent<LifeController>();
+            nextLifeController.nextLifeDistance = this.nextLifeDistance;
+            nextLifeController.setLives(n-1);
+    	} else if (n == 1) {
+            if (nextLife != null) {
+                LifeController nextLifeController = this.nextLife.GetComponent<LifeController>();
+                nextLifeController.setLives(n-1);
+            }
+        } else {
+            if (nextLife != null) {
+                LifeController nextLifeController = this.nextLife.GetComponent<LifeController>();
+                nextLifeController.setLives(n-1);
+            }
+            Destroy(this.gameObject);
+        }
     }
 
     private GameObject createLife()
