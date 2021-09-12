@@ -179,9 +179,9 @@ PrefabInstance:
       value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 1543252445072020614, guid: 25b361f93a54a4ef7a8d1dd9642c5af7, type: 3}
-      propertyPath: thrustObject
-      value: 
-      objectReference: {fileID: 1504179491}
+      propertyPath: angularVelocity
+      value: 250
+      objectReference: {fileID: 0}
     - target: {fileID: 6408628699658828207, guid: 25b361f93a54a4ef7a8d1dd9642c5af7, type: 3}
       propertyPath: m_Color.a
       value: 1
