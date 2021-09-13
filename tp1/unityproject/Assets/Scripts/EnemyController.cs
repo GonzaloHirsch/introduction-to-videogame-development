@@ -215,6 +215,12 @@ public class EnemyController : MonoBehaviour
         // Bullet rotation
         Vector3 targetDir = this.player.transform.position - transform.position;
         float rotAngle = Vector3.Angle(Vector3.right, targetDir);
+        // Add a certain degree of randomness to avoid instant death
+        rotAngle = (rotAngle + Utils.GetRandomNumInRange(
+            -Constants.MAX_DEGREE_SHOT_RANDOMIZATION, 
+            Constants.MAX_DEGREE_SHOT_RANDOMIZATION
+        )) % 360;
+
         if (this.player.transform.position.y < transform.position.y)
         {
             rotAngle = 360 - rotAngle;
