@@ -217,7 +217,8 @@ public class GameController : MonoBehaviour
     private void checkIfEnemySpawn()
     {
         // Creates a new enemy if the required time has passed
-        if (timeSinceLastEnemy >= this.dtBetweenEnemies) {
+        // And have already passed the first level
+        if (timeSinceLastEnemy >= this.dtBetweenEnemies && this.level > 0) {
             this.instantiateEnemyShip();
             timeSinceLastEnemy = 0f;
         }
@@ -230,11 +231,17 @@ public class GameController : MonoBehaviour
     {
         activeEnemies += 1;
         // If score above limit, small ship. Else, random.
-        Constants.ENEMY_SHIP enemyType = 
-            ScoreCounter.GetScore() >= Constants.INCREASE_DIFFICULTY_SCORE  
-                ? Constants.ENEMY_SHIP.SMALL
-                : Utils.GetRandomEnumValue<Constants.ENEMY_SHIP>();
-        
+        Constants.ENEMY_SHIP enemyType = Constants.ENEMY_SHIP.LARGE;
+        // Current score
+        int score = ScoreCounter.GetScore();
+        // Begin with only large ships, then random, then only small
+        if (score > Constants.MIN_DIFFICULTY_SCORE &&
+            score <= Constants.INCREASE_DIFFICULTY_SCORE) {
+            enemyType = Utils.GetRandomEnumValue<Constants.ENEMY_SHIP>();
+        } else if (score >= Constants.INCREASE_DIFFICULTY_SCORE) {
+            enemyType = Constants.ENEMY_SHIP.SMALL;
+        }
+        // Instantiate the enemy ship  
         Instantiate(
             enemyType == Constants.ENEMY_SHIP.SMALL
                 ? this.smallEnemyPrefab
