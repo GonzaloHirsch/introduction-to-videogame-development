@@ -8,6 +8,10 @@ public class SeamlessMovement : MonoBehaviour
 {
     private float width;
     private float height;
+    private float screenXLimit;
+    private float screenYLimit;
+    private float screenWidth;
+    private float screenHeight;
 
     // Activation variables
     public bool isSeamlessInX = true;
@@ -18,15 +22,16 @@ public class SeamlessMovement : MonoBehaviour
         // Recover Sprite Renderer for size
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         // Keep sizes in class
-        this.width = spriteRenderer.bounds.size.x / 2;
-        this.height = spriteRenderer.bounds.size.y / 2;
-        /* if (!spriteRenderer.isVisible) {
-            this.UpdateSeamlessPosition();
-        } */
+        this.width = spriteRenderer.bounds.size.x;
+        this.height = spriteRenderer.bounds.size.y;
+        // Screen limits
+        this.screenXLimit = ScreenSize.GetScreenToWorldWidth / 2;
+        this.screenYLimit = ScreenSize.GetScreenToWorldHeight / 2;
+        this.screenWidth = ScreenSize.GetScreenToWorldWidth;
+        this.screenHeight = ScreenSize.GetScreenToWorldHeight;
     }
 
-    // Called when object stops being visible by crossing screen limits
-    void OnBecameInvisible()
+    void Update()
     {
         this.UpdateSeamlessPosition();
     }
@@ -34,37 +39,38 @@ public class SeamlessMovement : MonoBehaviour
     // Updates the position of the gameobject to make bounds transition seamless
     public void UpdateSeamlessPosition()
     {
-        // Screen limits
-        float screenXLimit = ScreenSize.GetScreenToWorldWidth / 2;
-        float screenYLimit = ScreenSize.GetScreenToWorldHeight / 2;
-        float screenWidth = ScreenSize.GetScreenToWorldWidth;
-        float screenHeight = ScreenSize.GetScreenToWorldHeight;
         // Movement updates
-        Vector3 pos = transform.position;
+        Vector3 xMovement = Vector3.zero;
+        Vector3 yMovement = Vector3.zero;
+        bool isMoved = false;
         // Checking positions
         if (this.isSeamlessInX)
         {
-            if (transform.position.x > screenXLimit)
+            if (transform.position.x > (screenXLimit + (width / 2)))
             {
-                pos.x -= screenWidth + this.width;
+                xMovement -= new Vector3(screenWidth + this.width, 0f, 0f);
+                isMoved = true;
             }
-            else if (transform.position.x < -screenXLimit)
+            else if (transform.position.x < -(screenXLimit + (width / 2)))
             {
-                pos.x += screenWidth + this.width;
+                xMovement += new Vector3(screenWidth + this.width, 0f, 0f);
+                isMoved = true;
             }
         }
         if (this.isSeamlessInY)
         {
-            if (transform.position.y > screenYLimit)
+            if (transform.position.y > (screenYLimit + (height / 2)))
             {
-                pos.y -= screenHeight + this.height;
+                yMovement -= new Vector3(0f, screenHeight + this.height, 0f);
+                isMoved = true;
             }
-            else if (transform.position.y < -screenYLimit)
+            else if (transform.position.y < -(screenYLimit + (height / 2)))
             {
-                pos.y += screenHeight + this.height;
+                yMovement += new Vector3(0f, screenHeight + this.height, 0f);
+                isMoved = true;
             }
         }
         // Updating transform
-        transform.position = pos;
+        if (isMoved) transform.position += (xMovement + yMovement);
     }
 }

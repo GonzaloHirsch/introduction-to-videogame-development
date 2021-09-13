@@ -46,6 +46,9 @@ public class GameController : MonoBehaviour
     public int baseAsteroidsPerLevel = 4;
     // Time between each ship appearance
     public float dtBetweenEnemies = 25f;
+    // Player lives Sprites
+ 	public GameObject firstLife;
+ 	public LifeController firstLifeController;
     // Time transcurred since last enemy ship appearance
     private static float timeSinceLastEnemy = 0f;
     private static int activeEnemies = 0;
@@ -84,6 +87,8 @@ public class GameController : MonoBehaviour
         currentAsteroidDestructions = 0;
         this.level = 0;
         this.playerLives = this.initialPlayerLives;
+        this.firstLifeController = this.firstLife.GetComponent<LifeController>();
+        this.firstLifeController.setLives(this.playerLives);
         // Instantiate the player
         this.instantiatePlayer();
         // Generate the asteroids
@@ -107,6 +112,11 @@ public class GameController : MonoBehaviour
         Instantiate(this.playerPrefab, Vector3.zero, Quaternion.identity);
     }
 
+    public void addLife() {
+        this.playerLives++;
+        this.firstLifeController.setLives(this.playerLives);
+    }
+
     // Used by the player to notify the controller of it's death
     public void notifyPlayerDeath()
     {
@@ -117,6 +127,7 @@ public class GameController : MonoBehaviour
         {
             // TRY TO SPAWN PLAYER
             this.playerPendingSpawn = true;
+            this.firstLifeController.setLives(this.playerLives);
         }
         else
         {

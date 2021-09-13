@@ -5,6 +5,9 @@ public class ScoreCounter : MonoBehaviour
 {
     // START --> Implementing the Singleton Pattern
     private static ScoreCounter _instance;
+    private static int nextLifeUp;
+    public static int pointsForLifeUp = 10000;
+
 
     public static ScoreCounter Instance { get { return _instance; } }
 
@@ -22,8 +25,11 @@ public class ScoreCounter : MonoBehaviour
     private static int score = 0;
 
     private Text scoreText;
+    private static GameController gameController;
 
     void Start() {
+        gameController = GameObject.FindObjectOfType<GameController>();
+        nextLifeUp = pointsForLifeUp;
         // Get the text component
         this.scoreText = this.GetComponent<Text>();
         // Reset the score to 0
@@ -39,6 +45,10 @@ public class ScoreCounter : MonoBehaviour
 
     public static void AddScore(int amount) {
         score += amount;
+        if (score > nextLifeUp) {
+            gameController.addLife();
+            nextLifeUp = nextLifeUp + pointsForLifeUp;
+        }
         // Call the method to update the score text from the stored instance
         ScoreCounter.Instance.updateScoreText();
     }
