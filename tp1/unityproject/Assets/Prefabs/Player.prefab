@@ -212,7 +212,7 @@ MonoBehaviour:
   RIGHT: 275
   SHOOT: 32
   angularVelocity: 250
-  acceleration: 5000
+  acceleration: 6500
   deaccelerationRate: 0.9
   friction: 1
   audioSource: {fileID: 0}

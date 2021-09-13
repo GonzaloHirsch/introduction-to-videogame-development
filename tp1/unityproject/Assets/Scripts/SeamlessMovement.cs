@@ -46,27 +46,27 @@ public class SeamlessMovement : MonoBehaviour
         // Checking positions
         if (this.isSeamlessInX)
         {
-            if (transform.position.x > (screenXLimit + width))
+            if (transform.position.x > (screenXLimit + (width / 2)))
             {
-                xMovement -= new Vector3(screenWidth + this.width * 1.5f, 0f, 0f);
+                xMovement -= new Vector3(screenWidth + this.width, 0f, 0f);
                 isMoved = true;
             }
-            else if (transform.position.x < -(screenXLimit + width))
+            else if (transform.position.x < -(screenXLimit + (width / 2)))
             {
-                xMovement += new Vector3(screenWidth + this.width * 1.5f, 0f, 0f);
+                xMovement += new Vector3(screenWidth + this.width, 0f, 0f);
                 isMoved = true;
             }
         }
         if (this.isSeamlessInY)
         {
-            if (transform.position.y > (screenYLimit + height))
+            if (transform.position.y > (screenYLimit + (height / 2)))
             {
-                yMovement -= new Vector3(0f, screenHeight + this.height * 1.5f, 0f);
+                yMovement -= new Vector3(0f, screenHeight + this.height, 0f);
                 isMoved = true;
             }
-            else if (transform.position.y < -(screenYLimit + height))
+            else if (transform.position.y < -(screenYLimit + (height / 2)))
             {
-                yMovement += new Vector3(0f, screenHeight + this.height * 1.5f, 0f);
+                yMovement += new Vector3(0f, screenHeight + this.height, 0f);
                 isMoved = true;
             }
         }
