@@ -416,8 +416,6 @@ MonoBehaviour:
   initialPlayerLives: 3
   baseAsteroidsPerLevel: 4
   dtBetweenEnemies: 20
-  firstLife: {fileID: 0}
-  firstLifeController: {fileID: 0}
 --- !u!4 &1090774947
 Transform:
   m_ObjectHideFlags: 0

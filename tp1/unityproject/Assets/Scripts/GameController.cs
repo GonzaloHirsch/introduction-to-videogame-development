@@ -28,6 +28,7 @@ public class GameController : MonoBehaviour
             // Take the first one, we expect it to be only one music controller
             this.musicController = musicControllers[0];
         }
+        this.lifeController = GameObject.FindObjectOfType<LifeController>();
     }
 
     // FINISH --> Implementing the Singleton Pattern
@@ -56,6 +57,7 @@ public class GameController : MonoBehaviour
     private int playerLives = 0;
     private bool playerPendingSpawn = false;
     private MusicController musicController;
+    private LifeController lifeController;
 
     void Start()
     {
@@ -84,8 +86,8 @@ public class GameController : MonoBehaviour
         currentAsteroidDestructions = 0;
         this.level = 0;
         this.playerLives = this.initialPlayerLives;
-        // this.firstLifeController = this.firstLife.GetComponent<LifeController>();
-        // this.firstLifeController.setLives(this.playerLives);
+        // Setting the lives UI
+        this.lifeController.addLives(this.playerLives);
         // Instantiate the player
         this.instantiatePlayer();
         // Generate the asteroids
@@ -111,7 +113,9 @@ public class GameController : MonoBehaviour
 
     public void addLife() {
         this.playerLives++;
-        // this.firstLifeController.setLives(this.playerLives);
+        // Adding an extra life
+        this.lifeController.addLife();
+        // Play the life sound
     }
 
     // Used by the player to notify the controller of it's death
@@ -119,6 +123,8 @@ public class GameController : MonoBehaviour
     {
         // Reduce lives
         this.playerLives--;
+        // Reduce UI lives
+        this.lifeController.removeLife();
         // Spawn if it has lives left
         if (playerLives > 0)
         {

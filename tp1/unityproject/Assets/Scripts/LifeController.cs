@@ -9,99 +9,83 @@ public class LifeController : MonoBehaviour
     public GameObject lifePanel;
 
     private float lifeImagePrefabWidth;
-    private float nextLifeDistance;
+    private int nextLifeDistance;
     private GameController gameController;
     private RectTransform lifePanelRect;
 
     private Vector2 lastLifePosition;
     private Texture lifeTexture;
+    private int lifeCounter = 0;
+    private List<GameObject> createdLives = new List<GameObject>();
+    private int lifeWidth;
 
     void Awake()
     {
-        this.nextLifeDistance = lifeImagePrefab.rectTransform.rect.width * 1.5f;
+        this.nextLifeDistance = (int)(lifeImagePrefab.rectTransform.rect.width * 1.5f);
         this.gameController = GetComponent<GameController>();
         this.lifePanelRect = this.lifePanel.GetComponent<RectTransform>();
-        this.lastLifePosition = new Vector2(-(lifePanelRect.rect.width / 2), 0f);
     }
 
     void Start()
     {
-        float width = lifeImagePrefab.rectTransform.rect.width;
-        this.nextLifeDistance = width * 2f;
-        this.updateLives(0);
+        this.lifeWidth = (int)lifeImagePrefab.rectTransform.rect.width;
+        this.nextLifeDistance = (int)(this.lifeWidth * 2f);
     }
 
-    /*  void OnGUI()
-     {
-         Vector2 newPosition = lastLifePosition + new Vector2(this.nextLifeDistance, 0f);
-         Debug.Log(newPosition);
-         Debug.Log(this.nextLifeDistance);
-         Rect rect = new Rect(newPosition.x, newPosition.y, lifeSprite.texture.width, lifeSprite.texture.height);
-         GUI.DrawTexture(rect, this.getSpriteTexture());
-     } */
-    /* 
-        Texture2D getSpriteTexture()
+    public void addLife()
+    {
+        // Check if we can just activate the life or not
+        if (this.createdLives.Count > this.lifeCounter)
         {
-            // assume "sprite" is your Sprite object
-            var croppedTexture = new Texture2D((int)this.lifeSprite.rect.width, (int)this.lifeSprite.rect.height);
-            var pixels = this.lifeSprite.texture.GetPixels((int)this.lifeSprite.textureRect.x,
-                                                    (int)this.lifeSprite.textureRect.y,
-                                                    (int)this.lifeSprite.textureRect.width,
-                                                    (int)this.lifeSprite.textureRect.height);
-            croppedTexture.SetPixels(pixels);
-            croppedTexture.Apply();
-            return croppedTexture;
+            this.createdLives[this.lifeCounter++].SetActive(true);
         }
-     */
-    public void updateLives(int count)
-    {
-        GameObject go = new GameObject();
-        RectTransform trans = go.AddComponent<RectTransform>();
-        trans.transform.SetParent(lifePanel.transform); // setting parent
-        trans.localScale = Vector3.one;
-        trans.anchoredPosition = new Vector2(lifePanelRect.rect.left, lifePanelRect.rect.top); // setting position, will be on center
-        trans.sizeDelta = new Vector2(lifeImagePrefab.rectTransform.rect.width, lifeImagePrefab.rectTransform.rect.height); // custom size
-        Image img = go.AddComponent<Image>();
-        img.sprite = lifeImagePrefab.sprite;
-        img.transform.SetParent(lifePanel.transform);
-        // Image newLife = Instantiate(lifeImagePrefab, newPosition, Quaternion.identity);
-        // newLife.GetComponent<RectTransform>().SetParent(lifePanel.transform);
-        // GUI.DrawTexture(this.lifePanel.gameObject.)
-    }
-
-    /* // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void setLives(int n)
-    {
-    	if (n > 1) {
-    		if( nextLife == null) {
-    			this.nextLife = createLife();
-    		}
-            LifeController nextLifeController = this.nextLife.GetComponent<LifeController>();
-            nextLifeController.nextLifeDistance = this.nextLifeDistance;
-            nextLifeController.setLives(n-1);
-    	} else if (n == 1) {
-            if (nextLife != null) {
-                LifeController nextLifeController = this.nextLife.GetComponent<LifeController>();
-                nextLifeController.setLives(n-1);
+        else
+        {
+            // Increment the number of lives
+            this.lifeCounter++;
+            // Create the gameobject
+            GameObject newLife = new GameObject();
+            newLife.name = "Player Life " + this.lifeCounter;
+            // Add the rect transform
+            RectTransform trans = newLife.AddComponent<RectTransform>();
+            trans.transform.SetParent(lifePanel.transform); // setting parent
+            trans.localScale = Vector3.one;
+            // If we have a last life position, create one depending on that, otherwise create it
+            Vector2 newPosition = this.lastLifePosition;
+            // Debug.Log(lastLifePosition);
+            // Debug.Log(lifePanelRect.rect.xMin + "-" + lifePanelRect.rect.xMax + "-" + lifePanelRect.rect);
+            // If it's the first life we create, we won't have a previous position
+            if (lifeCounter == 1)
+            {
+                newPosition = new Vector2((int)(lifePanelRect.rect.xMin + (this.lifeWidth / 2)), 0f);
             }
-        } else {
-            if (nextLife != null) {
-                LifeController nextLifeController = this.nextLife.GetComponent<LifeController>();
-                nextLifeController.setLives(n-1);
+            else
+            {
+                newPosition = new Vector2(this.lastLifePosition.x + this.nextLifeDistance, 0f);
             }
-            Destroy(this.gameObject);
+            trans.anchoredPosition = newPosition;   // Position
+            trans.sizeDelta = new Vector2(lifeImagePrefab.rectTransform.rect.width, lifeImagePrefab.rectTransform.rect.height); // Size
+            // Store the position for the next one
+            this.lastLifePosition = newPosition;
+            // Add the image component
+            Image img = newLife.AddComponent<Image>();
+            img.sprite = lifeImagePrefab.sprite;
+            // Make it pseudo transparent
+            img.color = new Color(img.color.r, img.color.g, img.color.b, 0.5f);
+            img.transform.SetParent(lifePanel.transform);
+            // Add the life to the list
+            this.createdLives.Add(newLife);
         }
     }
 
-    private GameObject createLife()
+    public void addLives(int count)
     {
-    	GameObject life = Instantiate(this.lifePrefab, transform.position + new Vector3(this.nextLifeDistance,0,0), transform.rotation);
-        life.transform.localScale = transform.localScale;        
-        return life;
-    } */
+        for (int i = 0; i < count; i++){
+            this.addLife();
+        }
+    }
+
+    public void removeLife() {
+        this.createdLives[--this.lifeCounter].SetActive(false);
+    }
 }
