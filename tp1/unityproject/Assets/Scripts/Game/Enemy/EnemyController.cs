@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     public GameObject enemyBulletPrefab;
+    public Constants.AUDIO_TYPE audioType;
     public float speed = 40f;
     private int speedSign;
     private Vector3 velocity;
@@ -18,15 +19,11 @@ public class EnemyController : MonoBehaviour
     public float dtBetweenShooting = 1.5f;
     public float timeSinceLastShooting = 0f;
     public GameObject player;
-
-    private AudioSource audioSource;
-
     // Explosion system
     public GameObject explosionSystem;
 
     void Awake()
     {
-        this.audioSource = this.GetComponent<AudioSource>();
         findPlayerGameObject();
     }
 
@@ -35,7 +32,7 @@ public class EnemyController : MonoBehaviour
         setupSpriteSize();
         setupStartingPosition();
         updateVelocityVector();
-        this.audioSource.Play();
+        AudioManager.Instance.Play(audioType);
     }
 
     // Update is called once per frame
@@ -130,6 +127,8 @@ public class EnemyController : MonoBehaviour
 
     void destroyEnemyShip(bool automaticDestroy = false)
     {
+        // Stop the theme of the enemy ship
+        AudioManager.Instance.Stop(audioType);
         // Add the score to the counter
         ScoreController.AddScore(this.scoreValue);
         // Remove 1 from the active enemy counter

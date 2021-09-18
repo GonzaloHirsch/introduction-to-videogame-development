@@ -3,20 +3,12 @@ using UnityEngine;
 using System;
 
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : FrameLord.MonoBehaviorSingleton<AudioManager>
 {
-    public static AudioManager instance;
     public Sound[] sounds;
-    // Start is called before the first frame update
-    void Awake()
-    {
-        if (instance == null) {
-            instance = this;
-        } else {
-            Destroy(gameObject);
-            return;
-        }
 
+    new void Awake()
+    {
         foreach (Sound s in sounds) {
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
@@ -27,14 +19,36 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Play(Constants.SOUND_TYPE soundType) 
+    private Sound GetSoundByType(Constants.AUDIO_TYPE audioType)
     {
-        Sound s = Array.Find(sounds, sound => sound.type == soundType);
+        return Array.Find(sounds, sound => sound.type == audioType);
+    }
+
+    public void Play(Constants.AUDIO_TYPE audioType, bool noOverlap = false) 
+    {
+        Sound s = GetSoundByType(audioType);
         if (s == null) {
-            Debug.LogWarning("Sound of type " + soundType + " not found!"); 
+            Debug.LogWarning("Sound of type " + audioType + " not found!"); 
+            return;
+        }
+        // If I want no overlap of sounds, do not want to play 
+        // the audio if it is already playing
+        if (noOverlap && s.source.isPlaying) {
             return;
         }
         s.source.Play();
+    }
+
+    public void Stop(Constants.AUDIO_TYPE audioType) 
+    {
+        Sound s = GetSoundByType(audioType);
+        if (s == null) {
+            Debug.LogWarning("Sound of type " + audioType + " not found!"); 
+            return;
+        }
+
+        if (s.source.isPlaying) {
+            s.source.Stop();
+        }
     }
 }

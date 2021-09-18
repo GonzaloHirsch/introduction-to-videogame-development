@@ -4,7 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public class Sound
 {
-    public Constants.SOUND_TYPE type;
+    public Constants.AUDIO_TYPE type;
 
     public AudioClip clip;
     
@@ -12,7 +12,7 @@ public class Sound
     public float volume;
 
     [Range(.1f, 3f)]
-    public float pitch;
+    public float pitch = 1f; // default
 
     public bool loop;
 

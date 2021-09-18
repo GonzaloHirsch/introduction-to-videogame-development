@@ -22,9 +22,6 @@ public class PlayerController : MonoBehaviour
     public float deaccelerationRate = 0.9f;
     public float friction = 1f;
 
-    // Sound variables
-    public AudioSource audioSource;
-
     // Explosion system
     public GameObject explosionSystem;
 
@@ -50,7 +47,6 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         this.gameController = GameController.Instance;
-        this.audioSource = this.GetComponent<AudioSource>();
         this.thrustAnimator = this.thrustObject.GetComponent<Animator>();
     }
 
@@ -95,9 +91,7 @@ public class PlayerController : MonoBehaviour
             this.accelModule = acceleration;
             this.playThrustSound();
             this.thrustAnimator.SetBool("IsAccelerating", true);
-        }
-        else
-        {
+        } else { 
             this.accelModule = 0f;
             this.stopThrustSound();
             this.thrustAnimator.SetBool("IsAccelerating", false);
@@ -184,6 +178,7 @@ public class PlayerController : MonoBehaviour
             FrameLord.GameEventDispatcher.Instance.Dispatch(this, EvnPlayerDeath.notifier);
             // Destroy the object
             Destroy(this.gameObject);
+            stopThrustSound();
         }
     }
 
@@ -197,17 +192,11 @@ public class PlayerController : MonoBehaviour
 
     void playThrustSound()
     {
-        if (!this.audioSource.isPlaying)
-        {
-            this.audioSource.Play();
-        }
+        AudioManager.Instance.Play(Constants.AUDIO_TYPE.PLAYER_MOVE, true);
     }
 
     void stopThrustSound()
     {
-        if (this.audioSource.isPlaying)
-        {
-            this.audioSource.Stop();
-        }
+        AudioManager.Instance.Stop(Constants.AUDIO_TYPE.PLAYER_MOVE);
     }
 }

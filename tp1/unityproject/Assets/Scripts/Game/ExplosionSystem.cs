@@ -3,16 +3,12 @@ using UnityEngine;
 public class ExplosionSystem : MonoBehaviour
 {
     public ParticleSystem explosionSystem;
-    public AudioSource audioSource;
-
-    void Awake() {
-        this.audioSource = this.GetComponent<AudioSource>();
-    }
+    public Constants.AUDIO_TYPE audioType;
 
     void Start()
     {
         // Play the explosion sound
-        this.audioSource.Play();
+        AudioManager.Instance.Play(audioType);
         // Destroy
         float totalDuration = this.explosionSystem.main.duration + this.explosionSystem.main.startLifetime.constant;
         Destroy(this.gameObject, totalDuration);

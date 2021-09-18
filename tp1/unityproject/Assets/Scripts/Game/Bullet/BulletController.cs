@@ -5,19 +5,14 @@ using UnityEngine;
 public class BulletController : MonoBehaviour
 {
     public string[] collisionTags = new string[] {Constants.TAG_ASTEROID};
-    public AudioSource audioSource;
     public float speed = 800f;
     public float timeToLive = 0.8f;
     private float currentTime;
     private Vector3 velocity;
-
-    
-    void Awake() {
-        this.audioSource = this.GetComponent<AudioSource>();
-    }
     
     void OnEnable()
     {
+        Debug.Log("HERE");
         initializeVelocityVector();
         restartTimeToLive();
         this.playShootingSound();
@@ -62,6 +57,6 @@ public class BulletController : MonoBehaviour
 
     // Sound
     void playShootingSound() {
-        this.audioSource.Play();
+        AudioManager.Instance.Play(Constants.AUDIO_TYPE.BULLET_FIRE);
     }
 }
