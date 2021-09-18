@@ -424,6 +424,7 @@ MonoBehaviour:
   initialPlayerLives: 3
   baseAsteroidsPerLevel: 4
   dtBetweenEnemies: 25
+  scoreForLifeUp: 10000
 --- !u!4 &1090774947
 Transform:
   m_ObjectHideFlags: 0
@@ -618,7 +619,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2660944331700255289}
         m_TargetAssemblyTypeName: PauseController, Assembly-CSharp
         m_MethodName: unpause
         m_Mode: 1
@@ -751,7 +752,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2660944331700255289}
         m_TargetAssemblyTypeName: PauseController, Assembly-CSharp
         m_MethodName: goToMainMenu
         m_Mode: 1
@@ -1447,3 +1448,14 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 2660944331228636161, guid: 5980dd4e3128b4186b2682d644a60e9a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5980dd4e3128b4186b2682d644a60e9a, type: 3}
+--- !u!114 &2660944331700255289 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7627718970979577874, guid: 5980dd4e3128b4186b2682d644a60e9a, type: 3}
+  m_PrefabInstance: {fileID: 2660944331700255288}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 414191443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c856ae5e58b74d7aaa81b51c459b3e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

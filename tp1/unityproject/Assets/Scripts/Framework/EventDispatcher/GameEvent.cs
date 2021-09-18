@@ -24,7 +24,11 @@ namespace FrameLord
 		}
 
 		public enum Event {
-			PLAYER_DEATH
+			PLAYER_DEATH,
+			ASTEROID_DESTRUCTION,
+			ENEMY_DESTRUCTION,
+			UPDATE_SCORE,
+			EXTRA_LIFE
 		}
 	}
 }

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5960681470737370338}
   m_Layer: 0
   m_Name: EnemyShip-Large
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -174,7 +174,7 @@ MonoBehaviour:
   dtBetweenDirChanges: 2
   scoreValue: 200
   bulletsAreAccurate: 0
-  dtBetweenShooting: 1.5
+  dtBetweenShooting: 1
   timeSinceLastShooting: 0
   player: {fileID: 0}
   explosionSystem: {fileID: 7960283144436594500, guid: 0f1921914cabf44f6a4ac30dcb474ffb, type: 3}

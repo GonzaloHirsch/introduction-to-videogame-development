@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
-public class LifeController : MonoBehaviour
+public class LifeController : FrameLord.MonoBehaviorSingleton<LifeController>
 {
     public Image lifeImagePrefab;
     public GameObject lifePanel;
@@ -18,7 +19,7 @@ public class LifeController : MonoBehaviour
     private List<GameObject> createdLives = new List<GameObject>();
     private int lifeWidth;
 
-    void Awake()
+    new void Awake()
     {
         this.nextLifeDistance = (int)(lifeImagePrefab.rectTransform.rect.width * 1.5f);
         this.lifeWidth = (int)lifeImagePrefab.rectTransform.rect.width;
@@ -30,7 +31,16 @@ public class LifeController : MonoBehaviour
         }
     }
 
-    public void addLife()
+    void Start() {
+        FrameLord.GameEventDispatcher.Instance.AddListener(EvnPlayerDeath.EventName, OnPlayerDeath);
+        FrameLord.GameEventDispatcher.Instance.AddListener(EvnExtraLife.EventName, OnExtraLife);
+    }
+
+    private void OnExtraLife(System.Object sender, FrameLord.GameEvent e){
+        this.AddLife();
+    }
+
+    public void AddLife()
     {
         // Check if we can just activate the life or not
         if (this.createdLives.Count > this.lifeCounter)
@@ -74,14 +84,20 @@ public class LifeController : MonoBehaviour
         }
     }
 
-    public void addLives(int count)
+    public void SetInitialLives(int count)
     {
         for (int i = 0; i < count; i++){
-            this.addLife();
+            this.AddLife();
         }
     }
 
-    public void removeLife() {
+    /* ------------------------- REMOVE LIFE ------------------------- */
+
+    private void OnPlayerDeath(System.Object sender, FrameLord.GameEvent e){
+        this.RemoveLife();
+    }
+
+    private void RemoveLife() {
         this.createdLives[--this.lifeCounter].SetActive(false);
     }
 }

@@ -129,10 +129,10 @@ public class EnemyController : MonoBehaviour
     {
         // Stop the theme of the enemy ship
         AudioManager.Instance.Stop(audioType);
-        // Add the score to the counter
-        ScoreController.AddScore(this.scoreValue);
-        // Remove 1 from the active enemy counter
-        GameController.ChangeEnemyCount(-1);
+        // Notify destruction of asteroid
+        FrameLord.GameEventDispatcher.Instance.Dispatch(this, EvnUpdateScore.GetNotifier(this.scoreValue));
+        // Notify enemy destruction
+        FrameLord.GameEventDispatcher.Instance.Dispatch(this, EvnEnemyDestruction.notifier);
         if (!automaticDestroy)
         {
             // Create the explosion object

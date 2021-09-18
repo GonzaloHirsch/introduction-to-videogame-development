@@ -10,7 +10,7 @@ public class GameOverController : MonoBehaviour
 
     void Start()
     {
-        this.scoreText.text = "Score: " + ScoreController.GetScore();
+        this.scoreText.text = "Score: " + Score.Instance.GetScore();
     }
 
     public void playAgain() {

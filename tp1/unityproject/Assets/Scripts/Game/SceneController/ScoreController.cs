@@ -3,44 +3,36 @@ using UnityEngine.UI;
 
 public class ScoreController : FrameLord.MonoBehaviorSingleton<ScoreController>
 {
-    private static int nextLifeUp;
-    public static int pointsForLifeUp = 10000;
-
-    private static int score = 0;
-
     public Text scoreText;
-    private static GameController gameController;
 
     void Start() {
-        gameController = GameController.Instance;
-        nextLifeUp = pointsForLifeUp;
-        // Reset the score to 0
-        ResetScore();
         // Update the score to show 0
         this.updateScoreText();
     }
 
-    // Static Methods to be used from outside the class
-    public static void ResetScore() {
-        score = 0;
+    private void OnScoreChange(System.Object sender, FrameLord.GameEvent e){
+        this.addScore(((EvnUpdateScore)e).score);
     }
 
-    public static void AddScore(int amount) {
-        score += amount;
-        if (score > nextLifeUp) {
-            gameController.addLife();
-            nextLifeUp = nextLifeUp + pointsForLifeUp;
-        }
+    // Resets the score and adds the listener
+    public void ResetScore() {
+        Score.Instance.ResetScore();
+        // Start listening for the score event
+        FrameLord.GameEventDispatcher.Instance.AddListener(EvnUpdateScore.EventName, OnScoreChange);
+    }
+
+    public void addScore(int amount) {
+        Score.Instance.AddScore(amount);
         // Call the method to update the score text from the stored instance
-        ScoreController.Instance.updateScoreText();
+        this.updateScoreText();
     }
 
-    public static int GetScore() {
-        return score;
+    public int getScore() {
+        return Score.Instance.GetScore();
     }
 
     // Instance methods
     public void updateScoreText() {
-        this.scoreText.text = score.ToString();
+        this.scoreText.text = Score.Instance.GetScore().ToString();
     }
 }

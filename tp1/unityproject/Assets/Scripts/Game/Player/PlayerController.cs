@@ -38,15 +38,17 @@ public class PlayerController : MonoBehaviour
     private Vector3 speed;
     private float rot;
 
-    //Declare a SpriteRenderer variable to holds our SpriteRenderer component
+    // Declare a SpriteRenderer variable to holds our SpriteRenderer component
     private SpriteRenderer sprite;
     private float distanceFromCeterToTip;
-    private GameController gameController;
+
+    // Cooldown for shooting
+    public float shootingCooldown = 0.5f;
+    private float timeBetweenShooting = 0f;
 
     // Recover the instance of the Game Controller to be able to notify
     void Awake()
     {
-        this.gameController = GameController.Instance;
         this.thrustAnimator = this.thrustObject.GetComponent<Animator>();
     }
 
@@ -58,6 +60,10 @@ public class PlayerController : MonoBehaviour
         this.speed = new Vector3(0f, 0f, 0f);
         this.sprite = GetComponent<SpriteRenderer>(); //Set the reference to our SpriteRenderer component
         this.distanceFromCeterToTip = this.sprite.bounds.size.y;
+        // Shooting
+        this.shootingCooldown = this.timeBetweenShooting;
+        // Hyperdrive
+        this.hyperdriveCooldownTime = this.timeBetweenHyperdrives;
     }
 
     // Update is called once per frame
@@ -69,6 +75,8 @@ public class PlayerController : MonoBehaviour
         UpdatePosition();
         // Update hyperdrive cooldown time
         this.timeBetweenHyperdrives += Time.deltaTime;
+        // Update shooting cooldown time
+        this.timeBetweenShooting += Time.deltaTime;
     }
 
     void UpdateInput()
@@ -102,8 +110,9 @@ public class PlayerController : MonoBehaviour
             tryHyperdrive();
         }
 
-        if (Input.GetKeyDown(SHOOT))
+        if (Input.GetKeyDown(SHOOT) && this.timeBetweenShooting >= this.shootingCooldown)
         {
+            this.timeBetweenShooting = 0f;
             shoot();
         }
     }
@@ -171,11 +180,10 @@ public class PlayerController : MonoBehaviour
         // Check if collided with anything other than a player bullet
         if (!other.gameObject.CompareTag(Constants.TAG_PLAYER_BULLET))
         {
-            // Notify the gamecontroller of the death
-            this.gameController.notifyPlayerDeath();
+            // Notify the player death
+            FrameLord.GameEventDispatcher.Instance.Dispatch(this, EvnPlayerDeath.notifier);
             // Create the explosion object
             Instantiate(this.explosionSystem, transform.position, Quaternion.identity);
-            FrameLord.GameEventDispatcher.Instance.Dispatch(this, EvnPlayerDeath.notifier);
             // Destroy the object
             Destroy(this.gameObject);
             stopThrustSound();

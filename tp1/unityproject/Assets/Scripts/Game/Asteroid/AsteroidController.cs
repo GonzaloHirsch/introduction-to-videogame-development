@@ -41,11 +41,7 @@ public class AsteroidController : MonoBehaviour
             this.rotation = (int)transform.rotation.eulerAngles.z;
         }
     }
-
-    void Start()
-    {
-    }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -59,10 +55,8 @@ public class AsteroidController : MonoBehaviour
     {
         if (!other.gameObject.CompareTag(Constants.TAG_ASTEROID))
         {
-            // Number of asteroids
-            int asteroidDelta = -1;
-            // Add the score to the counter
-            ScoreController.AddScore(this.scoreValue);
+            // Notify destruction of asteroid
+            FrameLord.GameEventDispatcher.Instance.Dispatch(this, EvnUpdateScore.GetNotifier(this.scoreValue));
             // Create the explosion object
             Instantiate(this.explosionSystem, transform.position, Quaternion.identity);
             // If not in the last state, we can spawn the other 2 child asteroids
@@ -71,11 +65,9 @@ public class AsteroidController : MonoBehaviour
                 // Create 2 new asteroids from this one with a slight change in rotation
                 Instantiate(this.nextAsteroid, transform.position, Quaternion.Euler(0f, 0f, this.rotation + this.rotationDelta));
                 Instantiate(this.nextAsteroid, transform.position, Quaternion.Euler(0f, 0f, this.rotation - this.rotationDelta));
-                // Notify of 2 more created
-                asteroidDelta += 2;
             }
-            // Notify GameController of changes in asteroids count
-            GameController.ChangeAsteroidCount(asteroidDelta);
+            // Notify destruction of asteroid
+            FrameLord.GameEventDispatcher.Instance.Dispatch(this, EvnAsteroidDestruction.notifier);
             // In the end we end up destroying it
             Destroy(this.gameObject);
         }
