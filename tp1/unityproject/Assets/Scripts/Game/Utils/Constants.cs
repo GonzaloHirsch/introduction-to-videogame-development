@@ -12,6 +12,20 @@ public static class Constants
 
     public enum ENEMY_SHIP {SMALL, LARGE};
 
+    public enum SOUND_TYPE {
+        PLAYER_MOVE,
+        PLAYER_DESTROY,
+        SMALL_ASTEROID_DESTROY,
+        MEDIUM_ASTEROID_DESTROY,
+        LARGE_ASTEROID_DESTROY,
+        ENEMY_DESTROY,
+        SMALL_ENEMY_THEME,
+        LARGE_ENEMY_THEME,
+        BULLET_FIRE,
+        BG_FIRST_BEAT,
+        BG_SECOND_BEAT
+    }
+
     public const string TAG_ASTEROID = "Asteroid";
     public const string TAG_PLAYER = "Player";
     public const string TAG_ENEMY = "Enemy";
