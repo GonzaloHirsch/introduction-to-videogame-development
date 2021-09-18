@@ -12,7 +12,6 @@ public class BulletController : MonoBehaviour
     
     void OnEnable()
     {
-        Debug.Log("HERE");
         initializeVelocityVector();
         restartTimeToLive();
         this.playShootingSound();
