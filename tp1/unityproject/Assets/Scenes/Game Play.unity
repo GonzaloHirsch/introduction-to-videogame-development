@@ -123,17 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &303218773 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2660944331228636161, guid: 5980dd4e3128b4186b2682d644a60e9a, type: 3}
-  m_PrefabInstance: {fileID: 2660944331700255288}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9d065af020484ad68dafad2aa12e9f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &309433922
 GameObject:
   m_ObjectHideFlags: 0
@@ -160,7 +149,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 309433922}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fd7749c9494d644d8b2499502835be0, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e40ea5c9b1b64501940524a2cf7329d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lifeImagePrefab: {fileID: 7451128542826809817, guid: 4aacb59cb6c9441deb0510e8f854c8af, type: 3}
@@ -245,6 +234,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &414191443 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2660944331228636160, guid: 5980dd4e3128b4186b2682d644a60e9a, type: 3}
+  m_PrefabInstance: {fileID: 2660944331700255288}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &414191444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 414191443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c856ae5e58b74d7aaa81b51c459b3e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPaused: 0
+  pausePanel: {fileID: 1069817959}
 --- !u!1001 &749761173
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -406,7 +414,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1090774945}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 453ce789c0215433cb952507191ed726, type: 3}
+  m_Script: {fileID: 11500000, guid: 55a2f4faef6c24b6eb5b1c6fb382f35a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 1543252445072020611, guid: 25b361f93a54a4ef7a8d1dd9642c5af7, type: 3}
@@ -415,7 +423,7 @@ MonoBehaviour:
   largeEnemyPrefab: {fileID: 3726587190655027659, guid: 6180ea13a198c9e7fa707a94ab4cf958, type: 3}
   initialPlayerLives: 3
   baseAsteroidsPerLevel: 4
-  dtBetweenEnemies: 20
+  dtBetweenEnemies: 25
 --- !u!4 &1090774947
 Transform:
   m_ObjectHideFlags: 0
@@ -439,7 +447,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1090774945}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bba294427f2e54bf7826aed7758a364d, type: 3}
+  m_Script: {fileID: 11500000, guid: ee86399671b074f198981876e9c57f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pooledObjects: []
@@ -459,7 +467,6 @@ GameObject:
   - component: {fileID: 1209706244}
   - component: {fileID: 1209706246}
   - component: {fileID: 1209706245}
-  - component: {fileID: 1209706247}
   m_Layer: 5
   m_Name: Score Text
   m_TagString: Untagged
@@ -528,18 +535,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1209706243}
   m_CullTransparentMesh: 1
---- !u!114 &1209706247
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1209706243}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf9c6a1d81c8b46eea574efdbd6ab376, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1224659237
 GameObject:
   m_ObjectHideFlags: 0
@@ -623,7 +618,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 303218773}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PauseController, Assembly-CSharp
         m_MethodName: unpause
         m_Mode: 1
@@ -756,7 +751,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 303218773}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PauseController, Assembly-CSharp
         m_MethodName: goToMainMenu
         m_Mode: 1
@@ -815,8 +810,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1694461180}
-  - component: {fileID: 1694461179}
   - component: {fileID: 1694461178}
+  - component: {fileID: 1694461179}
   m_Layer: 0
   m_Name: MusicController
   m_TagString: Untagged
@@ -929,7 +924,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1694461177}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5dcb166bb5c164f7580159f7bb770771, type: 3}
+  m_Script: {fileID: 11500000, guid: f79c30af569d741e19ca8fbf18c8e201, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bgSounds:
@@ -1108,6 +1103,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1906728135}
   m_CullTransparentMesh: 1
+--- !u!1 &1949773002
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1949773004}
+  - component: {fileID: 1949773003}
+  m_Layer: 0
+  m_Name: ScoreController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1949773003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1949773002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a0a3093e48442c7aafa6c16d646215, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 1209706245}
+--- !u!4 &1949773004
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1949773002}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -48.087563, y: -5.808397, z: -238.38121}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1979638155
 GameObject:
   m_ObjectHideFlags: 0
@@ -1348,5 +1387,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2660944331228636161, guid: 5980dd4e3128b4186b2682d644a60e9a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5980dd4e3128b4186b2682d644a60e9a, type: 3}
