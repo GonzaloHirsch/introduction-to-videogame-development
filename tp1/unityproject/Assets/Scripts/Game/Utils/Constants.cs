@@ -2,10 +2,6 @@ using UnityEngine;
 public static class Constants
 {
     public const float MIN_DISTANCE_FROM_PLAYER = 50f;
-    public const int MIN_DIFFICULTY_SCORE = 5000;
-    public const int INCREASE_DIFFICULTY_SCORE = 40000;
-    public const int MAX_DEGREE_SHOT_RANDOMIZATION = 20;
-
     public enum SCREEN_BOUNDS {UPPER, LOWER};
 
     public enum ENEMY_DIRECTION {UP, DOWN, FORWARD};

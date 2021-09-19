@@ -50,10 +50,4 @@ public class ObjectPooler : MonoBehaviour
             go.SetActive(true);
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

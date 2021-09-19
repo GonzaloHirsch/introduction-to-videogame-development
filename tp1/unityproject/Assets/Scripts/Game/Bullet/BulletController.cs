@@ -12,36 +12,36 @@ public class BulletController : MonoBehaviour
     
     void OnEnable()
     {
-        initializeVelocityVector();
-        restartTimeToLive();
-        this.playShootingSound();
+        this.InitializeVelocityVector();
+        this.RestartTimeToLive();
+        this.PlayShootingSound();
     }
 
     void Update()
     {
-        updatePosition();
-        destroyIfExpired();
+        this.UpdatePosition();
+        this.DestroyIfExpired();
     }
 
-    void restartTimeToLive() {
+    void RestartTimeToLive() {
         this.currentTime = this.timeToLive;
     }
 
-    void destroyIfExpired() {
+    void DestroyIfExpired() {
         this.currentTime -= Time.deltaTime;
         if (currentTime <= 0) {
             this.gameObject.SetActive(false);
         }
     }
 
-    void updatePosition() {
+    void UpdatePosition() {
         // Get delta time
         float dt = Time.deltaTime;
         // Multiply the time with the velocity to know the next position
         transform.position += this.velocity * dt;
     }
 
-    void initializeVelocityVector() {
+    void InitializeVelocityVector() {
         this.velocity = transform.right * this.speed;
     }
 
@@ -55,7 +55,7 @@ public class BulletController : MonoBehaviour
     }
 
     // Sound
-    void playShootingSound() {
+    void PlayShootingSound() {
         AudioManager.Instance.Play(Constants.AUDIO_TYPE.BULLET_FIRE);
     }
 }

@@ -1,7 +1,7 @@
 
 public class EvnPlayerDeath : FrameLord.GameEvent
 {
-    public const FrameLord.GameEvent.Event EventName = FrameLord.GameEvent.Event.PLAYER_DEATH;
+    public new const FrameLord.GameEvent.Event EventName = FrameLord.GameEvent.Event.PLAYER_DEATH;
 
     public static EvnPlayerDeath notifier = new EvnPlayerDeath();
     

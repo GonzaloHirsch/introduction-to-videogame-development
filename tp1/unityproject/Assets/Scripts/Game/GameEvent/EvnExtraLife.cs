@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class EvnExtraLife : FrameLord.GameEvent
 {
-    public const FrameLord.GameEvent.Event EventName = FrameLord.GameEvent.Event.EXTRA_LIFE;
+    public new const FrameLord.GameEvent.Event EventName = FrameLord.GameEvent.Event.EXTRA_LIFE;
 
     public static EvnExtraLife notifier = new EvnExtraLife();
     

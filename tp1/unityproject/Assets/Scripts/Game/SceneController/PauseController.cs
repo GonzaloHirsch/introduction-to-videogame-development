@@ -13,41 +13,41 @@ public class PauseController : MonoBehaviour
 
     void Update()
     {
-        this.checkIfPause();
+        this.CheckIfPause();
     }
 
     // Checks if the games needs pausing
-    private void checkIfPause()
+    private void CheckIfPause()
     {
         // Detect PAUSE when the player presses P
         if (Input.GetKeyDown(KeyCode.P))
         {
             if (this.isPaused)
             {
-                this.unpause();
+                this.Unpause();
             }
             else
             {
-                this.pause();
+                this.Pause();
             }
         }
     }
 
-    public void pause()
+    public void Pause()
     {
         this.isPaused = true;
         Time.timeScale = 0f;
         if (this.pausePanel != null) this.pausePanel.SetActive(true);
     }
 
-    public void unpause()
+    public void Unpause()
     {
         this.isPaused = false;
         Time.timeScale = 1f;
         if (this.pausePanel != null) this.pausePanel.SetActive(false);
     }
 
-    public void goToMainMenu()
+    public void GoToMainMenu()
     {
         // Unpausing the game to not break it
         this.isPaused = false;

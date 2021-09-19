@@ -38,7 +38,7 @@ public class MusicController : MonoBehaviour
         }
     }
 
-    public void updateBgSoundSpeed(float progress) {
+    public void UpdateBgSoundSpeed(float progress) {
         this.currentBgSoundDelta = this.bgSoundDeltaMaxLimit - ((this.bgSoundDeltaMaxLimit - this.bgSoundDeltaMinLimit) * progress);
     }
 

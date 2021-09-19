@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class EvnUpdateScore : FrameLord.GameEvent
 {
-    public const FrameLord.GameEvent.Event EventName = FrameLord.GameEvent.Event.UPDATE_SCORE;
+    public new const FrameLord.GameEvent.Event EventName = FrameLord.GameEvent.Event.UPDATE_SCORE;
 
     public static Dictionary<int, EvnUpdateScore> NotifierMemory = new Dictionary<int, EvnUpdateScore>();
 

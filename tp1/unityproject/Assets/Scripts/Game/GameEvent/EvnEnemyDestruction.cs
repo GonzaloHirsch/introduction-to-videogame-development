@@ -1,7 +1,7 @@
 
 public class EvnEnemyDestruction : FrameLord.GameEvent
 {
-    public const FrameLord.GameEvent.Event EventName = FrameLord.GameEvent.Event.ENEMY_DESTRUCTION;
+    public new const FrameLord.GameEvent.Event EventName = FrameLord.GameEvent.Event.ENEMY_DESTRUCTION;
 
     public static EvnEnemyDestruction notifier = new EvnEnemyDestruction();
 

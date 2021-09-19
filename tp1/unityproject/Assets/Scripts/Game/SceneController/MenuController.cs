@@ -9,7 +9,7 @@ public class MenuController : MonoBehaviour
         this.transform.position = Vector3.zero;
     }
 
-    public void loadGame() {
+    public void LoadGame() {
         SceneManager.LoadScene("Game Play", LoadSceneMode.Single);
     }
 }

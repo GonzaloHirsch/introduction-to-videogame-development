@@ -61,18 +61,18 @@ public class PlayerController : MonoBehaviour
         this.sprite = GetComponent<SpriteRenderer>(); //Set the reference to our SpriteRenderer component
         this.distanceFromCeterToTip = this.sprite.bounds.size.y;
         // Shooting
-        this.shootingCooldown = this.timeBetweenShooting;
+        this.timeBetweenShooting = this.shootingCooldown;
         // Hyperdrive
-        this.hyperdriveCooldownTime = this.timeBetweenHyperdrives;
+        this.timeBetweenHyperdrives = this.hyperdriveCooldownTime;
     }
 
     // Update is called once per frame
     void Update()
     {
-        UpdateInput();
-        UpdateRotation();
-        UpdateAcceleration();
-        UpdatePosition();
+        this.UpdateInput();
+        this.UpdateRotation();
+        this.UpdateAcceleration();
+        this.UpdatePosition();
         // Update hyperdrive cooldown time
         this.timeBetweenHyperdrives += Time.deltaTime;
         // Update shooting cooldown time
@@ -97,23 +97,23 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(UP))
         {
             this.accelModule = acceleration;
-            this.playThrustSound();
+            this.PlayThrustSound();
             this.thrustAnimator.SetBool("IsAccelerating", true);
         } else { 
             this.accelModule = 0f;
-            this.stopThrustSound();
+            this.StopThrustSound();
             this.thrustAnimator.SetBool("IsAccelerating", false);
         }
 
         if (Input.GetKeyDown(DOWN))
         {
-            tryHyperdrive();
+            this.TryHyperdrive();
         }
 
         if (Input.GetKeyDown(SHOOT) && this.timeBetweenShooting >= this.shootingCooldown)
         {
             this.timeBetweenShooting = 0f;
-            shoot();
+            this.Shoot();
         }
     }
 
@@ -152,7 +152,7 @@ public class PlayerController : MonoBehaviour
         transform.position = transform.position + this.speed * dt;
     }
 
-    void tryHyperdrive()
+    void TryHyperdrive()
     {
         // Check if the cooldown period has passed
         if (this.timeBetweenHyperdrives >= this.hyperdriveCooldownTime)
@@ -186,11 +186,11 @@ public class PlayerController : MonoBehaviour
             Instantiate(this.explosionSystem, transform.position, Quaternion.identity);
             // Destroy the object
             Destroy(this.gameObject);
-            stopThrustSound();
+            this.StopThrustSound();
         }
     }
 
-    void shoot()
+    void Shoot()
     {
         Vector3 bulletPos = transform.position + transform.right * this.distanceFromCeterToTip;
         ObjectPooler.SharedInstance.ActivatePooledObject(Constants.TAG_PLAYER_BULLET, bulletPos, transform.rotation);
@@ -198,12 +198,12 @@ public class PlayerController : MonoBehaviour
 
     // Sound methods
 
-    void playThrustSound()
+    void PlayThrustSound()
     {
         AudioManager.Instance.Play(Constants.AUDIO_TYPE.PLAYER_MOVE, true);
     }
 
-    void stopThrustSound()
+    void StopThrustSound()
     {
         AudioManager.Instance.Stop(Constants.AUDIO_TYPE.PLAYER_MOVE);
     }

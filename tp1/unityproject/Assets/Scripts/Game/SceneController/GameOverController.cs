@@ -13,11 +13,11 @@ public class GameOverController : MonoBehaviour
         this.scoreText.text = "Score: " + Score.Instance.GetScore();
     }
 
-    public void playAgain() {
+    public void PlayAgain() {
         SceneManager.LoadScene("Game Play", LoadSceneMode.Single);
     }
 
-    public void mainMenu() {
+    public void MainMenu() {
         SceneManager.LoadScene("Main Menu", LoadSceneMode.Single);
     }
 }

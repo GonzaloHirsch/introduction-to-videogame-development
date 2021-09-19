@@ -63,8 +63,8 @@ public class AsteroidController : MonoBehaviour
             if (this.state > 1)
             {
                 // Create 2 new asteroids from this one with a slight change in rotation
-                Instantiate(this.nextAsteroid, transform.position, Quaternion.Euler(0f, 0f, Random.Range(this.rotation - this.rotationDelta, this.rotation + this.rotationDelta)));
-                Instantiate(this.nextAsteroid, transform.position, Quaternion.Euler(0f, 0f, Random.Range(this.rotation - this.rotationDelta, this.rotation + this.rotationDelta)));
+                Instantiate(this.nextAsteroid, transform.position, Quaternion.Euler(0f, 0f, Random.Range(this.rotation - this.rotationDelta, this.rotation)));
+                Instantiate(this.nextAsteroid, transform.position, Quaternion.Euler(0f, 0f, Random.Range(this.rotation, this.rotation + this.rotationDelta)));
             }
             // Notify destruction of asteroid
             FrameLord.GameEventDispatcher.Instance.Dispatch(this, EvnAsteroidDestruction.notifier);

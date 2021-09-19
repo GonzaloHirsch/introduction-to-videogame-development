@@ -18,31 +18,32 @@ public class EnemyController : MonoBehaviour
     public bool bulletsAreAccurate = false;
     public float dtBetweenShooting = 1.5f;
     public float timeSinceLastShooting = 0f;
+    public float maxDegreeShotRandomization = 20;
     public GameObject player;
     // Explosion system
     public GameObject explosionSystem;
 
     void Awake()
     {
-        findPlayerGameObject();
+        this.FindPlayerGameObject();
     }
 
     void Start()
     {
-        setupSpriteSize();
-        setupStartingPosition();
-        updateVelocityVector();
+        this.SetupSpriteSize();
+        this.SetupStartingPosition();
+        this.UpdateVelocityVector();
         AudioManager.Instance.Play(audioType);
     }
 
     // Update is called once per frame
     void Update()
     {
-        updatePosition();
-        changeDirection();
-        shoot();
+        this.UpdatePosition();
+        this.ChangeDirection();
+        this.Shoot();
     }
-    void findPlayerGameObject()
+    void FindPlayerGameObject()
     {
         GameObject[] playerList = GameObject.FindGameObjectsWithTag(Constants.TAG_PLAYER);
         if (playerList.Length > 0)
@@ -50,22 +51,22 @@ public class EnemyController : MonoBehaviour
             this.player = playerList[0];
         }
     }
-    void updatePosition()
+    void UpdatePosition()
     {
         // Multiply the time with the velocity to know the next position
         transform.position += this.velocity * Time.deltaTime;
     }
 
-    void updateVelocityVector()
+    void UpdateVelocityVector()
     {
         this.velocity = new Vector3(
             this.speedSign * this.speed,
-            this.speed * getYDirection(),
+            this.speed * this.GetYDirection(),
             0
         );
     }
 
-    void changeDirection()
+    void ChangeDirection()
     {
         // Add to the time transcurred since last direction change
         this.timeSinceLastDirChange += Time.deltaTime;
@@ -73,28 +74,28 @@ public class EnemyController : MonoBehaviour
         // reset the time transcurred counter
         if (this.timeSinceLastDirChange >= this.dtBetweenDirChanges)
         {
-            updateVelocityVector();
+            this.UpdateVelocityVector();
             this.timeSinceLastDirChange = 0;
         }
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        destroyEnemyShip();
+        this.DestroyEnemyShip();
     }
 
     void OnBecameInvisible()
     {
-        if (checkIfGoalReached())
+        if (this.CheckIfGoalReached())
         {
-            destroyEnemyShip(true);
+            this.DestroyEnemyShip(true);
         }
     }
 
-    void setupStartingPosition()
+    void SetupStartingPosition()
     {
         // Defines if it will start on the right or left of the screen
-        this.startBound = getRandomScreenBound();
+        this.startBound = this.GetRandomScreenBound();
         // Indicates the sign the y axis velocity should have
         this.speedSign = this.startBound == Constants.SCREEN_BOUNDS.UPPER
             ? -1
@@ -104,10 +105,10 @@ public class EnemyController : MonoBehaviour
             ? (this.width / 2)
             : -(this.width / 2);
 
-        float x = getScreenWidthBound(this.startBound);
+        float x = this.GetScreenWidthBound(this.startBound);
         float y = Utils.GetRandomNumInRange(
-            getScreenHeightBound(Constants.SCREEN_BOUNDS.LOWER) + (this.height / 2),
-            getScreenHeightBound(Constants.SCREEN_BOUNDS.UPPER) - (this.height / 2)
+            this.GetScreenHeightBound(Constants.SCREEN_BOUNDS.LOWER) + (this.height / 2),
+            this.GetScreenHeightBound(Constants.SCREEN_BOUNDS.UPPER) - (this.height / 2)
         );
 
         transform.position = new Vector3(
@@ -116,7 +117,7 @@ public class EnemyController : MonoBehaviour
             0
         );
     }
-    void setupSpriteSize()
+    void SetupSpriteSize()
     {
         // Recover Sprite Renderer for size
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
@@ -125,7 +126,7 @@ public class EnemyController : MonoBehaviour
         this.height = spriteRenderer.bounds.size.y;
     }
 
-    void destroyEnemyShip(bool automaticDestroy = false)
+    void DestroyEnemyShip(bool automaticDestroy = false)
     {
         // Stop the theme of the enemy ship
         AudioManager.Instance.Stop(audioType);
@@ -142,18 +143,18 @@ public class EnemyController : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    bool checkIfGoalReached()
+    bool CheckIfGoalReached()
     {
         // X position of the opposite side of the starting point
-        float goalX = -1 * this.getScreenWidthBound(startBound);
+        float goalX = -1 * this.GetScreenWidthBound(startBound);
         return this.startBound == Constants.SCREEN_BOUNDS.UPPER
             ? this.transform.position.x <= goalX
             : this.transform.position.x >= goalX;
     }
 
-    float getYDirection()
+    float GetYDirection()
     {
-        switch (getRandomDirection())
+        switch (this.GetRandomDirection())
         {
             case Constants.ENEMY_DIRECTION.DOWN:
                 return -1;
@@ -164,29 +165,29 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    Constants.ENEMY_DIRECTION getRandomDirection()
+    Constants.ENEMY_DIRECTION GetRandomDirection()
     {
         return Utils.GetRandomEnumValue<Constants.ENEMY_DIRECTION>();
     }
-    Constants.SCREEN_BOUNDS getRandomScreenBound()
+    Constants.SCREEN_BOUNDS GetRandomScreenBound()
     {
         return Utils.GetRandomEnumValue<Constants.SCREEN_BOUNDS>();
     }
 
-    float getScreenHeightBound(Constants.SCREEN_BOUNDS bound)
+    float GetScreenHeightBound(Constants.SCREEN_BOUNDS bound)
     {
         return bound == Constants.SCREEN_BOUNDS.UPPER
             ? ScreenSize.GetScreenToWorldHeight / 2
             : -ScreenSize.GetScreenToWorldHeight / 2;
     }
-    float getScreenWidthBound(Constants.SCREEN_BOUNDS bound)
+    float GetScreenWidthBound(Constants.SCREEN_BOUNDS bound)
     {
         return bound == Constants.SCREEN_BOUNDS.UPPER
             ? ScreenSize.GetScreenToWorldWidth / 2
             : -ScreenSize.GetScreenToWorldWidth / 2;
     }
 
-    void shoot()
+    void Shoot()
     {
         // Add to the time transcurred since last shooting
         this.timeSinceLastShooting += Time.deltaTime;
@@ -195,44 +196,44 @@ public class EnemyController : MonoBehaviour
         {
             if (!this.player)
             {
-                findPlayerGameObject();
+                this.FindPlayerGameObject();
             }
             if (this.bulletsAreAccurate && this.player != null)
             {
-                this.shootAccurately();
+                this.ShootAccurately();
             }
             else
             {
-                this.shootRandomly();
+                this.ShootRandomly();
             }
             this.timeSinceLastShooting = 0f;
         }
     }
 
-    void shootAccurately()
+    void ShootAccurately()
     {
         // Bullet rotation
         Vector3 targetDir = this.player.transform.position - transform.position;
         float rotAngle = Vector3.Angle(Vector3.right, targetDir);
         // Add a certain degree of randomness to avoid instant death
         rotAngle = (rotAngle + Utils.GetRandomNumInRange(
-            -Constants.MAX_DEGREE_SHOT_RANDOMIZATION, 
-            Constants.MAX_DEGREE_SHOT_RANDOMIZATION
+            -this.maxDegreeShotRandomization, 
+            this.maxDegreeShotRandomization
         )) % 360;
 
         if (this.player.transform.position.y < transform.position.y)
         {
             rotAngle = 360 - rotAngle;
         }
-        shootBulletAtAngle(rotAngle);
+        this.ShootBulletAtAngle(rotAngle);
     }
 
-    void shootRandomly()
+    void ShootRandomly()
     {
-        shootBulletAtAngle(Utils.GetRandomNumInRange(0, 360));
+        this.ShootBulletAtAngle(Utils.GetRandomNumInRange(0, 360));
     }
 
-    void shootBulletAtAngle(float degreeAngle)
+    void ShootBulletAtAngle(float degreeAngle)
     {
         float rotRadian = (degreeAngle * Mathf.PI) / 180;
         // Bullet position

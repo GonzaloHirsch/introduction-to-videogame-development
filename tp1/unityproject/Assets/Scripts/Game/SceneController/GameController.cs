@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameController : FrameLord.MonoBehaviorSingleton<GameController>
-{
+{   
     new void Awake()
     {
         // Clear all listeners
@@ -41,6 +41,8 @@ public class GameController : FrameLord.MonoBehaviorSingleton<GameController>
     private int level = 0;
     private int playerLives = 0;
     private bool playerPendingSpawn = false;
+    public int minDifficultyScore = 5000;
+    public int increaseDifficultyScore = 40000;
     private MusicController musicController;
 
     // Score
@@ -50,25 +52,25 @@ public class GameController : FrameLord.MonoBehaviorSingleton<GameController>
     void Start()
     {
         // Setting the listeners
-        this.setListeners();
+        this.SetListeners();
         // Set position to (0,0,0) initially
-        this.transform.position = Vector3.zero;
+        transform.position = Vector3.zero;
         // Start the game
-        this.startGame();
+        this.StartGame();
     }
 
     // Update is called once per frame
     void Update()
     {
-        this.checkIfAsteroidSpawn();
-        this.checkIfEnemySpawn();
-        this.checkIfPlayerSpawn();
-        this.checkScore();
+        this.CheckIfAsteroidSpawn();
+        this.CheckIfEnemySpawn();
+        this.CheckIfPlayerSpawn();
+        this.CheckScore();
     }
 
     /* ------------------------- GAME LIFECYCLE ------------------------- */
 
-    private void setListeners() {
+    private void SetListeners() {
         FrameLord.GameEventDispatcher.Instance.AddListener(EvnPlayerDeath.EventName, OnPlayerDeath);
         FrameLord.GameEventDispatcher.Instance.AddListener(EvnEnemyDestruction.EventName, OnEnemyDestruction);
         FrameLord.GameEventDispatcher.Instance.AddListener(EvnAsteroidDestruction.EventName, OnAsteroidDestruction);
@@ -76,7 +78,7 @@ public class GameController : FrameLord.MonoBehaviorSingleton<GameController>
 
     /* ------------------------- GAME LIFECYCLE ------------------------- */
 
-    private void startGame()
+    private void StartGame()
     {
         // Set variables to initial values
         activeAsteroids = 0;
@@ -90,21 +92,21 @@ public class GameController : FrameLord.MonoBehaviorSingleton<GameController>
         // Setting the lives UI
         LifeController.Instance.SetInitialLives(this.playerLives);
         // Instantiate the player
-        this.instantiatePlayer();
+        this.InstantiatePlayer();
         // Generate the asteroids
-        this.instantiateAsteroids(this.calculateNumberOfAsteroids());
+        this.InstantiateAsteroids(this.CalculateNumberOfAsteroids());
         // Reset the score
         ScoreController.Instance.ResetScore();
     }
 
-    private void startNextLevel()
+    private void StartNextLevel()
     {
         // Increment level
         this.level++;
         // Restart enemy counter
         this.timeSinceLastEnemy = 0f;
         // Instantiate new asteroids
-        this.instantiateAsteroids(this.calculateNumberOfAsteroids());
+        this.InstantiateAsteroids(this.CalculateNumberOfAsteroids());
     }
 
     /* ------------------------- PLAYER GENERATION ------------------------- */
@@ -122,75 +124,75 @@ public class GameController : FrameLord.MonoBehaviorSingleton<GameController>
         {
             // Game Over
             this.playerPendingSpawn = false;
-            this.gameOver();
+            this.GameOver();
         }
     }
 
-    private void instantiatePlayer()
+    private void InstantiatePlayer()
     {
         Instantiate(this.playerPrefab, Vector3.zero, Quaternion.identity);
     }
 
-    private void checkIfPlayerSpawn()
+    private void CheckIfPlayerSpawn()
     {
         if (this.playerPendingSpawn)
         {
             // TRY TO SPAWN PLAYER
-            this.trySpawnPlayer();
+            this.TrySpawnPlayer();
         }
     }
 
-    private void trySpawnPlayer()
+    private void TrySpawnPlayer()
     {
         // Find all important enemies
         GameObject[] asteroids = GameObject.FindGameObjectsWithTag(Constants.TAG_ASTEROID);
         GameObject[] enemies = GameObject.FindGameObjectsWithTag(Constants.TAG_ENEMY);
         // Try all asteroids
-        bool canSpawn = this.tryGameobjectListForPlayerSpawn(asteroids);
+        bool canSpawn = this.TryGameobjectListForPlayerSpawn(asteroids);
         // Try for enemies
         if (canSpawn) {
-            canSpawn = this.tryGameobjectListForPlayerSpawn(enemies);
+            canSpawn = this.TryGameobjectListForPlayerSpawn(enemies);
         }
         // If in the end it can spawn it
         if (canSpawn) {
-            this.instantiatePlayer();
+            this.InstantiatePlayer();
             this.playerPendingSpawn = false;
         }
     }
 
-    private bool tryGameobjectListForPlayerSpawn(GameObject[] goList) {
+    private bool TryGameobjectListForPlayerSpawn(GameObject[] goList) {
         bool canSpawn = true;
         foreach (GameObject go in goList) {
-            canSpawn = canSpawn && this.isGameobjectOutsidePlayerOriginRange(go);
+            canSpawn = canSpawn && this.IsGameobjectOutsidePlayerOriginRange(go);
         }
         return canSpawn;
     }
 
     // Determines if a gameobject is within the spawning area of the player (which is 0,0,0)
-    private bool isGameobjectOutsidePlayerOriginRange(GameObject go)
+    private bool IsGameobjectOutsidePlayerOriginRange(GameObject go)
     {
         return Vector3.Distance(Vector3.zero, go.transform.position) >= Constants.MIN_DISTANCE_FROM_PLAYER;
     }
 
-    private void gameOver() {
+    private void GameOver() {
         // Load the game over scene
         SceneManager.LoadScene("Game Over", LoadSceneMode.Single);
     }
 
     /* ------------------------- SCORE ------------------------- */
 
-    private void checkScore() {
+    private void CheckScore() {
         // Recover score from the controller
         int score = Score.Instance.GetScore();
         if (score >= prevScore + this.scoreForLifeUp) {
             // Keep score count
             this.prevScore += this.scoreForLifeUp;
             // Add life
-            this.addLife();
+            this.AddLife();
         }
     }
 
-    public void addLife() {
+    public void AddLife() {
         // Increase the lives
         this.playerLives++;
         // Play the extra life sound
@@ -201,22 +203,22 @@ public class GameController : FrameLord.MonoBehaviorSingleton<GameController>
 
     /* ------------------------- ASTEROID GENERATION ------------------------- */
 
-    private void checkIfAsteroidSpawn()
+    private void CheckIfAsteroidSpawn()
     {
         // If there are no more asteroids, move to the next level
         if (activeAsteroids == 0 && activeEnemies == 0)
         {
-            this.startNextLevel();
+            this.StartNextLevel();
         }
     }
 
-    private int calculateNumberOfAsteroids()
+    private int CalculateNumberOfAsteroids()
     {
         return this.baseAsteroidsPerLevel + this.level;
     }
 
     // Instantiates numberOfAsteroids asteroids
-    private void instantiateAsteroids(int numberOfAsteroids)
+    private void InstantiateAsteroids(int numberOfAsteroids)
     {
         // Instantiate all asteroids
         for (int i = 0; i < numberOfAsteroids; i++)
@@ -228,7 +230,7 @@ public class GameController : FrameLord.MonoBehaviorSingleton<GameController>
         // Update the number of active asteroids
         activeAsteroids = this.expectedAsteroidDestructions;
         this.currentAsteroidDestructions = 0;
-        GameController.Instance.musicController.updateBgSoundSpeed(((float)this.currentAsteroidDestructions)/this.expectedAsteroidDestructions);
+        GameController.Instance.musicController.UpdateBgSoundSpeed(((float)this.currentAsteroidDestructions)/this.expectedAsteroidDestructions);
     }
 
     public void OnAsteroidDestruction(System.Object sender, FrameLord.GameEvent e)
@@ -237,17 +239,17 @@ public class GameController : FrameLord.MonoBehaviorSingleton<GameController>
         // Every time this count changes, it's due to an asteroid destruction
         this.currentAsteroidDestructions++;
         // Notify the music controller of speed acceleration
-        GameController.Instance.musicController.updateBgSoundSpeed(((float)this.currentAsteroidDestructions)/this.expectedAsteroidDestructions);
+        GameController.Instance.musicController.UpdateBgSoundSpeed(((float)this.currentAsteroidDestructions)/this.expectedAsteroidDestructions);
     }
     
     /* ------------------------- ENEMY GENERATION ------------------------- */
 
-    private void checkIfEnemySpawn()
+    private void CheckIfEnemySpawn()
     {
         // Creates a new enemy if the required time has passed
         // And have already passed the first level
         if (this.timeSinceLastEnemy >= this.dtBetweenEnemies) {
-            this.instantiateEnemyShip();
+            this.InstantiateEnemyShip();
             this.timeSinceLastEnemy = 0f;
         }
         this.timeSinceLastEnemy += Time.deltaTime;
@@ -255,7 +257,7 @@ public class GameController : FrameLord.MonoBehaviorSingleton<GameController>
 
 
     // Instantiates the enemy ship
-    private void instantiateEnemyShip()
+    private void InstantiateEnemyShip()
     {
         activeEnemies += 1;
         // If score above limit, small ship. Else, random.
@@ -263,10 +265,10 @@ public class GameController : FrameLord.MonoBehaviorSingleton<GameController>
         // Current score
         int score = Score.Instance.GetScore();
         // Begin with only large ships, then random, then only small
-        if (score > Constants.MIN_DIFFICULTY_SCORE &&
-            score <= Constants.INCREASE_DIFFICULTY_SCORE) {
+        if (score > this.minDifficultyScore &&
+            score <= this.increaseDifficultyScore) {
             enemyType = Utils.GetRandomEnumValue<Constants.ENEMY_SHIP>();
-        } else if (score >= Constants.INCREASE_DIFFICULTY_SCORE) {
+        } else if (score >= this.increaseDifficultyScore) {
             enemyType = Constants.ENEMY_SHIP.SMALL;
         }
         // Instantiate the enemy ship  

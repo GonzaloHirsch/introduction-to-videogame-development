@@ -381,8 +381,7 @@ MonoBehaviour:
   acceleration: 6500
   deaccelerationRate: 0.9
   friction: 1
-  audioSource: {fileID: 0}
   explosionSystem: {fileID: 7749743172168299403, guid: 546779d90ffcd4aeaaa32ddd04f505af, type: 3}
   hyperdriveSuccessPossibility: 0.75
   hyperdriveCooldownTime: 3
-  shootingCooldown: 0.33
+  shootingCooldown: 0.2
