@@ -175,6 +175,8 @@ public class GameController : FrameLord.MonoBehaviorSingleton<GameController>
     }
 
     private void GameOver() {
+        // Stop all sounds
+        AudioManager.Instance.StopAll();
         // Load the game over scene
         SceneManager.LoadScene("Game Over", LoadSceneMode.Single);
     }

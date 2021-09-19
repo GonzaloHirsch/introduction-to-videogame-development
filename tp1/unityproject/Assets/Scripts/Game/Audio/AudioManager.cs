@@ -65,4 +65,13 @@ public class AudioManager : MonoBehaviour
             s.source.Stop();
         }
     }
+
+    // Stops all sounds, we just need to stop the looping ones, the others stop after finishing
+    public void StopAll() {
+        foreach(Sound sound in sounds){
+            if (sound.source.isPlaying && sound.source.loop) {
+                sound.source.Stop();
+            }
+        }
+    }
 }
