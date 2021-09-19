@@ -234,25 +234,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &414191443 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2660944331228636160, guid: 5980dd4e3128b4186b2682d644a60e9a, type: 3}
-  m_PrefabInstance: {fileID: 2660944331700255288}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &414191444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 414191443}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c856ae5e58b74d7aaa81b51c459b3e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isPaused: 0
-  pausePanel: {fileID: 1069817959}
 --- !u!1001 &749761173
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1393,6 +1374,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -1767941639362703746, guid: 5980dd4e3128b4186b2682d644a60e9a, type: 3}
+      propertyPath: pausePanel
+      value: 
+      objectReference: {fileID: 1069817959}
     - target: {fileID: 2660944331228636160, guid: 5980dd4e3128b4186b2682d644a60e9a, type: 3}
       propertyPath: m_Name
       value: PauseController
@@ -1445,15 +1430,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2660944331228636161, guid: 5980dd4e3128b4186b2682d644a60e9a, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5980dd4e3128b4186b2682d644a60e9a, type: 3}
 --- !u!114 &2660944331700255289 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7627718970979577874, guid: 5980dd4e3128b4186b2682d644a60e9a, type: 3}
+  m_CorrespondingSourceObject: {fileID: -1767941639362703746, guid: 5980dd4e3128b4186b2682d644a60e9a, type: 3}
   m_PrefabInstance: {fileID: 2660944331700255288}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 414191443}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c856ae5e58b74d7aaa81b51c459b3e2, type: 3}

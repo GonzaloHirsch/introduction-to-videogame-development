@@ -158,10 +158,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0f530d064aa943f1ad9820aa6ae8b40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minVelocity: 60
-  maxVelocity: 40
+  minVelocity: 65
+  maxVelocity: 45
   rotation: 0
-  rotationDelta: 20
+  rotationDelta: 75
   state: 2
   scoreValue: 75
   nextAsteroid: {fileID: 8231450085827925078, guid: bf659807eb7a0494bb8c21fa6922a7ea, type: 3}

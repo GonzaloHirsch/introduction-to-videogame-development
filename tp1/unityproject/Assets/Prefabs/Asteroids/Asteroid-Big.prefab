@@ -172,7 +172,7 @@ MonoBehaviour:
   minVelocity: 50
   maxVelocity: 25
   rotation: 0
-  rotationDelta: 15
+  rotationDelta: 75
   state: 3
   scoreValue: 50
   nextAsteroid: {fileID: 8103169016431803175, guid: 3de6eff4a7c534a47b7da97d5d2f0b16, type: 3}

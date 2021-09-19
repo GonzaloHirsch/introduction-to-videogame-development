@@ -193,6 +193,8 @@ public class GameController : FrameLord.MonoBehaviorSingleton<GameController>
     public void addLife() {
         // Increase the lives
         this.playerLives++;
+        // Play the extra life sound
+        AudioManager.Instance.Play(Constants.AUDIO_TYPE.EXTRA_LIFE);
         // Notify the extra life
         FrameLord.GameEventDispatcher.Instance.Dispatch(this, EvnExtraLife.notifier);
     }

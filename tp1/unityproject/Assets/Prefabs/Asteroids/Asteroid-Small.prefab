@@ -173,9 +173,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minVelocity: 75
-  maxVelocity: 50
+  maxVelocity: 55
   rotation: 0
-  rotationDelta: 25
+  rotationDelta: 75
   state: 1
   scoreValue: 100
   nextAsteroid: {fileID: 0}
