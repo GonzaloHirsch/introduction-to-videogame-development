@@ -3,12 +3,16 @@ using UnityEngine;
 using System;
 
 
-public class AudioManager : FrameLord.MonoBehaviorSingleton<AudioManager>
+public class AudioManager : MonoBehaviour
 {
     public Sound[] sounds;
 
-    new void Awake()
+    public static AudioManager Instance = null;
+
+    void Awake()
     {
+        ManageSingletonInstance();
+
         foreach (Sound s in sounds) {
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
@@ -16,6 +20,16 @@ public class AudioManager : FrameLord.MonoBehaviorSingleton<AudioManager>
             s.source.loop = s.loop;
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
+        }
+    }
+    // Creating our own singleton since MonoBehaviorSingleton
+    // does not work with DontDestroyOnLoad
+    private void ManageSingletonInstance() {
+        if (Instance == null) {
+            Instance = this;
+            DontDestroyOnLoad(this);
+        } else {
+            Destroy(this);
         }
     }
 

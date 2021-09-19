@@ -4,28 +4,26 @@ using UnityEngine;
 
 public class MusicController : MonoBehaviour
 {
-    public AudioClip[] bgSounds;
+    public Constants.AUDIO_TYPE[] bgAudioTypes = 
+        new Constants.AUDIO_TYPE[]{
+            Constants.AUDIO_TYPE.BG_FIRST_BEAT, 
+            Constants.AUDIO_TYPE.BG_SECOND_BEAT
+        };
     public float bgSoundDeltaMaxLimit = 1f;
     public float bgSoundDeltaMinLimit = 0.2f;
     public bool isBgReproducing = true;
     [Range(0.0f, 1.0f)]
-    public float bgSoundVolume = 0.5f;
 
-    private int bgSoundIndex = 0;
+    private int bgTypesIndex = 0;
     private float bgSoundTime = 0f;
     
     [SerializeField]
     private float currentBgSoundDelta;
-    private AudioSource audioSource;
 
     void Awake()
     {
         // Set bg sound delta
         this.currentBgSoundDelta = this.bgSoundDeltaMaxLimit;
-        // Recover the audio component
-        this.audioSource = GetComponent<AudioSource>();
-        // Set the volume
-        this.audioSource.volume = this.bgSoundVolume;
     }
 
     void Update()
@@ -34,7 +32,7 @@ public class MusicController : MonoBehaviour
         this.bgSoundTime += Time.deltaTime;
         // Check if play BG sound
         if (this.isBgReproducing){
-            this.playBgSound();
+            this.PlayBgSound();
         }
     }
 
@@ -43,10 +41,10 @@ public class MusicController : MonoBehaviour
     }
 
     // Play the background music
-    void playBgSound() {
+    void PlayBgSound() {
         if (this.bgSoundTime >= this.currentBgSoundDelta) {
-            this.audioSource.PlayOneShot(this.bgSounds[this.bgSoundIndex]);
-            this.bgSoundIndex = (this.bgSoundIndex + 1) % this.bgSounds.Length;
+            AudioManager.Instance.Play(this.bgAudioTypes[this.bgTypesIndex]);
+            this.bgTypesIndex = (this.bgTypesIndex + 1) % this.bgAudioTypes.Length;
             this.bgSoundTime = 0;
         }
     }

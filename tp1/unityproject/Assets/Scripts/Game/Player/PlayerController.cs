@@ -180,13 +180,13 @@ public class PlayerController : MonoBehaviour
         // Check if collided with anything other than a player bullet
         if (!other.gameObject.CompareTag(Constants.TAG_PLAYER_BULLET))
         {
+            this.StopThrustSound();
             // Notify the player death
             FrameLord.GameEventDispatcher.Instance.Dispatch(this, EvnPlayerDeath.notifier);
             // Create the explosion object
             Instantiate(this.explosionSystem, transform.position, Quaternion.identity);
             // Destroy the object
             Destroy(this.gameObject);
-            this.StopThrustSound();
         }
     }
 
