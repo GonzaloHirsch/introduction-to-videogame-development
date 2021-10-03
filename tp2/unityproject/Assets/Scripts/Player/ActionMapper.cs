@@ -25,4 +25,8 @@ public class ActionMapper
     public static bool IsSprinting() {
         return Input.GetKey(KeyCode.LeftShift);
     }
+    
+    public static bool IsCrouching() {
+        return Input.GetKey(KeyCode.LeftControl);
+    }
 }

@@ -544,6 +544,8 @@ MonoBehaviour:
   mouseSensitivity: 2
   upCameraLimit: -50
   downCameraLimit: 50
+  crouchFactor: 0.5
+  crouchTime: 0.15
 --- !u!1 &852768011
 GameObject:
   m_ObjectHideFlags: 0
