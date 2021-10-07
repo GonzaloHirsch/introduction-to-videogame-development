@@ -18,6 +18,10 @@ public class ActionMapper
         return Input.GetAxis("Mouse Y");
     }
 
+    public static bool GetShoot() {
+        return Input.GetMouseButtonDown(0);
+    }
+
     public static bool GetJump() {
         return Input.GetKeyDown(KeyCode.Space);
     }
@@ -26,7 +30,11 @@ public class ActionMapper
         return Input.GetKey(KeyCode.LeftShift);
     }
     
-    public static bool IsCrouching() {
-        return Input.GetKey(KeyCode.LeftControl);
+    public static bool StartedCrouching() {
+        return Input.GetKeyDown(KeyCode.LeftControl);
+    }
+
+    public static bool StoppedCrouching() {
+        return Input.GetKeyUp(KeyCode.LeftControl);
     }
 }
