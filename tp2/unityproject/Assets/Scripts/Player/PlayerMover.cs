@@ -61,7 +61,7 @@ public class PlayerMover : MonoBehaviour
         this.cameraTransform = GetComponentInChildren<Camera>().transform;
 
         // Set initial animation, start idle
-        this.SetIdle();
+        this.SetIdleAnimation();
     }
 
     void Update()
@@ -94,9 +94,9 @@ public class PlayerMover : MonoBehaviour
 
         // Check to determine jumping animation
         if (this.isJumping && this.jumped) {
-            this.SetStartJump();
+            this.SetStartJumpAnimation();
         } else {
-            this.SetFinishJump();
+            this.SetFinishJumpAnimation();
         }
 
         // Vf = V0 + g * dt
@@ -118,12 +118,12 @@ public class PlayerMover : MonoBehaviour
 
         if (!Mathf.Approximately(this.verticalMove, 0f) || !Mathf.Approximately(this.horizontalMove, 0f)) {
             if (this.isSprinting) {
-                this.SetRun();
+                this.SetRunAnimation();
             } else {
-                this.SetWalk();
+                this.SetWalkAnimation();
             }
         } else {
-            this.SetIdle();
+            this.SetIdleAnimation();
         }
     }
 
@@ -142,7 +142,7 @@ public class PlayerMover : MonoBehaviour
 
         this.currentVerticalRotation += -this.verticalRotation*this.mouseSensitivity;
         this.currentVerticalRotation = Mathf.Clamp(this.currentVerticalRotation, this.upCameraLimit, this.downCameraLimit);
-        this.SetBodyRotation(this.currentVerticalRotation);
+        this.SetBodyRotationAnimation(this.currentVerticalRotation);
         
     }
 
@@ -163,11 +163,11 @@ public class PlayerMover : MonoBehaviour
         if (this.startedCrouching) {
             this.isCrouching = true;
             // this.cc.center = this.transform.forward + new Vector3(0f, this.cc.center.y, 0f);
-            this.SetCrouch(true);
+            this.SetCrouchAnimation(true);
         } else if (this.stoppedCrouching) {
             this.isCrouching = false;
             // this.cc.center = new Vector3(0f, this.cc.center.y, 0f);
-            this.SetCrouch(false);
+            this.SetCrouchAnimation(false);
         }
     }
 
@@ -179,33 +179,33 @@ public class PlayerMover : MonoBehaviour
 
     // Animator functions
 
-    void SetIdle() {
+    void SetIdleAnimation() {
         this.characterAnimator.SetFloat("Speed_f", 0f);
     }
     
-    void SetWalk() {
+    void SetWalkAnimation() {
         this.characterAnimator.SetFloat("Speed_f", 0.5f);
     }
     
-    void SetRun() {
+    void SetRunAnimation() {
         this.characterAnimator.SetFloat("Speed_f", 1f);
     }
 
-    void SetBodyRotation(float angleDeg) {
+    void SetBodyRotationAnimation(float angleDeg) {
         this.characterAnimator.SetFloat("Body_Vertical_f", angleDeg * Mathf.PI / 180 * -1);
     }
 
-    void SetStartJump() {
+    void SetStartJumpAnimation() {
         this.characterAnimator.SetBool("Jump_b", true);
         this.characterAnimator.SetBool("Grounded", false);
     }
 
-    void SetFinishJump() {
+    void SetFinishJumpAnimation() {
         this.characterAnimator.SetBool("Jump_b", false);
         this.characterAnimator.SetBool("Grounded", true);
     }
 
-    void SetCrouch(bool status) {
+    void SetCrouchAnimation(bool status) {
         this.characterAnimator.SetBool("Crouch_b", status);
     }
 }

@@ -29,6 +29,10 @@ public class Weapon : MonoBehaviour
         return this.cooldownFire > 0;
     }
 
+    public bool CanFireShot() {
+        return !(this.NeedsReload() || this.NeedsCooldown());
+    }
+
     public void Reload() {
         // Do not reload if the mag is full
         if (this.ammoPerMag == this.currentAmmo) {
@@ -40,9 +44,10 @@ public class Weapon : MonoBehaviour
     }
 
     public bool ShotFired() {
-        if (this.NeedsReload() || this.NeedsCooldown()) {
+        if (!this.CanFireShot()) {
             return false;
         }
+        Debug.Log("Fired: " + this.currentAmmo);
         this.cooldownFire = this.fireRate;
         this.currentAmmo--;
         return true;
