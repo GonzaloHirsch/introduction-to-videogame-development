@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    public Transform gunEndPoint;
     public int currentAmmo = 60;                                            
     public int ammoPerMag = 60;                                            
     public int extraAmmo = 360;                                            
     public int totalInitialAmmo = 360;                                            
-    public int gunDamage = 1;                                            
+    public int damage = 1;                                            
     public float fireRate = .25f;                                        
-    public float weaponRange = 50f;                                        
+    public float range = 50f;                                        
     public float hitForce = 100f;
     private float cooldownFire = 0f;    
     

@@ -9,15 +9,36 @@ public class Shooter : MonoBehaviour
     private Camera fpsCam;                                                // Holds a reference to the first person camera
     private WaitForSeconds shotDuration = new WaitForSeconds(0.07f);    // WaitForSeconds object used by our ShotEffect coroutine, determines time laser line will remain visible
     private LineRenderer laserLine;                                        // Reference to the LineRenderer component which will display our laserline
-    private float nextFire;                                                // Float to store the time the player will be allowed to fire again, after firing
-    
+
     void Start() {
         this.weaponGo = Helper.FindChildGameObjectWithTag(this.gameObject, "Weapon");
         if (this.weaponGo != null) {
             this.weapon = this.weaponGo.GetComponent<Weapon>();
         }
     }
-    void Shoot(Vector3 origin, Vector3 direction) {
+     private void Shoot()
+    {
+        Ray ray = fpsCam.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit = new RaycastHit();
 
+        laserLine.SetPosition(0, this.weapon.gunEndPoint.position);
+        // StartCoroutine(FireLine());
+
+        // Check if the raycast collided with something
+        if (Physics.Raycast(ray, out hit, this.weapon.range)) {
+            print("hit " + hit.collider.gameObject);
+            this.laserLine.SetPosition(1, hit.point);
+            // Get the gameobject that collided with the raycast
+            Shootable shootable = hit.collider.GetComponent<Shootable>();
+            // If GO is shootable, apply the weapon damage
+            if (shootable != null) {
+                shootable.ApplyDamage(this.weapon.damage);
+            }
+        }
+        else
+        {
+            // If no collision, draw until the end of the weapons range
+            this.laserLine.SetPosition(1, ray.GetPoint(this.weapon.range));
+        }
     }
 }
