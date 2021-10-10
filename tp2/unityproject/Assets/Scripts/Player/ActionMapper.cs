@@ -22,6 +22,10 @@ public class ActionMapper
         return Input.GetMouseButtonDown(0);
     }
 
+    public static bool GetReload() {
+        return Input.GetKeyDown(KeyCode.R);
+    }
+
     public static bool GetJump() {
         return Input.GetKeyDown(KeyCode.Space);
     }

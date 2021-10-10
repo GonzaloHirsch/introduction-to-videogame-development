@@ -25,11 +25,11 @@ public class Weapon : MonoBehaviour
         return this.currentAmmo == 0;
     }
 
-    bool NeedsCooldown() {
+    public bool NeedsCooldown() {
         return this.cooldownFire > 0;
     }
 
-    void Reload() {
+    public void Reload() {
         // Do not reload if the mag is full
         if (this.ammoPerMag == this.currentAmmo) {
             return;
@@ -39,7 +39,7 @@ public class Weapon : MonoBehaviour
         this.extraAmmo -= ammoToRefill;
     }
 
-    bool ShotFired() {
+    public bool ShotFired() {
         if (this.NeedsReload() || this.NeedsCooldown()) {
             return false;
         }
