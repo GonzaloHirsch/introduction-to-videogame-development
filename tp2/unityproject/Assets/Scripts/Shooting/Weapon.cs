@@ -9,7 +9,7 @@ public class Weapon : MonoBehaviour
     public int ammoPerMag = 60;                                            
     public int extraAmmo = 360;                                            
     public int totalInitialAmmo = 360;                                            
-    public int damage = 1;                                            
+    public int damage = 17;                                            
     public float fireRate = .25f;                                        
     public float range = 50f;                                        
     public float hitForce = 100f;
