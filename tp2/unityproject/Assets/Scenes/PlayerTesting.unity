@@ -1237,6 +1237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 31931524}
+  isDebug: 0
 --- !u!1 &1666524394
 GameObject:
   m_ObjectHideFlags: 0
@@ -1530,6 +1531,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5972918890133707947, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
+      propertyPath: verticalSpeed
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5972918890148022589, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
       propertyPath: m_IsActive
       value: 1

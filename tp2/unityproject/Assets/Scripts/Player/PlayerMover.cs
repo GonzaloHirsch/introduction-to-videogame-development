@@ -113,7 +113,6 @@ public class PlayerMover : MonoBehaviour
         if (currentYPosition < 0f) {
             currentYPosition = 0;
             this.isJumping = false;
-            this.transform.position = new Vector3(this.transform.position.x, this.cc.height, transform.position.z);
         }
 
         if (!Mathf.Approximately(this.verticalMove, 0f) || !Mathf.Approximately(this.horizontalMove, 0f)) {
