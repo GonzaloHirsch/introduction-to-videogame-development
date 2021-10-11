@@ -135,10 +135,10 @@ public class PlayerMover : MonoBehaviour
         // Rotate hands accordingly
         // this.hands.transform.Rotate(-this.verticalRotation*this.mouseSensitivity, this.horizontalRotation * this.mouseSensitivity, 0);
 
-        Vector3 currentRotation = this.cameraTransform.localEulerAngles;
-        if (currentRotation.x > 180) currentRotation.x -= 360;
-        currentRotation.x = Mathf.Clamp(currentRotation.x, this.upCameraLimit, this.downCameraLimit);
-        this.cameraTransform.localRotation = Quaternion.Euler(currentRotation);
+        // Vector3 currentRotation = this.cameraTransform.localEulerAngles;
+        // if (currentRotation.x > 180) currentRotation.x -= 360;
+        // currentRotation.x = Mathf.Clamp(currentRotation.x, this.upCameraLimit, this.downCameraLimit);
+        // this.cameraTransform.localRotation = Quaternion.Euler(currentRotation);
 
         this.currentVerticalRotation += -this.verticalRotation*this.mouseSensitivity;
         this.currentVerticalRotation = Mathf.Clamp(this.currentVerticalRotation, this.upCameraLimit, this.downCameraLimit);

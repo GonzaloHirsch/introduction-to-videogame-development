@@ -29,11 +29,14 @@ public class Shooter : MonoBehaviour
     void Update ()
     {
         // Create a vector at the center of our camera's viewport
-        Vector3 lineOrigin = this.fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
+        // Vector3 lineOrigin = this.fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
+        Vector3 rayOrigin = this.CameraRealPosition();
+        Debug.Log(rayOrigin);
+        Debug.Log("ORIGIN");
 
         // Draw a line in the Scene View  from the point lineOrigin 
         // in the direction of fpsCam.transform.forward * weaponRange, using the color green
-        Debug.DrawRay(lineOrigin, this.fpsCam.transform.forward * this.weapon.range, Color.green);
+        Debug.DrawRay(rayOrigin, this.fpsCam.transform.forward * this.weapon.range, Color.green);
 
         // If shooting and not reloading
         if (ActionMapper.GetShoot() && !this.isReloading && !this.weapon.NeedsCooldown()) {
@@ -56,10 +59,12 @@ public class Shooter : MonoBehaviour
     }
      private bool Shoot()
     {
-        Ray ray = fpsCam.ScreenPointToRay(Input.mousePosition);
+        Ray ray = new Ray(this.CameraRealPosition(), this.fpsCam.transform.forward);
         RaycastHit hit = new RaycastHit();
 
         laserLine.SetPosition(0, this.weapon.gunEndPoint.position);
+        Debug.Log(this.weapon.gunEndPoint.position);
+        Debug.Log("GUN END");
         
         bool shotFired = this.weapon.ShotFired();
 
@@ -105,6 +110,12 @@ public class Shooter : MonoBehaviour
              * is called from the update
              */
         }
+    }
+
+    private Vector3 CameraRealPosition(){
+        Debug.Log(this.transform.position);
+        Debug.Log("MTHOD");
+        return new Vector3(this.fpsCam.transform.position.x, this.transform.TransformPoint(this.fpsCam.transform.localPosition).y, this.fpsCam.transform.position.z);
     }
 
     private void StartShooting()
