@@ -33,6 +33,10 @@ public class ActionMapper
     public static bool IsSprinting() {
         return Input.GetKey(KeyCode.LeftShift);
     }
+
+    public static bool IsInteracting() {
+        return Input.GetKey(KeyCode.E);
+    }
     
     public static bool StartedCrouching() {
         return Input.GetKeyDown(KeyCode.LeftControl);
