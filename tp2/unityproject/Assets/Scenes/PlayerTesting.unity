@@ -1693,6 +1693,10 @@ PrefabInstance:
       propertyPath: defuseTime
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: -1851847577876005444, guid: a093f7bbbd4ea464fbc77f918166d95c, type: 3}
+      propertyPath: timeToExplode
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 180629355732772252, guid: a093f7bbbd4ea464fbc77f918166d95c, type: 3}
       propertyPath: m_Name
       value: Bomb

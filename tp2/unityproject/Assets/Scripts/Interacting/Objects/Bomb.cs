@@ -34,31 +34,47 @@ public class Bomb : MonoBehaviour, IInteractable
     {
         if (!this.isDefused)
         {
-            if (!this.isDefusing) this.StartDefusing();
-            // If it is already defusing
-            else this.lastInteractedFrame = Time.frameCount;
+            if (!this.isDefusing)
+            {
+                this.StartDefusing();
+            }
+            else
+            {
+                // If it is already defusing
+                this.lastInteractedFrame = Time.frameCount;
+            }
         }
     }
 
-    public InteractType GetInteractType() {
+    public InteractType GetInteractType()
+    {
         return InteractType.Bomb;
     }
 
     private void CheckDefusing()
     {
-        if (this.isDefusing && this.lastInteractedFrame + 1 == Time.frameCount) this.ContinueDefusing();
-        else this.ResetDefusing();
+        if (this.isDefusing && (this.lastInteractedFrame + 1 == Time.frameCount || this.lastInteractedFrame == Time.frameCount))
+        {
+            this.ContinueDefusing();
+        }
+        else
+        {
+            this.ResetDefusing();
+        }
     }
 
     private void CheckDefused()
     {
-        if (this.isDefusing && this.currentDefuseTime >= this.defuseTime) this.isDefused = true;
+        if (this.isDefusing && this.currentDefuseTime >= this.defuseTime)
+        {
+            this.isDefused = true;
+        }
     }
 
     private void ResetDefusing()
     {
         this.isDefusing = false;
-        this.currentDefuseTime += 0f;
+        this.currentDefuseTime = 0f;
         this.lastInteractedFrame = -1;
     }
 
@@ -75,9 +91,11 @@ public class Bomb : MonoBehaviour, IInteractable
         this.lastInteractedFrame = Time.frameCount;
     }
 
-    private void CheckTicking(){
+    private void CheckTicking()
+    {
         this.currentTickTime += Time.deltaTime;
-        if (this.currentTickTime >= this.timeToExplode) {
+        if (this.currentTickTime >= this.timeToExplode)
+        {
             Debug.Log("EXPLODED");
         }
     }
