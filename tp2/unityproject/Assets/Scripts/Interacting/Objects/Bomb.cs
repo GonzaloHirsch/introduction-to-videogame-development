@@ -10,6 +10,7 @@ public class Bomb : MonoBehaviour, IInteractable
     private float currentTickTime = 0f;
     private bool isDefusing = false;
     private bool isDefused = false;
+    private bool isExploded = false;
 
     [Header("Exploding")]
     public float timeToExplode = 60f * 2f;  // 60s * 2 => 2min
@@ -22,7 +23,7 @@ public class Bomb : MonoBehaviour, IInteractable
 
     void Update()
     {
-        if (!this.isDefused)
+        if (!this.isDefused && !this.isExploded)
         {
             this.CheckDefusing();
             this.CheckDefused();
@@ -32,7 +33,7 @@ public class Bomb : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        if (!this.isDefused)
+        if (!this.isDefused && !this.isExploded)
         {
             if (!this.isDefusing)
             {
@@ -68,6 +69,7 @@ public class Bomb : MonoBehaviour, IInteractable
         if (this.isDefusing && this.currentDefuseTime >= this.defuseTime)
         {
             this.isDefused = true;
+            FrameLord.GameEventDispatcher.Instance.Dispatch(this, EvnBombDefuse.notifier);
         }
     }
 
@@ -96,7 +98,8 @@ public class Bomb : MonoBehaviour, IInteractable
         this.currentTickTime += Time.deltaTime;
         if (this.currentTickTime >= this.timeToExplode)
         {
-            Debug.Log("EXPLODED");
+            this.isExploded = true;
+            FrameLord.GameEventDispatcher.Instance.Dispatch(this, EvnBombExplode.notifier);
         }
     }
 }
