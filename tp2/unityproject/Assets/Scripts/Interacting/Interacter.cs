@@ -52,7 +52,7 @@ public class Interacter : MonoBehaviour
         InteractType interactType = interactableObject.GetInteractType();
         switch(interactType) {
             case InteractType.Bomb:
-                this.interactText.text = "Press \"E\" to interact";
+                this.interactText.text = "Hold \"E\" to defuse";
             break;
         }
         this.interactTextPanel.SetActive(true);
