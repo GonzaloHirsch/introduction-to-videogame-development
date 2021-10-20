@@ -13,7 +13,7 @@ public class Shooter : MonoBehaviour
     private LineRenderer laserLine;
     private bool isShooting = false;                                       // Reference to the LineRenderer component which will display our laserline
     private bool isReloading = false;
-    public bool isDebug = false;
+    public bool isDebug = true;
 
     void Start()
     {
@@ -197,5 +197,17 @@ public class Shooter : MonoBehaviour
     void SetShootAnimation(bool isShooting)
     {
         this.characterAnimator.SetBool("Shoot_b", isShooting);
+    }
+
+    void OnDrawGizmos()
+    {
+        Camera camera = GetComponentInChildren<Camera>();
+        Gizmos.color = Color.red;
+        
+        Vector3 p1 = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, camera.nearClipPlane));
+        Vector3 p2 = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, camera.farClipPlane));
+        
+        Gizmos.DrawSphere(camera.transform.position, 0.1F);
+        Gizmos.DrawLine(p1, p2);
     }
 }
