@@ -62,7 +62,7 @@ public class Shooter : MonoBehaviour
 
     private bool Shoot()
     {
-        Ray ray = fpsCam.ScreenPointToRay(Input.mousePosition);
+        Ray ray = new Ray(this.fpsCam.transform.position, this.fpsCam.transform.forward); 
         RaycastHit hit = new RaycastHit();
 
         if (this.isDebug) laserLine.SetPosition(0, this.weapon.gunEndPoint.position);
