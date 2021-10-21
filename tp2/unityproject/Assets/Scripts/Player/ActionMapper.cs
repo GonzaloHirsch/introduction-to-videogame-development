@@ -45,4 +45,8 @@ public class ActionMapper
     public static bool StoppedCrouching() {
         return Input.GetKeyUp(KeyCode.LeftControl);
     }
+    
+    public static bool GetPaused() {
+        return Input.GetKeyDown(KeyCode.P);
+    }
 }

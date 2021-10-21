@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defuseTime: 5
+  timeToExplode: 60
 --- !u!1001 &180629356153137254
 PrefabInstance:
   m_ObjectHideFlags: 0

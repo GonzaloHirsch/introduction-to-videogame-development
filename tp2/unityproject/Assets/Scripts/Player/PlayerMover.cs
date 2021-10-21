@@ -41,7 +41,7 @@ public class PlayerMover : MonoBehaviour
 
     // Crouching
     private float initialHeight;
-    
+
     [Header("Crouching")]
     [Range(0.0f, 1.0f)]
     public float crouchFactor = 0.5f;
@@ -66,14 +66,19 @@ public class PlayerMover : MonoBehaviour
 
     void Update()
     {
-        ReadInput();
-        UpdateMovement();
-        UpdateCrouching();
-        UpdateCameraRotation();
-        CheckShooting();
+        // Make sure to don't move if paused, some movements don't use timescale
+        if (!GameStatus.Instance.GetGamePaused())
+        {
+            ReadInput();
+            UpdateMovement();
+            UpdateCrouching();
+            UpdateCameraRotation();
+            CheckShooting();
+        }
     }
 
-    void ReadInput() {
+    void ReadInput()
+    {
         this.horizontalMove = ActionMapper.GetMoveHorizontal();
         this.verticalMove = ActionMapper.GetMoveVertical();
         this.horizontalRotation = ActionMapper.GetCameraRotationHorizontal();
@@ -85,17 +90,22 @@ public class PlayerMover : MonoBehaviour
         this.shoot = ActionMapper.GetShoot();
     }
 
-    void UpdateMovement() {
+    void UpdateMovement()
+    {
         // Check it's not already jumping to avoid double jumping
-        if (this.jumped && !this.isJumping && !this.isCrouching) {
+        if (this.jumped && !this.isJumping && !this.isCrouching)
+        {
             this.currentJumpSpeed = this.verticalSpeed;
             this.isJumping = true;
         }
 
         // Check to determine jumping animation
-        if (this.isJumping && this.jumped) {
+        if (this.isJumping && this.jumped)
+        {
             this.SetStartJumpAnimation();
-        } else {
+        }
+        else
+        {
             this.SetFinishJumpAnimation();
         }
 
@@ -110,18 +120,25 @@ public class PlayerMover : MonoBehaviour
         Vector3 move = this.transform.forward * this.verticalMove + this.transform.right * this.horizontalMove;
         this.cc.Move((this.isSprinting ? this.sprintSpeed : this.speed) * Time.deltaTime * move + gravityMove);
 
-        if (currentYPosition < 0f) {
+        if (currentYPosition < 0f)
+        {
             currentYPosition = 0;
             this.isJumping = false;
         }
 
-        if (!Mathf.Approximately(this.verticalMove, 0f) || !Mathf.Approximately(this.horizontalMove, 0f)) {
-            if (this.isSprinting) {
+        if (!Mathf.Approximately(this.verticalMove, 0f) || !Mathf.Approximately(this.horizontalMove, 0f))
+        {
+            if (this.isSprinting)
+            {
                 this.SetRunAnimation();
-            } else {
+            }
+            else
+            {
                 this.SetWalkAnimation();
             }
-        } else {
+        }
+        else
+        {
             this.SetIdleAnimation();
         }
     }
@@ -139,13 +156,14 @@ public class PlayerMover : MonoBehaviour
         // currentRotation.x = Mathf.Clamp(currentRotation.x, this.upCameraLimit, this.downCameraLimit);
         // this.cameraTransform.localRotation = Quaternion.Euler(currentRotation);
 
-        this.currentVerticalRotation += -this.verticalRotation*this.mouseSensitivity;
+        this.currentVerticalRotation += -this.verticalRotation * this.mouseSensitivity;
         this.currentVerticalRotation = Mathf.Clamp(this.currentVerticalRotation, this.upCameraLimit, this.downCameraLimit);
         this.SetBodyRotationAnimation(this.currentVerticalRotation);
-        
+
     }
 
-    void UpdateCrouching(){
+    void UpdateCrouching()
+    {
         /* float newHeight = this.initialHeight;
 
         if (this.isCrouching && !this.isJumping && !this.isSprinting) {
@@ -159,52 +177,64 @@ public class PlayerMover : MonoBehaviour
         
         // fix vertical position
         this.transform.position = this.transform.position + new Vector3(0f, ( this.cc.height - lastHeight ) * this.crouchFactor, 0f);  */
-        if (this.startedCrouching) {
+        if (this.startedCrouching)
+        {
             this.isCrouching = true;
             // this.cc.center = this.transform.forward + new Vector3(0f, this.cc.center.y, 0f);
             this.SetCrouchAnimation(true);
-        } else if (this.stoppedCrouching) {
+        }
+        else if (this.stoppedCrouching)
+        {
             this.isCrouching = false;
             // this.cc.center = new Vector3(0f, this.cc.center.y, 0f);
             this.SetCrouchAnimation(false);
         }
     }
 
-    void CheckShooting() {
-        if (this.shoot) {
+    void CheckShooting()
+    {
+        if (this.shoot)
+        {
             // CAST RAY
         }
     }
 
     // Animator functions
 
-    void SetIdleAnimation() {
+    void SetIdleAnimation()
+    {
         this.characterAnimator.SetFloat("Speed_f", 0f);
     }
-    
-    void SetWalkAnimation() {
+
+    void SetWalkAnimation()
+    {
         this.characterAnimator.SetFloat("Speed_f", 0.5f);
     }
-    
-    void SetRunAnimation() {
+
+    void SetRunAnimation()
+    {
         this.characterAnimator.SetFloat("Speed_f", 1f);
     }
 
-    void SetBodyRotationAnimation(float angleDeg) {
+    void SetBodyRotationAnimation(float angleDeg)
+    {
         this.characterAnimator.SetFloat("Body_Vertical_f", angleDeg * Mathf.PI / 180 * -1);
     }
 
-    void SetStartJumpAnimation() {
+    void SetStartJumpAnimation()
+    {
         this.characterAnimator.SetBool("Jump_b", true);
         this.characterAnimator.SetBool("Grounded", false);
     }
 
-    void SetFinishJumpAnimation() {
+    void SetFinishJumpAnimation()
+    {
         this.characterAnimator.SetBool("Jump_b", false);
         this.characterAnimator.SetBool("Grounded", true);
     }
 
-    void SetCrouchAnimation(bool status) {
+    void SetCrouchAnimation(bool status)
+    {
         this.characterAnimator.SetBool("Crouch_b", status);
     }
 }
