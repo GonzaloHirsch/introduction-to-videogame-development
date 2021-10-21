@@ -16,11 +16,6 @@ public class Bomb : MonoBehaviour, IInteractable
     public float timeToExplode = 60f * 2f;  // 60s * 2 => 2min
     private int lastInteractedFrame = -1;
 
-    void Start()
-    {
-
-    }
-
     void Update()
     {
         if (!this.isDefused && !this.isExploded)
@@ -101,5 +96,9 @@ public class Bomb : MonoBehaviour, IInteractable
             this.isExploded = true;
             FrameLord.GameEventDispatcher.Instance.Dispatch(this, EvnBombExplode.notifier);
         }
+    }
+
+    public void SetTimeToExplode(float time) {
+        this.timeToExplode = time;
     }
 }

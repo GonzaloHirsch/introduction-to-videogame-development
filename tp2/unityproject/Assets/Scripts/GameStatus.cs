@@ -19,4 +19,9 @@ public class GameStatus : FrameLord.Singleton<GameStatus>
     public int GetLevel() {
         return this.level;
     }
+
+    private HashSet<int> completedLevels = new HashSet<int>();
+    public void AddCompletedLevel(int completedLevel) {
+        this.completedLevels.Add(completedLevel);
+    }
 }

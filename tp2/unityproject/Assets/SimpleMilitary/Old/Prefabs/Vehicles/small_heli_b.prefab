@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 400000}
   - component: {fileID: 3300000}
   - component: {fileID: 2300000}
-  - component: {fileID: 8808243049921919643}
+  - component: {fileID: -8322542915475260181}
   m_Layer: 0
   m_Name: small_heli_b
   m_TagString: Untagged
@@ -85,8 +85,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8808243049921919643
-BoxCollider:
+--- !u!64 &-8322542915475260181
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -95,9 +95,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3.5147247, y: 4.4807024, z: 14.667831}
-  m_Center: {x: -0.000014066696, y: 2.2403512, z: 3.7978318}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 55f59590bab21f743999d9511df4811c, type: 3}
 --- !u!1 &100002
 GameObject:
   m_ObjectHideFlags: 0

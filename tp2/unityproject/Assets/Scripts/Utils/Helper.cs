@@ -23,7 +23,7 @@ public class Helper
         int curr = 0;
         int gen;
         while (curr < count) {
-            gen = Random.Range(low, high + 1);
+            gen = Random.Range(low, high);
             if (!mem.ContainsKey(gen)) {
                 res[curr] = gen;
                 curr++;
