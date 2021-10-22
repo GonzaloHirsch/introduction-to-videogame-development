@@ -9,7 +9,6 @@ public class GameController : MonoBehaviour
     public int[] activeBombsPerLevel;
     public int[] bombTimersPerLevel;
     public GameObject[] possibleBombLocations;
-    private bool bombExploded = false;
 
     [Header("Enemies")]
     public int[] enemiesPerLevel;
@@ -45,14 +44,16 @@ public class GameController : MonoBehaviour
         this.activeBombs--;
         if (this.activeBombs == 0) {
             this.timerController.StopTimer();
+            GameStatus.Instance.SetPlayerWon(true);
+            GameStatus.Instance.AddCompletedLevel(GameStatus.Instance.GetLevel());
+            SceneController.LoadGameOver();
         }
-        Debug.Log("BOMB DEFUSED FROM GC");
     }
 
     private void OnBombExplode(System.Object sender, FrameLord.GameEvent e)
     {
-        this.bombExploded = true;
-        Debug.Log("BOMB EXPLODED FROM GC");
+        GameStatus.Instance.SetPlayerWon(false);
+        SceneController.LoadGameOver();
     }
 
     /* ------------------------------ BOMBS ------------------------------ */

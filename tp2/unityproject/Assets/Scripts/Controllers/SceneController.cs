@@ -10,4 +10,9 @@ public class SceneController
         // Load the new scene
         SceneManager.LoadScene("PlayableLevel", LoadSceneMode.Single);
     }
+    
+    public static void LoadGameOver() {
+        // Load the new scene
+        SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
+    }
 }
