@@ -16,6 +16,10 @@ public class Bomb : MonoBehaviour, IInteractable
     public float timeToExplode = 60f * 2f;  // 60s * 2 => 2min
     private int lastInteractedFrame = -1;
 
+    [Header("UI")]
+    public bool showInUI = false;
+    public ProgressBar defuseBar;
+
     void Update()
     {
         if (!this.isDefused && !this.isExploded)
@@ -73,11 +77,17 @@ public class Bomb : MonoBehaviour, IInteractable
         this.isDefusing = false;
         this.currentDefuseTime = 0f;
         this.lastInteractedFrame = -1;
+        if (this.showInUI) {
+            this.defuseBar.SetValue(0f);
+        }
     }
 
     private void ContinueDefusing()
     {
         this.currentDefuseTime += Time.deltaTime;
+        if (this.showInUI) {
+            this.defuseBar.SetValue(this.currentDefuseTime);
+        }
         Debug.Log("DEFUSING-" + this.currentDefuseTime);
     }
 
@@ -86,6 +96,10 @@ public class Bomb : MonoBehaviour, IInteractable
         this.currentDefuseTime = 0f;
         this.isDefusing = true;
         this.lastInteractedFrame = Time.frameCount;
+        if (this.showInUI) {
+            this.defuseBar.SetMaxValue(this.defuseTime);
+            this.defuseBar.SetValue(0f);
+        }
     }
 
     private void CheckTicking()

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : MonoBehaviour
+public class ProgressBar : MonoBehaviour
 {
     public Slider slider;
 
@@ -9,12 +9,12 @@ public class HealthBar : MonoBehaviour
         this.slider.minValue = 0f;
     }
 
-    public void SetMaxHealth(float health) {
+    public void SetMaxValue(float health) {
         this.slider.maxValue = health;
         this.slider.value = health;
     }
 
-    public void SetHealth(float health) {
+    public void SetValue(float health) {
         this.slider.value = health;
     }
 }

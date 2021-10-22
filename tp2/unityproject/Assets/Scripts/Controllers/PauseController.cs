@@ -38,6 +38,7 @@ public class PauseController : MonoBehaviour
         this.isPaused = true;
         GameStatus.Instance.SetGamePaused(true);
         Time.timeScale = 0f;
+        Cursor.lockState = CursorLockMode.Confined;
         if (this.pausePanel != null) this.pausePanel.SetActive(true);
     }
 
@@ -46,6 +47,7 @@ public class PauseController : MonoBehaviour
         this.isPaused = false;
         GameStatus.Instance.SetGamePaused(false);
         Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Locked;
         if (this.pausePanel != null) this.pausePanel.SetActive(false);
     }
 

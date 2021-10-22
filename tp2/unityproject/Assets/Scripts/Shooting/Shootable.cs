@@ -7,7 +7,7 @@ public class Shootable : MonoBehaviour
     public int currentHealth = 100;
 
     public bool showInUI = false;
-    public HealthBar healthBar;
+    public ProgressBar healthBar;
 
     private bool isDead = false;
     private Animator characterAnimator;
@@ -17,7 +17,7 @@ public class Shootable : MonoBehaviour
         this.characterAnimator = GetComponent<Animator>();
         // In case we show health in UI
         if (this.showInUI) {
-            this.healthBar.SetMaxHealth(this.currentHealth);
+            this.healthBar.SetMaxValue(this.currentHealth);
         }
     }
 
@@ -28,7 +28,7 @@ public class Shootable : MonoBehaviour
             this.bloodParticles.Play();
             // Check if alter UI
             if (this.showInUI) {
-                this.healthBar.SetHealth(this.currentHealth);
+                this.healthBar.SetValue(this.currentHealth);
             }
             // Check if health has fallen below zero
             if (this.currentHealth <= 0) 

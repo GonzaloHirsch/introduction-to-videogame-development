@@ -7,13 +7,16 @@ public class Interacter : MonoBehaviour
 {
     public float interactRange = 5f;
 
+    [Header("Raycasting")]
     private Ray ray;
     private RaycastHit hit;
     private IInteractable interactableHit;
     private Camera fpsCam;
 
+    [Header("UI")]
     public Text interactText;
     public GameObject interactTextPanel;
+    public GameObject defuseProgressBar;
 
     void Start()
     {
@@ -41,9 +44,11 @@ public class Interacter : MonoBehaviour
                 this.CanInteract(this.interactableHit);
             } else {
                 this.interactTextPanel.SetActive(false);
+                this.defuseProgressBar.SetActive(false);
             }
         } else {
             this.interactTextPanel.SetActive(false);
+            this.defuseProgressBar.SetActive(false);
         }
     }
 
@@ -53,6 +58,7 @@ public class Interacter : MonoBehaviour
         switch(interactType) {
             case InteractType.Bomb:
                 this.interactText.text = "Hold \"E\" to defuse";
+                this.defuseProgressBar.SetActive(true);
             break;
         }
         this.interactTextPanel.SetActive(true);
