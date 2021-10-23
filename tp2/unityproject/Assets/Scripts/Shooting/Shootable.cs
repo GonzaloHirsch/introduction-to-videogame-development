@@ -12,6 +12,7 @@ public class Shootable : MonoBehaviour
     private bool isDead = false;
     private Animator characterAnimator;
     public ParticleSystem bloodParticles;
+    public bool emitPlayerDeath = false;
 
     void Start() {
         this.characterAnimator = GetComponent<Animator>();
@@ -41,5 +42,6 @@ public class Shootable : MonoBehaviour
 
     private void SetDeath() {
         if (this.characterAnimator != null) this.characterAnimator.SetBool("Death_b", true);
+        if (this.emitPlayerDeath) FrameLord.GameEventDispatcher.Instance.Dispatch(this, EvnPlayerDeath.notifier);
     }
 }

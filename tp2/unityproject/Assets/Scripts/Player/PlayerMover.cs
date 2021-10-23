@@ -26,6 +26,7 @@ public class PlayerMover : MonoBehaviour
     private bool isCrouching = false;
     private bool jumped = false;
     private bool shoot = false;
+    private bool isDead = false;
 
     // Camera and rotation
     private Transform cameraTransform;
@@ -67,7 +68,7 @@ public class PlayerMover : MonoBehaviour
     void Update()
     {
         // Make sure to don't move if paused, some movements don't use timescale
-        if (!GameStatus.Instance.GetGamePaused())
+        if (!GameStatus.Instance.GetGamePaused() && !this.isDead)
         {
             ReadInput();
             UpdateMovement();
@@ -197,6 +198,10 @@ public class PlayerMover : MonoBehaviour
         {
             // CAST RAY
         }
+    }
+
+    public void SetDead(bool status) {
+        this.isDead = true;
     }
 
     // Animator functions

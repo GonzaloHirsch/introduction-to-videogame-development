@@ -35,6 +35,7 @@ public class GameController : MonoBehaviour
     {
         FrameLord.GameEventDispatcher.Instance.AddListener(EvnBombDefuse.EventName, OnBombDefuse);
         FrameLord.GameEventDispatcher.Instance.AddListener(EvnBombExplode.EventName, OnBombExplode);
+        FrameLord.GameEventDispatcher.Instance.AddListener(EvnPlayerDeath.EventName, OnPlayerDeath);
     }
 
     /* ------------------------------ HANDLERS ------------------------------ */
@@ -53,6 +54,21 @@ public class GameController : MonoBehaviour
     private void OnBombExplode(System.Object sender, FrameLord.GameEvent e)
     {
         GameStatus.Instance.SetPlayerWon(false);
+        SceneController.LoadGameOver();
+    }
+    
+    private void OnPlayerDeath(System.Object sender, FrameLord.GameEvent e)
+    {
+        // Mark player as dead
+        PlayerManager.Instance.player.SetDead(true);
+        GameStatus.Instance.SetPlayerWon(false);
+        StartCoroutine(this.finishGameCourotine(5));
+    }
+
+    IEnumerator finishGameCourotine(int secs)
+    {
+        yield return new WaitForSeconds(secs);
+        
         SceneController.LoadGameOver();
     }
 
