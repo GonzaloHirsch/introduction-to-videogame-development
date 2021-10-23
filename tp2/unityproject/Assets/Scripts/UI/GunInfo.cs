@@ -19,12 +19,12 @@ public class GunInfo : MonoBehaviour
 
     void OnBulletsChange(System.Object sender, FrameLord.GameEvent e) {
         this.evnBullets = (EvnBulletsChange) e;
-        this.currentBullets.text = this.evnBullets.current.ToString();
-        this.totalBullets.text = this.evnBullets.total.ToString();
+        if (this.currentBullets) this.currentBullets.text = this.evnBullets.current.ToString();
+        if (this.totalBullets) this.totalBullets.text = this.evnBullets.total.ToString();
     }
     
     void OnGrenadesChange(System.Object sender, FrameLord.GameEvent e) {
         this.evnGrenades = (EvnGrenadesChange) e;
-        this.currentGrenades.text = this.evnGrenades.current.ToString();
+        if (this.currentGrenades) this.currentGrenades.text = this.evnGrenades.current.ToString();
     }
 }

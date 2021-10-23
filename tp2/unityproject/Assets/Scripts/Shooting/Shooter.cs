@@ -15,6 +15,8 @@ public class Shooter : MonoBehaviour
     private bool isReloading = false;
     public bool isDebug = true;
 
+    public bool isDead = false;
+
     void Start()
     {
         this.weaponGo = Helper.FindChildGameObjectWithTag(this.gameObject, "Weapon");
@@ -31,38 +33,40 @@ public class Shooter : MonoBehaviour
 
     void Update()
     {
-        // Create a vector at the center of our camera's viewport
-        Vector3 rayOrigin = this.fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, this.fpsCam.nearClipPlane));
-
-        // Draw a line in the Scene View  from the point lineOrigin 
-        // in the direction of fpsCam.transform.forward * weaponRange, using the color green
-        if (this.isDebug) Debug.DrawRay(rayOrigin, this.fpsCam.transform.forward * this.weapon.range, Color.green);
-
-        // If shooting and not reloading
-        if (ActionMapper.GetShoot() && !this.isReloading && !this.weapon.NeedsCooldown())
+        if (!this.isDead)
         {
-            // Trigger animation
-            this.HandleShootAnimation();
-            // Shoot the weapon
-            bool shotFired = this.Shoot();
-        }
-        // When shooting action is stopped
-        else if (!ActionMapper.GetShoot())
-        {
-            this.FinishShooting();
-        }
+            // Create a vector at the center of our camera's viewport
+            Vector3 rayOrigin = this.fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, this.fpsCam.nearClipPlane));
 
-        // When reloading
-        if (ActionMapper.GetReload())
-        {
-            this.Reload();
-        }
+            // Draw a line in the Scene View  from the point lineOrigin 
+            // in the direction of fpsCam.transform.forward * weaponRange, using the color green
+            if (this.isDebug) Debug.DrawRay(rayOrigin, this.fpsCam.transform.forward * this.weapon.range, Color.green);
 
+            // If shooting and not reloading
+            if (ActionMapper.GetShoot() && !this.isReloading && !this.weapon.NeedsCooldown())
+            {
+                // Trigger animation
+                this.HandleShootAnimation();
+                // Shoot the weapon
+                bool shotFired = this.Shoot();
+            }
+            // When shooting action is stopped
+            else if (!ActionMapper.GetShoot())
+            {
+                this.FinishShooting();
+            }
+
+            // When reloading
+            if (ActionMapper.GetReload())
+            {
+                this.Reload();
+            }
+        }
     }
 
     private bool Shoot()
     {
-        Ray ray = new Ray(this.fpsCam.transform.position, this.fpsCam.transform.forward); 
+        Ray ray = new Ray(this.fpsCam.transform.position, this.fpsCam.transform.forward);
         RaycastHit hit = new RaycastHit();
 
         if (this.isDebug) laserLine.SetPosition(0, this.weapon.gunEndPoint.position);
@@ -203,10 +207,10 @@ public class Shooter : MonoBehaviour
     {
         Camera camera = GetComponentInChildren<Camera>();
         Gizmos.color = Color.red;
-        
+
         Vector3 p1 = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, camera.nearClipPlane));
         Vector3 p2 = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, camera.farClipPlane));
-        
+
         Gizmos.DrawSphere(camera.transform.position, 0.1F);
         Gizmos.DrawLine(p1, p2);
     }

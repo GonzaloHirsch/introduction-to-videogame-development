@@ -5,6 +5,7 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     public Transform gunEndPoint;
+    public ParticleSystem muzzleFlash;
     public int currentAmmo = 60;
     public int ammoPerMag = 60;
     public int extraAmmo = 360;
@@ -18,6 +19,7 @@ public class Weapon : MonoBehaviour
     private EvnBulletsChange evn;
 
     void Start(){
+        if (this.muzzleFlash) this.muzzleFlash.Stop();
         this.SendBulletsEvent();
     }
 
@@ -67,6 +69,8 @@ public class Weapon : MonoBehaviour
         Debug.Log("Fired: " + this.currentAmmo);
         this.cooldownFire = this.fireRate;
         this.currentAmmo--;
+        // Muzzle flash
+        if (this.muzzleFlash) this.muzzleFlash.Play();
         // Send shot event
         this.SendBulletsEvent();
         return true;

@@ -6,7 +6,7 @@ public class Thrower : MonoBehaviour
 {
     [Header("Prefabs")]
     public GameObject grenadePrefab;
-    
+
     [Header("Throw Action")]
     public float force = 1000f;
     public float cooldown = 10f;
@@ -21,6 +21,7 @@ public class Thrower : MonoBehaviour
     private GameObject thrownGrenade;
     private Rigidbody thrownGrenadeRb;
     private EvnGrenadesChange evn;
+    public bool isDead = false;
 
     void Start()
     {
@@ -33,8 +34,11 @@ public class Thrower : MonoBehaviour
 
     void Update()
     {
-        this.timeBetweenThrows += Time.deltaTime;
-        this.CheckIfThrow();
+        if (!this.isDead)
+        {
+            this.timeBetweenThrows += Time.deltaTime;
+            this.CheckIfThrow();
+        }
     }
 
     void CheckIfThrow()
@@ -61,7 +65,8 @@ public class Thrower : MonoBehaviour
         this.SendThrowEvent();
     }
 
-    void SendThrowEvent() {
+    void SendThrowEvent()
+    {
         evn = EvnGrenadesChange.notifier;
         evn.current = this.ammo;
         FrameLord.GameEventDispatcher.Instance.Dispatch(this, evn);

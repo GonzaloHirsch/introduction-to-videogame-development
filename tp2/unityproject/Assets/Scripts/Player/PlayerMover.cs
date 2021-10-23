@@ -201,7 +201,18 @@ public class PlayerMover : MonoBehaviour
     }
 
     public void SetDead(bool status) {
-        this.isDead = true;
+        this.isDead = status;
+        // Mark as dead not to be able to shoot
+        if (this.isDead) {
+            Shooter s = this.GetComponent<Shooter>();
+            if (s != null) {
+                s.isDead = true;
+            }
+            Thrower t = this.GetComponent<Thrower>();
+            if (t != null) {
+                t.isDead = true;
+            }
+        }
     }
 
     // Animator functions
