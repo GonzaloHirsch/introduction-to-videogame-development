@@ -30,9 +30,20 @@ public class EnemyController : MonoBehaviour
             if (distance <= this.agent.stoppingDistance) {
                 // Attack the target
                 // Face the target
+                FaceTarget();
             }
         }
         
+    }
+
+    void FaceTarget()
+    {
+        // Get direction to the target
+        Vector3 direction = (this.target.position - this.transform.position).normalized;
+        // Rotation where we point to that target
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+        // Update our own rotation with smoothing to point in that direction
+        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
 
     void onDrawGizmosSelected()
