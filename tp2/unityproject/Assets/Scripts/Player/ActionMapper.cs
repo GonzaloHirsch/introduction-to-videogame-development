@@ -21,6 +21,10 @@ public class ActionMapper
     public static bool GetShoot() {
         return Input.GetMouseButtonDown(0);
     }
+    
+    public static bool GetGrenade() {
+        return Input.GetKeyDown(KeyCode.G);
+    }
 
     public static bool GetReload() {
         return Input.GetKeyDown(KeyCode.R);

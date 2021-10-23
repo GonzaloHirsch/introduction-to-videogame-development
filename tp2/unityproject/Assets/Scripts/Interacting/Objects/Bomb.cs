@@ -69,6 +69,9 @@ public class Bomb : MonoBehaviour, IInteractable
         {
             this.isDefused = true;
             FrameLord.GameEventDispatcher.Instance.Dispatch(this, EvnBombDefuse.notifier);
+            if (this.showInUI) {
+                this.defuseBar.SetValue(0f);
+            }
         }
     }
 
@@ -77,9 +80,6 @@ public class Bomb : MonoBehaviour, IInteractable
         this.isDefusing = false;
         this.currentDefuseTime = 0f;
         this.lastInteractedFrame = -1;
-        if (this.showInUI) {
-            this.defuseBar.SetValue(0f);
-        }
     }
 
     private void ContinueDefusing()
@@ -88,7 +88,6 @@ public class Bomb : MonoBehaviour, IInteractable
         if (this.showInUI) {
             this.defuseBar.SetValue(this.currentDefuseTime);
         }
-        Debug.Log("DEFUSING-" + this.currentDefuseTime);
     }
 
     private void StartDefusing()
