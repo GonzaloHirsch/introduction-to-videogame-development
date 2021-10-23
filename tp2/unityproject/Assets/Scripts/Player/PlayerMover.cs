@@ -111,7 +111,7 @@ public class PlayerMover : MonoBehaviour
         }
 
         // Vf = V0 + g * dt
-        float nextJumpSpeed = this.currentJumpSpeed + Physics.gravity.y * Time.deltaTime;
+        float nextJumpSpeed = this.cc.isGrounded ? this.currentJumpSpeed : this.currentJumpSpeed + Physics.gravity.y * Time.deltaTime;
         // Dy = (Vi + Vf) * dt / 2
         float dy = (this.currentJumpSpeed + nextJumpSpeed) * Time.deltaTime / 2f;
         this.currentJumpSpeed = nextJumpSpeed;

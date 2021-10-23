@@ -14,7 +14,8 @@ public class Shootable : MonoBehaviour
     public ParticleSystem bloodParticles;
     public bool emitPlayerDeath = false;
 
-    void Start() {
+    void Awake() {
+        this.bloodParticles.Stop();
         this.characterAnimator = GetComponent<Animator>();
         // In case we show health in UI
         if (this.showInUI) {

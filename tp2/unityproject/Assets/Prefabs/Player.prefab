@@ -3634,8 +3634,8 @@ MonoBehaviour:
   sprintSpeed: 10
   verticalSpeed: 8
   mouseSensitivity: 2
-  upCameraLimit: -50
-  downCameraLimit: 50
+  upCameraLimit: -75
+  downCameraLimit: 75
   crouchFactor: 0.5
   crouchTime: 5
 --- !u!114 &4303106493370059204
@@ -3800,6 +3800,7 @@ MonoBehaviour:
   force: 750
   cooldown: 1
   intialAmmo: 20
+  grenadeOriginDistance: 1
 --- !u!1 &7762929268088828474
 GameObject:
   m_ObjectHideFlags: 0

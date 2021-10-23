@@ -26,7 +26,9 @@ namespace FrameLord
 		public enum Event {
 			PLAYER_DEATH,
 			BOMB_DEFUSE,
-			BOMB_EXPLODE
+			BOMB_EXPLODE,
+			BULLETS_CHANGE,
+			GRENADES_CHANGE
 		}
 	}
 }
