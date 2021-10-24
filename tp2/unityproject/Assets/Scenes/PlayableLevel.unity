@@ -3148,7 +3148,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7665828462127279086, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
   m_PrefabInstance: {fileID: 7665828461652451726}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &130310014
+--- !u!114 &130310007
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3157,10 +3157,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 130310006}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c4097e7ec03b1c2f8873629f75aba99, type: 3}
+  m_Script: {fileID: 11500000, guid: a8117ff0c15bdcfc3be1a648f8119156, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDead: 0
+  speed: 5
+  sprintSpeed: 10
+  verticalSpeed: 5
+  mouseSensitivity: 2
+  upCameraLimit: -50
+  downCameraLimit: 50
+  crouchFactor: 0.5
+  crouchTime: 5
 --- !u!1001 &131213899
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20404,7 +20411,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab1fee77b2c6b9c629e8052c9609504e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1211643037}
+  player: {fileID: 130310007}
 --- !u!1 &824363785
 GameObject:
   m_ObjectHideFlags: 0
@@ -24401,6 +24408,9 @@ GameObject:
   - component: {fileID: 993045886}
   - component: {fileID: 993045885}
   - component: {fileID: 993045884}
+  - component: {fileID: 993045890}
+  - component: {fileID: 993045889}
+  - component: {fileID: 993045891}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -24488,6 +24498,57 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &993045889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993045883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 619016dfac7eb44c8bf9907a91103629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 0}
+  isDebug: 1
+  isDead: 0
+--- !u!114 &993045890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993045883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46937bb3e20f8427f93fd3e8ac8e1a72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 100
+  showInUI: 0
+  healthBar: {fileID: 0}
+  bloodParticles: {fileID: 1794008422}
+  emitPlayerDeath: 0
+--- !u!95 &993045891
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993045883}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 009a340ea743c464da13c08b526058b5, type: 3}
+  m_Controller: {fileID: 9100000, guid: afec2cc25e3439e4bb1b43e7c09f6503, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &994721362
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29413,17 +29474,6 @@ Transform:
   m_Father: {fileID: 1868340944}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1211643037 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8728707665220251506, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
-  m_PrefabInstance: {fileID: 7665828461652451726}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 130310006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d140892de2f824bfa911c499b83d36b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1214687679
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44057,6 +44107,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 9ae987b4b22703146ab27785fa0d26a5, type: 3}
   m_PrefabInstance: {fileID: 1793450468}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &1794008422 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7556215177785742808, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
+  m_PrefabInstance: {fileID: 7665828461652451726}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1798150206
 GameObject:
   m_ObjectHideFlags: 0
@@ -53367,5 +53422,6 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Weapon
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8728707665220251506, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
