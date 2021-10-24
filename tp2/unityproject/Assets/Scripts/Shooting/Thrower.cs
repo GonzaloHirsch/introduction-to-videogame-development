@@ -20,8 +20,11 @@ public class Thrower : MonoBehaviour
     private Vector3 grenadeOrigin;
     private GameObject thrownGrenade;
     private Rigidbody thrownGrenadeRb;
+    private Grenade thrownGrenadeScript;
     private EvnGrenadesChange evn;
     public bool isDead = false;
+
+    private bool isHolding = false;
 
     void Start()
     {
@@ -44,25 +47,42 @@ public class Thrower : MonoBehaviour
     void CheckIfThrow()
     {
         // Make sure it has ammo and the cooldown is ok
-        if (ActionMapper.GetGrenade() && this.ammo > 0 && this.timeBetweenThrows >= this.cooldown)
+        if (ActionMapper.GetGrenadeHold() && this.ammo > 0 && this.timeBetweenThrows >= this.cooldown)
         {
+            this.isHolding = true;
+            this.ActivateGrenade();
+        } else if (this.isHolding && ActionMapper.GetGrenadeThrow()) {
+            this.isHolding = false;
             this.ThrowGrenade();
         }
     }
 
-    void ThrowGrenade()
+    void ActivateGrenade()
     {
         // Update internal state
         this.ammo--;
-        this.timeBetweenThrows = 0f;
         // Generate grenade
         this.grenadeOrigin = (this.fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, this.fpsCam.nearClipPlane))) + (this.fpsCam.transform.forward * this.grenadeOriginDistance);
         this.thrownGrenade = Instantiate(this.grenadePrefab, grenadeOrigin, Quaternion.identity);
-        // Add force as a throw
         this.thrownGrenadeRb = this.thrownGrenade.GetComponent<Rigidbody>();
-        this.thrownGrenadeRb.AddForce(this.fpsCam.transform.forward * this.force);
+        this.thrownGrenadeScript = this.thrownGrenade.GetComponent<Grenade>();
+        // Mark as kinematic to keep with the character
+        this.thrownGrenadeRb.isKinematic = true;
+        // Set grenade as active
+        this.thrownGrenadeScript.SetGrenadeLive();
         // Sending the throw event
         this.SendThrowEvent();
+    }
+    
+    void ThrowGrenade()
+    {
+        // Update internal state
+        this.timeBetweenThrows = 0f;
+        // Add force as a throw
+        this.thrownGrenadeRb.isKinematic = false;
+        this.thrownGrenadeRb.AddForce(this.fpsCam.transform.forward * this.force);
+        // Make it visible
+        this.thrownGrenadeScript.ThrowGrenade();
     }
 
     void SendThrowEvent()

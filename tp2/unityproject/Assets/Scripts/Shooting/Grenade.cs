@@ -9,13 +9,29 @@ public class Grenade : MonoBehaviour
     public float baseDamageMultiplier = 0.5f;
     public float timeToExplode = 5f;
     private float currentTime = 0f;
+    private bool isActive = false;
 
     public GameObject explosionEffectPrefab;
+    private MeshRenderer meshRenderer;
+
+    void Awake()
+    {
+        this.meshRenderer = GetComponentInChildren<MeshRenderer>();
+    }
+
+    void Start()
+    {
+        Debug.Log(this.meshRenderer);
+        this.meshRenderer.enabled = false;
+    }
 
     void Update()
     {
-        this.currentTime += Time.deltaTime;
-        this.CheckIfExplode();
+        if (this.isActive)
+        {
+            this.currentTime += Time.deltaTime;
+            this.CheckIfExplode();
+        }
     }
 
     void CheckIfExplode()
@@ -43,12 +59,23 @@ public class Grenade : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    float GetDamageMultiplier(float distance) {
+    float GetDamageMultiplier(float distance)
+    {
         return 1 + (this.baseDamageMultiplier - 1) * Mathf.Sqrt(distance / this.explosionRadius);
     }
 
-    int GetDamage(float distance) {
+    int GetDamage(float distance)
+    {
         return (int)(this.GetDamageMultiplier(distance) * this.maxDamage);
+    }
+
+    public void SetGrenadeLive()
+    {
+        this.isActive = true;
+    }
+
+    public void ThrowGrenade() {
+        this.meshRenderer.enabled = true;
     }
 
     void OnDrawGizmos()
