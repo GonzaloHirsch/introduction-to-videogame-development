@@ -5,6 +5,8 @@ using UnityEngine;
 public class Shooter : MonoBehaviour
 {
     private Animator characterAnimator;
+
+    [Header("Weapon")]
     public Weapon weapon;
     private GameObject weaponGo;
     private WaitForSeconds shotDuration = new WaitForSeconds(0.07f);    // WaitForSeconds object used by our ShotEffect coroutine, determines time laser line will remain visible
@@ -13,12 +15,17 @@ public class Shooter : MonoBehaviour
     private bool isShooting = false;                                       // Reference to the LineRenderer component which will display our laserline
     private bool isReloading = false;
     public bool isDebug = true;
+    public bool isDead = false;
 
     void Start()
     {
         this.weapon = this.GetComponentInChildren<Weapon>();
         this.laserLine = GetComponent<LineRenderer>();
         this.characterAnimator = GetComponent<Animator>();
+
+        // Set initial animation, start idle
+        this.SetIdleAnimation();
+
         // _shootableMask = LayerMask.GetMask("Shootable");
     }
 
@@ -89,22 +96,26 @@ public class Shooter : MonoBehaviour
         this.FinishReloading();
     }
 
-    private void SetReloadAnimation(bool isReloading)
-    {
-        this.characterAnimator.SetBool("Reload_b", isReloading);
-    }
-    private void SetShootAnimation(bool isShooting)
-    {
-        this.characterAnimator.SetBool("Shoot_b", isShooting);
-    }
-
     //*****************************************//
     //*************PUBLIC METHODS**************//
     //*****************************************//
 
+    public void SetDead(bool status) {
+        this.isDead = status;
+        // Mark as dead not to be able to shoot
+        if (this.isDead) {
+            Shooter s = this.GetComponent<Shooter>();
+            if (s != null) {
+                s.isDead = true;
+            }
+            Thrower t = this.GetComponent<Thrower>();
+            if (t != null) {
+                t.isDead = true;
+            }
+        }
+    }
     public bool CanShoot()
     {
-        Debug.Log("IN SHOOTER");
         return !this.isReloading && !this.weapon.NeedsCooldown();
     }
 
@@ -191,5 +202,52 @@ public class Shooter : MonoBehaviour
         if (this.isDebug) {
             Debug.DrawRay(rayOrigin, rayDirection * this.weapon.range, Color.green);
         }
+    }
+
+    // Animator functions
+
+    public void SetIdleAnimation()
+    {
+        this.characterAnimator.SetFloat("Speed_f", 0f);
+    }
+
+    public void SetWalkAnimation()
+    {
+        this.characterAnimator.SetFloat("Speed_f", 0.5f);
+    }
+
+    public void SetRunAnimation()
+    {
+        this.characterAnimator.SetFloat("Speed_f", 1f);
+    }
+
+    public void SetBodyRotationAnimation(float angleDeg)
+    {
+        this.characterAnimator.SetFloat("Body_Vertical_f", angleDeg * Mathf.PI / 180 * -1);
+    }
+
+    public void SetStartJumpAnimation()
+    {
+        this.characterAnimator.SetBool("Jump_b", true);
+        this.characterAnimator.SetBool("Grounded", false);
+    }
+
+    public void SetFinishJumpAnimation()
+    {
+        this.characterAnimator.SetBool("Jump_b", false);
+        this.characterAnimator.SetBool("Grounded", true);
+    }
+
+    public void SetCrouchAnimation(bool status)
+    {
+        this.characterAnimator.SetBool("Crouch_b", status);
+    }
+    public void SetReloadAnimation(bool isReloading)
+    {
+        this.characterAnimator.SetBool("Reload_b", isReloading);
+    }
+    public void SetShootAnimation(bool isShooting)
+    {
+        this.characterAnimator.SetBool("Shoot_b", isShooting);
     }
 }

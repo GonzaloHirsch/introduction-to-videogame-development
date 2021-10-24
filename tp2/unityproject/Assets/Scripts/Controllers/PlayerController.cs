@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMover : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
+    private Shooter shooter;
+
     // Movement speed variables
     [Header("Movement")]
     public float speed;
@@ -12,7 +14,6 @@ public class PlayerMover : MonoBehaviour
 
     // Components
     private CharacterController cc;
-    private Animator characterAnimator;
 
     // Move variables
     private float horizontalMove;
@@ -26,15 +27,15 @@ public class PlayerMover : MonoBehaviour
     private bool isCrouching = false;
     private bool jumped = false;
     private bool shoot = false;
-    private bool isDead = false;
+    private bool reload = false;
 
     // Camera and rotation
-    private Transform cameraTransform;
     [Header("Camera and Rotation")]
     public float mouseSensitivity = 2f;
     public float upCameraLimit = -50f;
     public float downCameraLimit = 50f;
     private float currentVerticalRotation = 0f;
+    private Camera fpsCam;                                                // Holds a reference to the first person camera
 
     // Jumping
     private float currentJumpSpeed = 0f;
@@ -49,32 +50,28 @@ public class PlayerMover : MonoBehaviour
     // The larger the faster we can crouch
     public float crouchTime = 5f;
 
-    // Shooting
-    [Header("Shooting")]
-    private Transform gunEnd;
-    private GameObject gun;
-
     void Start()
     {
-        this.characterAnimator = GetComponent<Animator>();
+        this.shooter = GetComponent<Shooter>();
+        this.fpsCam = GetComponentInChildren<Camera>();
+        Cursor.lockState = CursorLockMode.Locked;
+        // _shootableMask = LayerMask.GetMask("Shootable");
+    
         this.cc = GetComponent<CharacterController>();
         this.initialHeight = this.cc.height;
-        this.cameraTransform = GetComponentInChildren<Camera>().transform;
-
-        // Set initial animation, start idle
-        this.SetIdleAnimation();
     }
 
     void Update()
     {
         // Make sure to don't move if paused, some movements don't use timescale
-        if (!GameStatus.Instance.GetGamePaused() && !this.isDead)
+        if (!GameStatus.Instance.GetGamePaused() && !this.shooter.isDead)
         {
             ReadInput();
             UpdateMovement();
             UpdateCrouching();
             UpdateCameraRotation();
             CheckShooting();
+            CheckReloading();
         }
     }
 
@@ -89,6 +86,7 @@ public class PlayerMover : MonoBehaviour
         this.startedCrouching = ActionMapper.StartedCrouching();
         this.stoppedCrouching = ActionMapper.StoppedCrouching();
         this.shoot = ActionMapper.GetShoot();
+        this.reload = ActionMapper.GetReload();
     }
 
     void UpdateMovement()
@@ -103,11 +101,11 @@ public class PlayerMover : MonoBehaviour
         // Check to determine jumping animation
         if (this.isJumping && this.jumped)
         {
-            this.SetStartJumpAnimation();
+            this.shooter.SetStartJumpAnimation();
         }
         else
         {
-            this.SetFinishJumpAnimation();
+            this.shooter.SetFinishJumpAnimation();
         }
 
         // Vf = V0 + g * dt
@@ -131,16 +129,16 @@ public class PlayerMover : MonoBehaviour
         {
             if (this.isSprinting)
             {
-                this.SetRunAnimation();
+                this.shooter.SetRunAnimation();
             }
             else
             {
-                this.SetWalkAnimation();
+                this.shooter.SetWalkAnimation();
             }
         }
         else
         {
-            this.SetIdleAnimation();
+            this.shooter.SetIdleAnimation();
         }
     }
 
@@ -159,7 +157,7 @@ public class PlayerMover : MonoBehaviour
 
         this.currentVerticalRotation += -this.verticalRotation * this.mouseSensitivity;
         this.currentVerticalRotation = Mathf.Clamp(this.currentVerticalRotation, this.upCameraLimit, this.downCameraLimit);
-        this.SetBodyRotationAnimation(this.currentVerticalRotation);
+        this.shooter.SetBodyRotationAnimation(this.currentVerticalRotation);
 
     }
 
@@ -182,75 +180,62 @@ public class PlayerMover : MonoBehaviour
         {
             this.isCrouching = true;
             // this.cc.center = this.transform.forward + new Vector3(0f, this.cc.center.y, 0f);
-            this.SetCrouchAnimation(true);
+            this.shooter.SetCrouchAnimation(true);
         }
         else if (this.stoppedCrouching)
         {
             this.isCrouching = false;
             // this.cc.center = new Vector3(0f, this.cc.center.y, 0f);
-            this.SetCrouchAnimation(false);
+            this.shooter.SetCrouchAnimation(false);
+        }
+    }
+
+    void CheckReloading()
+    {
+        // When reloading
+        if (this.reload)
+        {
+            this.shooter.Reload();
         }
     }
 
     void CheckShooting()
     {
-        if (this.shoot)
+        Transform camaraTransform = this.fpsCam.transform;
+        // Create a vector at the center of our camera's viewport
+        Vector3 rayOrigin = this.fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, this.fpsCam.nearClipPlane));
+
+        this.shooter.DebugDrawRay(rayOrigin, camaraTransform.forward);
+
+        // If shooting and not reloading
+        if (this.shoot && this.shooter.CanShoot()) 
         {
-            // CAST RAY
+            // Trigger animation
+            this.shooter.HandleShootAnimation();
+            // Shoot the weapon
+            this.shooter.Shoot(new Ray(camaraTransform.position, camaraTransform.forward));
+        }
+        // When shooting action is stopped
+        else if (!this.shoot)
+        {
+            this.shooter.FinishShooting();
         }
     }
 
-    public void SetDead(bool status) {
-        this.isDead = status;
-        // Mark as dead not to be able to shoot
-        if (this.isDead) {
-            PlayerShooter p = this.GetComponent<PlayerShooter>();
-            if (p != null) {
-                p.isDead = true;
-            }
-            Thrower t = this.GetComponent<Thrower>();
-            if (t != null) {
-                t.isDead = true;
-            }
-        }
+    public Shooter GetShooter()
+    {
+        return this.shooter;
     }
 
-    // Animator functions
-
-    void SetIdleAnimation()
+    void OnDrawGizmos()
     {
-        this.characterAnimator.SetFloat("Speed_f", 0f);
-    }
+        Camera camera = GetComponentInChildren<Camera>();
+        Gizmos.color = Color.red;
 
-    void SetWalkAnimation()
-    {
-        this.characterAnimator.SetFloat("Speed_f", 0.5f);
-    }
+        Vector3 p1 = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, camera.nearClipPlane));
+        Vector3 p2 = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, camera.farClipPlane));
 
-    void SetRunAnimation()
-    {
-        this.characterAnimator.SetFloat("Speed_f", 1f);
-    }
-
-    void SetBodyRotationAnimation(float angleDeg)
-    {
-        this.characterAnimator.SetFloat("Body_Vertical_f", angleDeg * Mathf.PI / 180 * -1);
-    }
-
-    void SetStartJumpAnimation()
-    {
-        this.characterAnimator.SetBool("Jump_b", true);
-        this.characterAnimator.SetBool("Grounded", false);
-    }
-
-    void SetFinishJumpAnimation()
-    {
-        this.characterAnimator.SetBool("Jump_b", false);
-        this.characterAnimator.SetBool("Grounded", true);
-    }
-
-    void SetCrouchAnimation(bool status)
-    {
-        this.characterAnimator.SetBool("Crouch_b", status);
+        Gizmos.DrawSphere(camera.transform.position, 0.1F);
+        Gizmos.DrawLine(p1, p2);
     }
 }

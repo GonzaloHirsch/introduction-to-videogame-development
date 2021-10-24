@@ -21,18 +21,18 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        float distance = Vector3.Distance(this.target.position, this.transform.position);
+        // float distance = Vector3.Distance(this.target.position, this.transform.position);
 
-        if (distance <= this.lookRadius) {
-            // Want to start chasing player
-            this.agent.SetDestination(this.target.position);
+        // if (distance <= this.lookRadius) {
+        //     // Want to start chasing player
+        //     this.agent.SetDestination(this.target.position);
 
-            if (distance <= this.agent.stoppingDistance) {
-                // Attack the target
-                // Face the target
-                FaceTarget();
-            }
-        }
+        //     if (distance <= this.agent.stoppingDistance) {
+        //         // Attack the target
+        //         // Face the target
+        //         FaceTarget();
+        //     }
+        // }
         
     }
 

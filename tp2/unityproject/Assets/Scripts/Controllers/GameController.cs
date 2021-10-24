@@ -60,7 +60,7 @@ public class GameController : MonoBehaviour
     private void OnPlayerDeath(System.Object sender, FrameLord.GameEvent e)
     {
         // Mark player as dead
-        PlayerManager.Instance.player.SetDead(true);
+        PlayerManager.Instance.player.GetShooter().SetDead(true);
         GameStatus.Instance.SetPlayerWon(false);
         StartCoroutine(this.finishGameCourotine(5));
     }

@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class PlayerManager : FrameLord.MonoBehaviorSingleton<PlayerManager>
 {
-    public PlayerMover player;
+    public PlayerController player;
 }
