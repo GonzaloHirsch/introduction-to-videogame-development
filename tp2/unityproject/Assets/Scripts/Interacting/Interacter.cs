@@ -66,6 +66,14 @@ public class Interacter : MonoBehaviour
                 this.interactText.text = "Hold \"E\" to defuse";
                 this.defuseProgressBar.SetActive(true);
             break;
+            case InteractType.AmmoBox:
+                AmmoBox ammoBox = (AmmoBox) interactableObject;
+                if (ammoBox.IsEmpty()) {
+                    this.interactText.text = "This ammo box is empty";
+                } else {
+                    this.interactText.text = "Press \"E\" to get ammo";
+                }
+            break;
         }
         this.interactTextPanel.SetActive(true);
 
