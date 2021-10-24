@@ -7,7 +7,6 @@ public class Shooter : MonoBehaviour
     private Animator characterAnimator;
     public Weapon weapon;
     private GameObject weaponGo;
-    private Camera fpsCam;                                                // Holds a reference to the first person camera
     private WaitForSeconds shotDuration = new WaitForSeconds(0.07f);    // WaitForSeconds object used by our ShotEffect coroutine, determines time laser line will remain visible
     private WaitForSeconds reloadDuration = new WaitForSeconds(1.4f);    // WaitForSeconds object used by our ShotEffect coroutine, determines time laser line will remain visible
     private LineRenderer laserLine;
@@ -15,85 +14,26 @@ public class Shooter : MonoBehaviour
     private bool isReloading = false;
     public bool isDebug = true;
 
-    public bool isDead = false;
-
     void Start()
     {
-        this.weaponGo = Helper.FindChildGameObjectWithTag(this.gameObject, "Weapon");
-        if (this.weaponGo != null)
-        {
-            this.weapon = this.weaponGo.GetComponent<Weapon>();
-        }
-        this.fpsCam = GetComponentInChildren<Camera>();
-        Cursor.lockState = CursorLockMode.Locked;
+        this.weapon = this.GetComponentInChildren<Weapon>();
         this.laserLine = GetComponent<LineRenderer>();
         this.characterAnimator = GetComponent<Animator>();
         // _shootableMask = LayerMask.GetMask("Shootable");
     }
 
-    void Update()
+    //*****************************************//
+    //*************PRIVATE METHODS*************//
+    //*****************************************//
+
+    // TODO: PREG A GONZA PQ YA NO ANDA MAS ESTE METODO
+    private Weapon GetWeapon()
     {
-        if (!this.isDead)
-        {
-            // Create a vector at the center of our camera's viewport
-            Vector3 rayOrigin = this.fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, this.fpsCam.nearClipPlane));
-
-            // Draw a line in the Scene View  from the point lineOrigin 
-            // in the direction of fpsCam.transform.forward * weaponRange, using the color green
-            if (this.isDebug) Debug.DrawRay(rayOrigin, this.fpsCam.transform.forward * this.weapon.range, Color.green);
-
-            // If shooting and not reloading
-            if (ActionMapper.GetShoot() && !this.isReloading && !this.weapon.NeedsCooldown())
-            {
-                // Trigger animation
-                this.HandleShootAnimation();
-                // Shoot the weapon
-                bool shotFired = this.Shoot();
-            }
-            // When shooting action is stopped
-            else if (!ActionMapper.GetShoot())
-            {
-                this.FinishShooting();
-            }
-
-            // When reloading
-            if (ActionMapper.GetReload())
-            {
-                this.Reload();
-            }
-        }
-    }
-
-    private bool Shoot()
-    {
-        Ray ray = new Ray(this.fpsCam.transform.position, this.fpsCam.transform.forward);
-        RaycastHit hit = new RaycastHit();
-
-        if (this.isDebug) laserLine.SetPosition(0, this.weapon.gunEndPoint.position);
-
-        bool shotFired = this.weapon.ShotFired();
-
-        // Check if the raycast collided with something
-        if (Physics.Raycast(ray, out hit, this.weapon.range))
-        {
-
-            print("hit " + hit.collider.gameObject);
-
-            if (this.isDebug) this.laserLine.SetPosition(1, hit.point);
-
-            // Apply damage to the obj if a shot was fired
-            if (shotFired)
-            {
-                this.ApplyCollisionDamage(hit);
-            }
-        }
-        else if (this.isDebug)
-        {
-            // If no collision, draw until the end of the weapons range
-            this.laserLine.SetPosition(1, ray.GetPoint(this.weapon.range));
-        }
-        // Returns if the shot was fired
-        return shotFired;
+        this.weaponGo = Helper.FindChildGameObjectWithTag(this.gameObject, "Weapon");
+        Debug.Log(this.gameObject);
+        return this.weaponGo != null
+            ? weaponGo.GetComponent<Weapon>()
+            : null;
     }
 
     private void ApplyCollisionDamage(RaycastHit hit)
@@ -106,45 +46,6 @@ public class Shooter : MonoBehaviour
         }
     }
 
-    private void HandleShootAnimation()
-    {
-        bool canFire = this.weapon.CanFireShot();
-        Debug.Log("Fired successfully: " + canFire);
-
-        if (canFire)
-        {
-            // Start the shooting animation
-            this.StartShooting();
-        }
-        else
-        {
-            /**
-             * Handle sound/animation for when weapon has no ammo
-             * Will never fall here when cooldown is > 0 since it
-             * is called from the update
-             */
-        }
-    }
-
-    private void StartShooting()
-    {
-        Debug.Log("Shooting...");
-        // Setting laser effect
-        StartCoroutine(this.ShotEffect());
-        // Setting class variable state
-        this.isShooting = true;
-        // Triggering the animation
-        this.SetShootAnimation(this.isShooting);
-    }
-
-    private void FinishShooting()
-    {
-        // Setting class variable state
-        this.isShooting = false;
-        // Triggering the animation
-        this.SetShootAnimation(this.isShooting);
-    }
-
     private IEnumerator ShotEffect()
     {
         // Turn on our line renderer
@@ -155,12 +56,6 @@ public class Shooter : MonoBehaviour
 
         // Deactivate our line renderer after waiting
         this.laserLine.enabled = false;
-    }
-
-    private void Reload()
-    {
-        this.StartReloading();
-        StartCoroutine(this.ReloadEffect());
     }
 
     private void StartReloading()
@@ -194,24 +89,107 @@ public class Shooter : MonoBehaviour
         this.FinishReloading();
     }
 
-    void SetReloadAnimation(bool isReloading)
+    private void SetReloadAnimation(bool isReloading)
     {
         this.characterAnimator.SetBool("Reload_b", isReloading);
     }
-    void SetShootAnimation(bool isShooting)
+    private void SetShootAnimation(bool isShooting)
     {
         this.characterAnimator.SetBool("Shoot_b", isShooting);
     }
 
-    void OnDrawGizmos()
+    //*****************************************//
+    //*************PUBLIC METHODS**************//
+    //*****************************************//
+
+    public bool CanShoot()
     {
-        Camera camera = GetComponentInChildren<Camera>();
-        Gizmos.color = Color.red;
+        Debug.Log("IN SHOOTER");
+        return !this.isReloading && !this.weapon.NeedsCooldown();
+    }
 
-        Vector3 p1 = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, camera.nearClipPlane));
-        Vector3 p2 = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, camera.farClipPlane));
+    public bool Shoot(Ray ray)
+    {
+        RaycastHit hit = new RaycastHit();
 
-        Gizmos.DrawSphere(camera.transform.position, 0.1F);
-        Gizmos.DrawLine(p1, p2);
+        if (this.isDebug) this.laserLine.SetPosition(0, this.weapon.gunEndPoint.position);
+
+        bool shotFired = this.weapon.ShotFired();
+
+        // Check if the raycast collided with something
+        if (Physics.Raycast(ray, out hit, this.weapon.range))
+        {
+
+            print("hit " + hit.collider.gameObject);
+
+            if (this.isDebug) this.laserLine.SetPosition(1, hit.point);
+
+            // Apply damage to the obj if a shot was fired
+            if (shotFired)
+            {
+                this.ApplyCollisionDamage(hit);
+            }
+        }
+        else if (this.isDebug)
+        {
+            // If no collision, draw until the end of the weapons range
+            this.laserLine.SetPosition(1, ray.GetPoint(this.weapon.range));
+        }
+        // Returns if the shot was fired
+        return shotFired;
+    }
+
+    public void HandleShootAnimation()
+    {
+        bool canFire = this.weapon.CanFireShot();
+        Debug.Log("Fired successfully: " + canFire);
+
+        if (canFire)
+        {
+            // Start the shooting animation
+            this.StartShooting();
+        }
+        else
+        {
+            /**
+             * Handle sound/animation for when weapon has no ammo
+             * Will never fall here when cooldown is > 0 since it
+             * is called from the update
+             */
+        }
+    }
+
+    public void FinishShooting()
+    {
+        // Setting class variable state
+        this.isShooting = false;
+        // Triggering the animation
+        this.SetShootAnimation(this.isShooting);
+    }
+
+    public void Reload()
+    {
+        this.StartReloading();
+        StartCoroutine(this.ReloadEffect());
+    }
+
+    private void StartShooting()
+    {
+        Debug.Log("Shooting...");
+        // Setting laser effect
+        StartCoroutine(this.ShotEffect());
+        // Setting class variable state
+        this.isShooting = true;
+        // Triggering the animation
+        this.SetShootAnimation(this.isShooting);
+    }
+
+    public void DebugDrawRay(Vector3 rayOrigin, Vector3 rayDirection)
+    {
+        // Draw a line in the Scene View  from the point lineOrigin 
+        // in the direction of fpsCam.transform.forward * weaponRange, using the color green
+        if (this.isDebug) {
+            Debug.DrawRay(rayOrigin, rayDirection * this.weapon.range, Color.green);
+        }
     }
 }

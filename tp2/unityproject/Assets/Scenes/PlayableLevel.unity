@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465785, g: 0.49641252, b: 0.574817, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3143,6 +3143,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: f4a980adffb8fdf489d1cd307803800b, type: 3}
   m_PrefabInstance: {fileID: 1163055191}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &130310006 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7665828462127279086, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
+  m_PrefabInstance: {fileID: 7665828461652451726}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &130310014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 130310006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c4097e7ec03b1c2f8873629f75aba99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
 --- !u!1001 &131213899
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29400,7 +29418,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8728707665220251506, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
   m_PrefabInstance: {fileID: 7665828461652451726}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 130310006}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d140892de2f824bfa911c499b83d36b4, type: 3}
@@ -53277,6 +53295,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2647359353317141028, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 4303106493370059204, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
       propertyPath: healthBar
       value: 
@@ -53340,6 +53362,10 @@ PrefabInstance:
     - target: {fileID: 7665828462127279086, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7993805360373157712, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
+      propertyPath: m_TagString
+      value: Weapon
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}

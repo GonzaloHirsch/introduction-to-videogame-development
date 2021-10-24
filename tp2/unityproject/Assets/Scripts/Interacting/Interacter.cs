@@ -17,6 +17,7 @@ public class Interacter : MonoBehaviour
     public Text interactText;
     public GameObject interactTextPanel;
     public GameObject defuseProgressBar;
+    public bool isNPC = false;
 
     void Start()
     {
@@ -29,8 +30,13 @@ public class Interacter : MonoBehaviour
     }
 
     private void CheckInteractableItem() {
-        // Generate a raycast 
-        this.ray = fpsCam.ScreenPointToRay(Input.mousePosition);
+        // Generate a raycast
+        // If NPC -> direction it is facing
+        // If player, to the mouse position
+         this.ray = this.isNPC 
+            ? new Ray(this.transform.position, this.transform.forward)
+            : this.fpsCam.ScreenPointToRay(Input.mousePosition);
+
         this.hit = new RaycastHit();
 
         // Check if the raycast collided with something
