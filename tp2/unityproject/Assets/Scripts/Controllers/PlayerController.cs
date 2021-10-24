@@ -92,14 +92,14 @@ public class PlayerController : MonoBehaviour
     void UpdateMovement()
     {
         // Check it's not already jumping to avoid double jumping
-        if (this.jumped && !this.isJumping && !this.isCrouching)
+        if (this.jumped && !this.isJumping && !this.isCrouching && this.cc.isGrounded)
         {
             this.currentJumpSpeed = this.verticalSpeed;
             this.isJumping = true;
         }
 
         // Check to determine jumping animation
-        if (this.isJumping && this.jumped)
+        if (this.isJumping && this.jumped && this.cc.isGrounded)
         {
             this.shooter.SetStartJumpAnimation();
         }
@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour
 
         if (currentYPosition < 0f)
         {
-            currentYPosition = 0;
+            currentYPosition = 0f;
             this.isJumping = false;
         }
 
