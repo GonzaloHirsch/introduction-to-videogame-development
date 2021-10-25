@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IInteractable
 {
     private Shooter shooter;
 
@@ -225,6 +225,18 @@ public class PlayerController : MonoBehaviour
     public Shooter GetShooter()
     {
         return this.shooter;
+    }
+
+    public void Interact() 
+    {
+        // Do nothing since this method
+        // is for Player interactions.
+        // Will only use for enemy interactions.
+    }
+
+    public InteractType GetInteractType()
+    {
+        return InteractType.Player;
     }
 
     void OnDrawGizmos()

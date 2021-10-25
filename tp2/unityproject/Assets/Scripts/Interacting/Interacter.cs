@@ -12,16 +12,28 @@ public class Interacter : MonoBehaviour
     private RaycastHit hit;
     private IInteractable interactableHit;
     private Camera fpsCam;
+    private LineRenderer laserLine;
 
     [Header("UI")]
     public Text interactText;
     public GameObject interactTextPanel;
     public GameObject defuseProgressBar;
+    
+    [Header("NPC")]
     public bool isNPC = false;
+    private EnemyController enemy;
+    private CapsuleCollider enemyCollider;
 
     void Start()
     {
-        this.fpsCam = GetComponentInChildren<Camera>();
+        this.laserLine = this.GetComponent<LineRenderer>();
+        this.fpsCam = this.GetComponentInChildren<Camera>();
+        // Get the enemy script if the interacter is an enemy
+        if (this.isNPC) {
+            this.enemy = this.GetComponent<EnemyController>();
+            this.enemyCollider = this.GetComponent<CapsuleCollider>();
+            this.interactRange = this.enemy.lookRadius;
+        }
     }
 
     void Update()
@@ -33,9 +45,7 @@ public class Interacter : MonoBehaviour
         // Generate a raycast
         // If NPC -> direction it is facing
         // If player, to the mouse position
-         this.ray = this.isNPC 
-            ? new Ray(this.transform.position, this.transform.forward)
-            : this.fpsCam.ScreenPointToRay(Input.mousePosition);
+         this.ray = this.GetRaycastRay();
 
         this.hit = new RaycastHit();
 
@@ -48,19 +58,72 @@ public class Interacter : MonoBehaviour
             if (this.interactableHit != null)
             {
                 this.CanInteract(this.interactableHit);
-            } else {
-                this.interactTextPanel.SetActive(false);
-                this.defuseProgressBar.SetActive(false);
-            }
+                this.DebugDrawRay(ray);
+                return;
+            } 
+        } 
+        
+        this.DebugDrawRay(ray);
+
+        // Disable all text and other interactions
+        if (this.isNPC) {
+            this.TurnOffEnemyInteractions();
         } else {
-            this.interactTextPanel.SetActive(false);
-            this.defuseProgressBar.SetActive(false);
+            this.TurnOffPlayerInteractions();
         }
     }
 
     private void CanInteract(IInteractable interactableObject) {
         // Show interacting UI
         InteractType interactType = interactableObject.GetInteractType();
+        
+        if (this.isNPC) {
+            this.CheckEnemyInteractions(interactType);
+        } else {
+            this.CheckPlayerInteractions(interactType, interactableObject);
+        }
+    }
+
+    private Ray GetRaycastRay() 
+    {
+        Vector3 rayOrigin;
+        Vector3 rayDirection;
+
+        if (this.isNPC) {
+            rayOrigin = this.transform.position;
+            // Add the capsule height
+            rayOrigin += new Vector3(0, this.enemyCollider.height, 0);
+            // Add the capsule radius in the forward direction
+            rayOrigin += this.transform.forward * this.enemyCollider.radius;
+            // Set the direction
+            rayDirection = this.transform.forward;
+        }
+        else {
+            rayOrigin = this.fpsCam.transform.position;
+            rayDirection = this.fpsCam.transform.forward;            
+        }
+        return new Ray(rayOrigin, rayDirection);
+    }
+    public void DebugDrawRay(Ray ray)
+    {
+        Debug.DrawRay(ray.origin, ray.direction * this.interactRange, Color.green);
+    }
+
+    private void CheckEnemyInteractions(InteractType interactType) 
+    {   
+        if (this.enemy != null) {
+            switch(interactType) {
+                case InteractType.Player:
+                    this.enemy.setPlayerVisibility(true);
+                break;
+            }
+        } else {
+            Debug.LogWarning("[Interacter] No enemy script for NPC interacter.");
+        }  
+    }
+
+    private void CheckPlayerInteractions(InteractType interactType, IInteractable interactableObject) 
+    {
         switch(interactType) {
             case InteractType.Bomb:
                 this.interactText.text = "Hold \"E\" to defuse";
@@ -77,9 +140,26 @@ public class Interacter : MonoBehaviour
         }
         this.interactTextPanel.SetActive(true);
 
-        // Interact
+        // Interact if is player and interacting
         if (ActionMapper.IsInteracting()) {
             interactableObject.Interact();
         }
+    }
+
+    private void TurnOffPlayerInteractions()
+    {
+        this.interactTextPanel.SetActive(false);
+        this.defuseProgressBar.SetActive(false);
+    }
+
+    private void TurnOffEnemyInteractions()
+    {
+        // this.enemy.setPlayerVisibility(false);
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(this.transform.position, this.interactRange);
     }
 }

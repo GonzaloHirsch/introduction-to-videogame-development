@@ -7,33 +7,50 @@ public class EnemyController : MonoBehaviour
 {
     // Only want enemies to attack us if we are within a certain range
     public float lookRadius = 10f;
+    // Amount of time the enemy will consider the player visible once 
+    // it leaves the lookRadius (as if enemy is still alert and searching)
+    public float playerVisibilityTimeLimit = 5f;
+    // Current amount of time player is considered visible
+    private float currentPlayerVisibilityTime = 0f;
     // Need a reference to what we are chasing
-    Transform target;
+    private Transform target;
     // Need a reference to our nav mesh agent to move our enemy
-    NavMeshAgent agent;
+    private NavMeshAgent agent;
+    // Marks if the player is visible to the NPC
+    private bool playerIsVisible = false;
 
     void Start()
     {
         this.target = PlayerManager.Instance.player.transform;
-        this.agent = GetComponent<NavMeshAgent>();
-        
+        this.agent = GetComponent<NavMeshAgent>();  
     }
 
     void Update()
     {
-        // float distance = Vector3.Distance(this.target.position, this.transform.position);
+        // If player is not visible to the NPC do nothing
+        if (!this.playerIsVisible) {
+            return;
+        }
 
-        // if (distance <= this.lookRadius) {
-        //     // Want to start chasing player
-        //     this.agent.SetDestination(this.target.position);
+        // If visible, get closer
+        float distance = Vector3.Distance(this.target.position, this.transform.position);
 
-        //     if (distance <= this.agent.stoppingDistance) {
-        //         // Attack the target
-        //         // Face the target
-        //         FaceTarget();
-        //     }
-        // }
-        
+        if (distance <= this.lookRadius) {
+            this.UpdateEnemyPosition(distance);
+        } else {
+            this.CheckPlayerVisibilityTime();
+        } 
+    }
+
+    void UpdateEnemyPosition(float distance)
+    {
+        // Want to start chasing player
+        this.agent.SetDestination(this.target.position);
+        if (distance <= this.agent.stoppingDistance) {
+            // Attack the target
+            // Face the target
+            FaceTarget();
+        }
     }
 
     void FaceTarget()
@@ -46,9 +63,28 @@ public class EnemyController : MonoBehaviour
         this.transform.rotation = Quaternion.Slerp(this.transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
 
+    void CheckPlayerVisibilityTime()
+    {
+        // If distance is greater than look radius for a 
+        // period of time, set player visibility to false
+        bool playerVisibilityTimeReached = 
+            this.currentPlayerVisibilityTime >= this.playerVisibilityTimeLimit;
+        // Reset the timer or keep adding to it
+        this.currentPlayerVisibilityTime = playerVisibilityTimeReached
+            ? 0f
+            : this.currentPlayerVisibilityTime + Time.deltaTime;
+        // Player no longer visible if time limit reached
+        this.playerIsVisible = !playerVisibilityTimeReached;  
+    }
+
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(this.transform.position, lookRadius);
+    }
+
+    public void setPlayerVisibility(bool playerIsVisible)
+    {
+        this.playerIsVisible = playerIsVisible;
     }
 }

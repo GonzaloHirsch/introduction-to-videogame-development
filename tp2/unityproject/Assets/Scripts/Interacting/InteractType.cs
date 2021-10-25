@@ -1,5 +1,6 @@
 public enum InteractType
 {
     Bomb,
-    AmmoBox
+    AmmoBox,
+    Player
 }

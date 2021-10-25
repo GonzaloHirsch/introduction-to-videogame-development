@@ -37,7 +37,6 @@ public class Shooter : MonoBehaviour
     private Weapon GetWeapon()
     {
         this.weaponGo = Helper.FindChildGameObjectWithTag(this.gameObject, "Weapon");
-        Debug.Log(this.gameObject);
         return this.weaponGo != null
             ? weaponGo.GetComponent<Weapon>()
             : null;
