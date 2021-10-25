@@ -12,7 +12,6 @@ public class Interacter : MonoBehaviour
     private RaycastHit hit;
     private IInteractable interactableHit;
     private Camera fpsCam;
-    private LineRenderer laserLine;
 
     [Header("UI")]
     public Text interactText;
@@ -26,7 +25,6 @@ public class Interacter : MonoBehaviour
 
     void Start()
     {
-        this.laserLine = this.GetComponent<LineRenderer>();
         this.fpsCam = this.GetComponentInChildren<Camera>();
         // Get the enemy script if the interacter is an enemy
         if (this.isNPC) {

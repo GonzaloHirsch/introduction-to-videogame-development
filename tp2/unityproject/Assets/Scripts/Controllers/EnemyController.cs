@@ -12,34 +12,39 @@ public class EnemyController : MonoBehaviour
     public float playerVisibilityTimeLimit = 5f;
     // Current amount of time player is considered visible
     private float currentPlayerVisibilityTime = 0f;
+    // Marks if the player is visible to the NPC
+    private bool playerIsVisible = false;
     // Need a reference to what we are chasing
     private Transform target;
     // Need a reference to our nav mesh agent to move our enemy
     private NavMeshAgent agent;
-    // Marks if the player is visible to the NPC
-    private bool playerIsVisible = false;
+    // Reference to the Shooter script
+    private Shooter shooter;
+
 
     void Start()
     {
         this.target = PlayerManager.Instance.player.transform;
-        this.agent = GetComponent<NavMeshAgent>();  
+        this.agent = this.GetComponent<NavMeshAgent>();  
+        this.shooter = this.GetComponent<Shooter>();
     }
 
     void Update()
     {
         // If player is not visible to the NPC do nothing
-        if (!this.playerIsVisible) {
-            return;
+        if (this.playerIsVisible) {
+            // If visible, get closer
+            float distance = Vector3.Distance(this.target.position, this.transform.position);
+
+            if (distance <= this.lookRadius) {
+                this.UpdateEnemyPosition(distance);
+            } else {
+                this.CheckPlayerVisibilityTime();
+            } 
         }
 
-        // If visible, get closer
-        float distance = Vector3.Distance(this.target.position, this.transform.position);
-
-        if (distance <= this.lookRadius) {
-            this.UpdateEnemyPosition(distance);
-        } else {
-            this.CheckPlayerVisibilityTime();
-        } 
+        // Set walking or idle animation
+        this.SetMovementAnimation();
     }
 
     void UpdateEnemyPosition(float distance)
@@ -75,6 +80,17 @@ public class EnemyController : MonoBehaviour
             : this.currentPlayerVisibilityTime + Time.deltaTime;
         // Player no longer visible if time limit reached
         this.playerIsVisible = !playerVisibilityTimeReached;  
+    }
+
+    void SetMovementAnimation() 
+    {
+        Debug.Log(this.agent.velocity.magnitude);
+        float currentVelocity = this.agent.velocity.magnitude;
+        if (currentVelocity > 0) {
+            this.shooter.SetWalkAnimation();
+        } else {
+            this.shooter.SetIdleAnimation();
+        }
     }
 
     void OnDrawGizmosSelected()
