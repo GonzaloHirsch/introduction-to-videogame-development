@@ -13,6 +13,7 @@ public class Shootable : MonoBehaviour
     private Animator characterAnimator;
     public ParticleSystem bloodParticles;
     public bool emitPlayerDeath = false;
+    public bool emitEnemyDeath = false;
 
     void Awake() {
         this.bloodParticles.Stop();
@@ -41,11 +42,13 @@ public class Shootable : MonoBehaviour
         }
     }
 
-    // TODO: Arreglar esto, el evento se va a llamar cuando cualquiera muera, sea
-    // player o NPC, pero en el GameController solo se esta considerando que muere 
-    // el player.
     private void SetDeath() {
         if (this.characterAnimator != null) this.characterAnimator.SetBool("Death_b", true);
         if (this.emitPlayerDeath) FrameLord.GameEventDispatcher.Instance.Dispatch(this, EvnPlayerDeath.notifier);
+        if (this.emitEnemyDeath) FrameLord.GameEventDispatcher.Instance.Dispatch(this, EvnEnemyDeath.notifier);
+    }
+
+    public bool IsDead() {
+        return this.isDead;
     }
 }

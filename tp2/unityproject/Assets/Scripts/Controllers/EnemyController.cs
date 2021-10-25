@@ -20,38 +20,53 @@ public class EnemyController : MonoBehaviour
     private NavMeshAgent agent;
     // Reference to the Shooter script
     private Shooter shooter;
+    private Shootable shootable;
+    private Collider enemyCollider;
 
 
     void Start()
     {
         this.target = PlayerManager.Instance.player.transform;
-        this.agent = this.GetComponent<NavMeshAgent>();  
+        this.agent = this.GetComponent<NavMeshAgent>();
         this.shooter = this.GetComponent<Shooter>();
+        this.shootable = this.GetComponent<Shootable>();
+        this.enemyCollider = this.GetComponent<Collider>();
     }
 
     void Update()
     {
-        // If player is not visible to the NPC do nothing
-        if (this.playerIsVisible) {
-            // If visible, get closer
-            float distance = Vector3.Distance(this.target.position, this.transform.position);
+        if (!this.shootable.IsDead())
+        {
+            // If player is not visible to the NPC do nothing
+            if (this.playerIsVisible)
+            {
+                // If visible, get closer
+                float distance = Vector3.Distance(this.target.position, this.transform.position);
 
-            if (distance <= this.lookRadius) {
-                this.UpdateEnemyPosition(distance);
-            } else {
-                this.CheckPlayerVisibilityTime();
-            } 
+                if (distance <= this.lookRadius)
+                {
+                    this.UpdateEnemyPosition(distance);
+                }
+                else
+                {
+                    this.CheckPlayerVisibilityTime();
+                }
+            }
+
+            // Set walking or idle animation
+            this.SetMovementAnimation();
+        } else {
+            // Disable collider to avoid bothering player movement
+            if (this.enemyCollider.enabled) this.enemyCollider.enabled = false;
         }
-
-        // Set walking or idle animation
-        this.SetMovementAnimation();
     }
 
     void UpdateEnemyPosition(float distance)
     {
         // Want to start chasing player
         this.agent.SetDestination(this.target.position);
-        if (distance <= this.agent.stoppingDistance) {
+        if (distance <= this.agent.stoppingDistance)
+        {
             // Attack the target
             // Face the target
             FaceTarget();
@@ -72,23 +87,26 @@ public class EnemyController : MonoBehaviour
     {
         // If distance is greater than look radius for a 
         // period of time, set player visibility to false
-        bool playerVisibilityTimeReached = 
+        bool playerVisibilityTimeReached =
             this.currentPlayerVisibilityTime >= this.playerVisibilityTimeLimit;
         // Reset the timer or keep adding to it
         this.currentPlayerVisibilityTime = playerVisibilityTimeReached
             ? 0f
             : this.currentPlayerVisibilityTime + Time.deltaTime;
         // Player no longer visible if time limit reached
-        this.playerIsVisible = !playerVisibilityTimeReached;  
+        this.playerIsVisible = !playerVisibilityTimeReached;
     }
 
-    void SetMovementAnimation() 
+    void SetMovementAnimation()
     {
         Debug.Log(this.agent.velocity.magnitude);
         float currentVelocity = this.agent.velocity.magnitude;
-        if (currentVelocity > 0) {
+        if (currentVelocity > 0)
+        {
             this.shooter.SetWalkAnimation();
-        } else {
+        }
+        else
+        {
             this.shooter.SetIdleAnimation();
         }
     }

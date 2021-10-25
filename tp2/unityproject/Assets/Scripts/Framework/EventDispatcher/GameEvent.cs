@@ -28,7 +28,8 @@ namespace FrameLord
 			BOMB_DEFUSE,
 			BOMB_EXPLODE,
 			BULLETS_CHANGE,
-			GRENADES_CHANGE
+			GRENADES_CHANGE,
+			ENEMY_DEATH
 		}
 	}
 }
