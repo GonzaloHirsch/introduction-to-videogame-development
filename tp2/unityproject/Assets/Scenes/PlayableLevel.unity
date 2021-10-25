@@ -24329,7 +24329,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 095c849bfd19dbb02a48bf6bf13baec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookRadius: 25
+  turnRadius: 15
+  lookRadius: 40
   playerVisibilityTimeLimit: 5
 --- !u!54 &993045885
 Rigidbody:
@@ -24371,7 +24372,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.2
-  m_Speed: 3
+  m_Speed: 4
   m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 120
