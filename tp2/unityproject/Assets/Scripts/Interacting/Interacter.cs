@@ -126,8 +126,14 @@ public class Interacter : MonoBehaviour
     {
         switch(interactType) {
             case InteractType.Bomb:
-                this.interactText.text = "Hold \"E\" to defuse";
-                this.defuseProgressBar.SetActive(true);
+                Bomb bomb = (Bomb) interactableObject;
+                if (bomb.IsDefused()) {
+                    this.interactText.text = "This bomb is defused";
+                    this.defuseProgressBar.SetActive(false);
+                } else {
+                    this.interactText.text = "Hold \"E\" to defuse";
+                    this.defuseProgressBar.SetActive(true);
+                } 
             break;
             case InteractType.AmmoBox:
                 AmmoBox ammoBox = (AmmoBox) interactableObject;

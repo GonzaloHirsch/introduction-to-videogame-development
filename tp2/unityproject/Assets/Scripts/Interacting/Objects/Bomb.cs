@@ -19,6 +19,13 @@ public class Bomb : MonoBehaviour, IInteractable
     [Header("UI")]
     public bool showInUI = false;
     public ProgressBar defuseBar;
+    public Outline outline;
+
+    void Start() {
+        this.outline = GetComponent<Outline>();
+        if (this.outline) this.outline.OutlineColor = new Color(1f, 0f, 0f);
+        this.ResetProgressBar();
+    }
 
     void Update()
     {
@@ -69,6 +76,8 @@ public class Bomb : MonoBehaviour, IInteractable
         {
             this.isDefused = true;
             FrameLord.GameEventDispatcher.Instance.Dispatch(this, EvnBombDefuse.notifier);
+            // Green outline
+            if (this.outline) this.outline.OutlineColor = new Color(0f, 1f, 0f);
             if (this.showInUI) {
                 this.defuseBar.SetValue(0f);
             }
@@ -95,10 +104,7 @@ public class Bomb : MonoBehaviour, IInteractable
         this.currentDefuseTime = 0f;
         this.isDefusing = true;
         this.lastInteractedFrame = Time.frameCount;
-        if (this.showInUI) {
-            this.defuseBar.SetMaxValue(this.defuseTime);
-            this.defuseBar.SetValue(0f);
-        }
+        this.ResetProgressBar();
     }
 
     private void CheckTicking()
@@ -113,5 +119,16 @@ public class Bomb : MonoBehaviour, IInteractable
 
     public void SetTimeToExplode(float time) {
         this.timeToExplode = time;
+    }
+
+    public bool IsDefused() {
+        return this.isDefused;
+    }
+
+    public void ResetProgressBar() {
+        if (this.showInUI) {
+            this.defuseBar.SetMaxValue(this.defuseTime);
+            this.defuseBar.SetValue(0f);
+        }
     }
 }
