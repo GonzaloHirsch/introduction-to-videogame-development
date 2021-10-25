@@ -55,13 +55,13 @@ public class Shooter : MonoBehaviour
     private IEnumerator ShotEffect()
     {
         // Turn on our line renderer
-        this.laserLine.enabled = true;
+        if (this.isDebug) this.laserLine.enabled = true;
 
         //Wait for .07 seconds
         yield return shotDuration;
 
         // Deactivate our line renderer after waiting
-        this.laserLine.enabled = false;
+        if (this.isDebug) this.laserLine.enabled = false;
     }
 
     private void StartReloading()
@@ -143,7 +143,7 @@ public class Shooter : MonoBehaviour
         else if (this.isDebug)
         {
             // If no collision, draw until the end of the weapons range
-            this.laserLine.SetPosition(1, ray.GetPoint(this.weapon.range));
+            if (this.isDebug) this.laserLine.SetPosition(1, ray.GetPoint(this.weapon.range));
         }
         // Returns if the shot was fired
         return shotFired;

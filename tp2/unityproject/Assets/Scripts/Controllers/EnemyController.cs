@@ -5,8 +5,10 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
+    // If player within this distance, enemy will turn to face them
+    public float turnRadius = 15f;
     // Only want enemies to attack us if we are within a certain range
-    public float lookRadius = 10f;
+    public float lookRadius = 40f;
     // Amount of time the enemy will consider the player visible once 
     // it leaves the lookRadius (as if enemy is still alert and searching)
     public float playerVisibilityTimeLimit = 5f;
@@ -37,12 +39,12 @@ public class EnemyController : MonoBehaviour
     {
         if (!this.shootable.IsDead())
         {
+            // If visible, get closer
+            float distance = Vector3.Distance(this.target.position, this.transform.position);
+
             // If player is not visible to the NPC do nothing
             if (this.playerIsVisible)
             {
-                // If visible, get closer
-                float distance = Vector3.Distance(this.target.position, this.transform.position);
-
                 if (distance <= this.lookRadius)
                 {
                     this.UpdateEnemyPosition(distance);
@@ -51,11 +53,16 @@ public class EnemyController : MonoBehaviour
                 {
                     this.CheckPlayerVisibilityTime();
                 }
+                // Set walking or idle animation
+                this.SetMovementAnimation();
             }
-
-            // Set walking or idle animation
-            this.SetMovementAnimation();
-        } else {
+            else if (distance <= this.turnRadius)
+            {
+                this.FaceTarget();
+            }
+        }
+        else
+        {
             // Disable collider to avoid bothering player movement
             if (this.enemyCollider.enabled) this.enemyCollider.enabled = false;
         }
@@ -109,12 +116,6 @@ public class EnemyController : MonoBehaviour
         {
             this.shooter.SetIdleAnimation();
         }
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(this.transform.position, lookRadius);
     }
 
     public void setPlayerVisibility(bool playerIsVisible)

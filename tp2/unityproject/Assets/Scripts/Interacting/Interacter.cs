@@ -64,9 +64,7 @@ public class Interacter : MonoBehaviour
         this.DebugDrawRay(ray);
 
         // Disable all text and other interactions
-        if (this.isNPC) {
-            this.TurnOffEnemyInteractions();
-        } else {
+        if (!this.isNPC) {
             this.TurnOffPlayerInteractions();
         }
     }
@@ -154,11 +152,6 @@ public class Interacter : MonoBehaviour
     {
         this.interactTextPanel.SetActive(false);
         this.defuseProgressBar.SetActive(false);
-    }
-
-    private void TurnOffEnemyInteractions()
-    {
-        // this.enemy.setPlayerVisibility(false);
     }
 
     void OnDrawGizmosSelected()
