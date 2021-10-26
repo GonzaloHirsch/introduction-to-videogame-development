@@ -13,9 +13,10 @@ public class GameController : MonoBehaviour
     public Outline[] bombOutlines;
 
     [Header("Enemies")]
-    public int[] enemiesPerLevel;
+    public int[] activeEnemiesPerLevel;
     public GameObject[] enemies;
     public Outline[] enemyOutlines;
+    private int activeEnemies = 0;
 
     [Header("Killstreaks")]
     public int killstreakKilledEnemies = 0;
@@ -33,14 +34,14 @@ public class GameController : MonoBehaviour
     {
         FrameLord.GameEventDispatcher.Instance.ClearSceneListeners();
         this.SetListeners();
+        this.SetActiveBombs();
+        this.SetActiveEnemies();
+        this.SetTimer();
+        this.RecoverOutlines();
     }
 
     void Start()
     {
-        this.SetActiveBombs();
-        this.SetTimer();
-        this.RecoverObjects();
-        this.RecoverOutlines();
     }
 
     void Update() {
@@ -124,6 +125,19 @@ public class GameController : MonoBehaviour
 
     void SetTimer() {
         this.timerController.SetTimerLimit(this.bombTimersPerLevel[GameStatus.Instance.GetLevel()]);
+    }
+
+    /* ------------------------------ ENEMIES ------------------------------ */
+
+    void SetActiveEnemies() {
+        // Mark number of active bombs
+        this.activeEnemies = this.activeEnemiesPerLevel[GameStatus.Instance.GetLevel()];
+        // Get random indexes
+        int[] indexes = Helper.GetUniqueRandomNumbersBetween(0, this.enemies.Length, this.activeEnemies);
+        foreach (int i in indexes) {
+            // Set bomb active
+            this.enemies[i].SetActive(true);
+        }
     }
 
     /* ------------------------------ OBJECTS ------------------------------ */

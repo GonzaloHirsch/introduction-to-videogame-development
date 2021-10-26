@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 2547819082845411644}
   - component: {fileID: 2547819082845411778}
   - component: {fileID: 2547819082845411777}
-  - component: {fileID: 2547819082845411779}
   - component: {fileID: 2547819082845411780}
   - component: {fileID: 2547819082845411781}
   m_Layer: 0
@@ -125,6 +124,7 @@ MonoBehaviour:
   bloodParticles: {fileID: 2442292407667566988}
   emitPlayerDeath: 0
   emitEnemyDeath: 1
+  isNPC: 1
 --- !u!114 &2547819082845411777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,25 +140,7 @@ MonoBehaviour:
   weapon: {fileID: 0}
   isDebug: 1
   isDead: 0
---- !u!95 &2547819082845411779
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2547819082845411643}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 009a340ea743c464da13c08b526058b5, type: 3}
-  m_Controller: {fileID: 9100000, guid: afec2cc25e3439e4bb1b43e7c09f6503, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  isNPC: 1
 --- !u!114 &2547819082845411780
 MonoBehaviour:
   m_ObjectHideFlags: 0

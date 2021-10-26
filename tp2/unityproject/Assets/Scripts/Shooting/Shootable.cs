@@ -14,10 +14,15 @@ public class Shootable : MonoBehaviour
     public ParticleSystem bloodParticles;
     public bool emitPlayerDeath = false;
     public bool emitEnemyDeath = false;
+    public bool isNPC = false;
 
     void Awake() {
         this.bloodParticles.Stop();
-        this.characterAnimator = GetComponent<Animator>();
+        if (this.isNPC) {
+            this.characterAnimator = GetComponentInChildren<Animator>();
+        } else {
+            this.characterAnimator = GetComponent<Animator>();
+        }
         // In case we show health in UI
         if (this.showInUI) {
             this.healthBar.SetMaxValue(this.currentHealth);
@@ -36,8 +41,9 @@ public class Shootable : MonoBehaviour
             // Check if health has fallen below zero
             if (this.currentHealth <= 0) 
             {
-                this.isDead = true;
+                // Play animation before marking to avoid race condition errors
                 this.SetDeath();
+                this.isDead = true;
             }
         }
     }
