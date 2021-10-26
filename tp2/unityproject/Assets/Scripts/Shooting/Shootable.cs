@@ -14,15 +14,10 @@ public class Shootable : MonoBehaviour
     public ParticleSystem bloodParticles;
     public bool emitPlayerDeath = false;
     public bool emitEnemyDeath = false;
-    public bool isNPC = false;
 
     void Awake() {
         this.bloodParticles.Stop();
-        if (this.isNPC) {
-            this.characterAnimator = GetComponentInChildren<Animator>();
-        } else {
-            this.characterAnimator = GetComponent<Animator>();
-        }
+        this.characterAnimator = GetComponent<Animator>();
         // In case we show health in UI
         if (this.showInUI) {
             this.healthBar.SetMaxValue(this.currentHealth);

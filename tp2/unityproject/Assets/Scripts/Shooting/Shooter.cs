@@ -16,17 +16,12 @@ public class Shooter : MonoBehaviour
     private bool isReloading = false;
     public bool isDebug = true;
     public bool isDead = false;
-    public bool isNPC = false;
 
     void Start()
     {
         this.weapon = this.GetComponentInChildren<Weapon>();
         this.laserLine = GetComponent<LineRenderer>();
-        if (this.isNPC) {
-            this.characterAnimator = GetComponentInChildren<Animator>();
-        } else {
-            this.characterAnimator = GetComponent<Animator>();
-        }
+        this.characterAnimator = GetComponent<Animator>();
 
         // Set initial animation, start idle
         this.SetIdleAnimation();
