@@ -21274,7 +21274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeBombsPerLevel: 010000000200000003000000
-  bombTimersPerLevel: b40000007800000078000000
+  bombTimersPerLevel: b40000009600000096000000
   possibleBombLocations:
   - {fileID: 1762128489}
   - {fileID: 933880789}
@@ -21283,7 +21283,7 @@ MonoBehaviour:
   - {fileID: 887301267}
   bombs: []
   bombOutlines: []
-  activeEnemiesPerLevel: 0a0000000f00000014000000
+  activeEnemiesPerLevel: 0f0000001400000019000000
   enemies:
   - {fileID: 2050598785}
   - {fileID: 174212894}
@@ -32774,7 +32774,7 @@ RectTransform:
   - {fileID: 840619889}
   - {fileID: 838434017}
   m_Father: {fileID: 1903633123}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -37471,7 +37471,7 @@ RectTransform:
   - {fileID: 1503027971}
   - {fileID: 1595085266}
   m_Father: {fileID: 1903633123}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -48607,8 +48607,8 @@ RectTransform:
   - {fileID: 142575360}
   - {fileID: 558021275}
   - {fileID: 1919770648}
-  - {fileID: 1484957519}
   - {fileID: 1279374158}
+  - {fileID: 1484957519}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -48818,7 +48818,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1916414017
 MonoBehaviour:
@@ -48840,7 +48840,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 7484a720d7c5b4d21b38ade8ffc5dc9a, type: 3}
+  m_Texture: {fileID: 2800000, guid: 524f6825a807a4fd6a2e624da2c66929, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0

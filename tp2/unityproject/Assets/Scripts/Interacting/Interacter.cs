@@ -129,7 +129,8 @@ public class Interacter : MonoBehaviour
                 } else {
                     this.interactText.text = "Hold \"E\" to defuse";
                     this.defuseProgressBar.SetActive(true);
-                } 
+                }
+                this.interactTextPanel.SetActive(true);
             break;
             case InteractType.AmmoBox:
                 AmmoBox ammoBox = (AmmoBox) interactableObject;
@@ -138,9 +139,12 @@ public class Interacter : MonoBehaviour
                 } else {
                     this.interactText.text = "Press \"E\" to get ammo";
                 }
+                this.interactTextPanel.SetActive(true);
+            break;
+            case InteractType.Player:
+                this.interactTextPanel.SetActive(false);
             break;
         }
-        this.interactTextPanel.SetActive(true);
 
         // Interact if is player and interacting
         if (ActionMapper.IsInteracting()) {
