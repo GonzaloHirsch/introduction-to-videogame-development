@@ -52,6 +52,11 @@ public class Bomb : MonoBehaviour, IInteractable
             }
         }
     }
+    
+    public void InteractWithCaller(GameObject caller)
+    {
+        this.Interact();
+    }
 
     public InteractType GetInteractType()
     {

@@ -5,11 +5,21 @@ using UnityEngine;
 public class AmmoBox : MonoBehaviour, IInteractable
 {
     private bool isAlreadyUsed = false;
+    private Outline outline;
+
+    void Awake() {
+        this.outline = GetComponent<Outline>();
+    }
 
     public void Interact()
     {
+        // Avoid calls to interact on this one, we expect to receive the caller
+    }
+
+    public void InteractWithCaller(GameObject caller)
+    {
         if (!this.isAlreadyUsed) {
-            this.GiveAmmo();
+            this.GiveAmmo(caller);
         }
     }
 
@@ -18,9 +28,16 @@ public class AmmoBox : MonoBehaviour, IInteractable
         return InteractType.AmmoBox;
     }
 
-    private void GiveAmmo(){
+    private void GiveAmmo(GameObject caller){
         this.isAlreadyUsed = true;
-        // GIVE AMMO
+        // Refill weapon
+        Weapon weapon = caller.GetComponentInChildren<Weapon>();
+        weapon.RefillWeapon();
+        // Refill grenades
+        Thrower thrower = caller.GetComponent<Thrower>();
+        thrower.RefillGrenades();
+        // Update outline
+        this.outline.OutlineWidth = 0f;
     }
 
     public bool IsEmpty() {

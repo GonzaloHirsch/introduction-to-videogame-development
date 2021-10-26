@@ -83,4 +83,10 @@ public class Weapon : MonoBehaviour
         evn.total = this.extraAmmo;
         FrameLord.GameEventDispatcher.Instance.Dispatch(this, evn);
     }
+
+    public void RefillWeapon() {
+        this.currentAmmo = this.ammoPerMag;
+        this.extraAmmo = this.totalInitialAmmo;
+        this.SendBulletsEvent();
+    }
 }

@@ -91,4 +91,9 @@ public class Thrower : MonoBehaviour
         evn.current = this.ammo;
         FrameLord.GameEventDispatcher.Instance.Dispatch(this, evn);
     }
+
+    public void RefillGrenades() {
+        this.ammo = this.intialAmmo;
+        this.SendThrowEvent();
+    }
 }

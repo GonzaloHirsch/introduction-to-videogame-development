@@ -17,7 +17,7 @@ public class Interacter : MonoBehaviour
     public Text interactText;
     public GameObject interactTextPanel;
     public GameObject defuseProgressBar;
-    
+
     [Header("NPC")]
     public bool isNPC = false;
     private EnemyController enemy;
@@ -27,7 +27,8 @@ public class Interacter : MonoBehaviour
     {
         this.fpsCam = this.GetComponentInChildren<Camera>();
         // Get the enemy script if the interacter is an enemy
-        if (this.isNPC) {
+        if (this.isNPC)
+        {
             this.enemy = this.GetComponent<EnemyController>();
             this.enemyCollider = this.GetComponent<CapsuleCollider>();
             this.interactRange = this.enemy.lookRadius;
@@ -39,11 +40,12 @@ public class Interacter : MonoBehaviour
         this.CheckInteractableItem();
     }
 
-    private void CheckInteractableItem() {
+    private void CheckInteractableItem()
+    {
         // Generate a raycast
         // If NPC -> direction it is facing
         // If player, to the mouse position
-         this.ray = this.GetRaycastRay();
+        this.ray = this.GetRaycastRay();
 
         this.hit = new RaycastHit();
 
@@ -58,34 +60,40 @@ public class Interacter : MonoBehaviour
                 this.CanInteract(this.interactableHit);
                 this.DebugDrawRay(ray);
                 return;
-            } 
-        } 
-        
+            }
+        }
+
         this.DebugDrawRay(ray);
 
         // Disable all text and other interactions
-        if (!this.isNPC) {
+        if (!this.isNPC)
+        {
             this.TurnOffPlayerInteractions();
         }
     }
 
-    private void CanInteract(IInteractable interactableObject) {
+    private void CanInteract(IInteractable interactableObject)
+    {
         // Show interacting UI
         InteractType interactType = interactableObject.GetInteractType();
-        
-        if (this.isNPC) {
+
+        if (this.isNPC)
+        {
             this.CheckEnemyInteractions(interactType);
-        } else {
+        }
+        else
+        {
             this.CheckPlayerInteractions(interactType, interactableObject);
         }
     }
 
-    private Ray GetRaycastRay() 
+    private Ray GetRaycastRay()
     {
         Vector3 rayOrigin;
         Vector3 rayDirection;
 
-        if (this.isNPC) {
+        if (this.isNPC)
+        {
             rayOrigin = this.transform.position;
             // Add the capsule height
             rayOrigin += new Vector3(0, this.enemyCollider.height, 0);
@@ -94,9 +102,10 @@ public class Interacter : MonoBehaviour
             // Set the direction
             rayDirection = this.transform.forward;
         }
-        else {
+        else
+        {
             rayOrigin = this.fpsCam.transform.position;
-            rayDirection = this.fpsCam.transform.forward;            
+            rayDirection = this.fpsCam.transform.forward;
         }
         return new Ray(rayOrigin, rayDirection);
     }
@@ -105,50 +114,66 @@ public class Interacter : MonoBehaviour
         Debug.DrawRay(ray.origin, ray.direction * this.interactRange, Color.green);
     }
 
-    private void CheckEnemyInteractions(InteractType interactType) 
-    {   
-        if (this.enemy != null) {
-            switch(interactType) {
+    private void CheckEnemyInteractions(InteractType interactType)
+    {
+        if (this.enemy != null)
+        {
+            switch (interactType)
+            {
                 case InteractType.Player:
                     this.enemy.SetPlayerVisibility(true);
-                break;
+                    break;
             }
-        } else {
+        }
+        else
+        {
             Debug.LogWarning("[Interacter] No enemy script for NPC interacter.");
-        }  
+        }
     }
 
-    private void CheckPlayerInteractions(InteractType interactType, IInteractable interactableObject) 
+    private void CheckPlayerInteractions(InteractType interactType, IInteractable interactableObject)
     {
-        switch(interactType) {
+        switch (interactType)
+        {
             case InteractType.Bomb:
-                Bomb bomb = (Bomb) interactableObject;
-                if (bomb.IsDefused()) {
+                Bomb bomb = (Bomb)interactableObject;
+                if (bomb.IsDefused())
+                {
                     this.interactText.text = "This bomb is defused";
                     this.defuseProgressBar.SetActive(false);
-                } else {
+                }
+                else
+                {
                     this.interactText.text = "Hold \"E\" to defuse";
                     this.defuseProgressBar.SetActive(true);
                 }
                 this.interactTextPanel.SetActive(true);
-            break;
+                // Interact if is player and interacting
+                if (ActionMapper.IsInteracting())
+                {
+                    interactableObject.Interact();
+                }
+                break;
             case InteractType.AmmoBox:
-                AmmoBox ammoBox = (AmmoBox) interactableObject;
-                if (ammoBox.IsEmpty()) {
+                AmmoBox ammoBox = (AmmoBox)interactableObject;
+                if (ammoBox.IsEmpty())
+                {
                     this.interactText.text = "This ammo box is empty";
-                } else {
+                }
+                else
+                {
                     this.interactText.text = "Press \"E\" to get ammo";
                 }
                 this.interactTextPanel.SetActive(true);
-            break;
+                // Interact if is player and interacting
+                if (ActionMapper.IsInteracting())
+                {
+                    interactableObject.InteractWithCaller(this.gameObject);
+                }
+                break;
             case InteractType.Player:
                 this.interactTextPanel.SetActive(false);
-            break;
-        }
-
-        // Interact if is player and interacting
-        if (ActionMapper.IsInteracting()) {
-            interactableObject.Interact();
+                break;
         }
     }
 

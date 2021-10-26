@@ -234,6 +234,13 @@ public class PlayerController : MonoBehaviour, IInteractable
         // Will only use for enemy interactions.
     }
 
+    public void InteractWithCaller(GameObject caller)
+    {
+        // Do nothing since this method
+        // is for Player interactions.
+        // Will only use for enemy interactions.
+    }
+
     public InteractType GetInteractType()
     {
         return InteractType.Player;
