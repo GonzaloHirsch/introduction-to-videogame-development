@@ -110,7 +110,7 @@ public class Interacter : MonoBehaviour
         if (this.enemy != null) {
             switch(interactType) {
                 case InteractType.Player:
-                    this.enemy.setPlayerVisibility(true);
+                    this.enemy.SetPlayerVisibility(true);
                 break;
             }
         } else {

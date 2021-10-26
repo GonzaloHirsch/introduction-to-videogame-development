@@ -6,9 +6,9 @@ using UnityEngine.AI;
 public class EnemyController : MonoBehaviour
 {
     // If player within this distance, enemy will turn to face them
-    public float turnRadius = 15f;
+    public float turnRadius = 10f;
     // Only want enemies to attack us if we are within a certain range
-    public float lookRadius = 40f;
+    public float lookRadius = 30f;
     // Amount of time the enemy will consider the player visible once 
     // it leaves the lookRadius (as if enemy is still alert and searching)
     public float playerVisibilityTimeLimit = 5f;
@@ -39,36 +39,36 @@ public class EnemyController : MonoBehaviour
     {
         if (!this.shootable.IsDead())
         {
-            // If visible, get closer
-            float distance = Vector3.Distance(this.target.position, this.transform.position);
-
-            // If player is not visible to the NPC do nothing
-            if (this.playerIsVisible)
-            {
-                if (distance <= this.lookRadius)
-                {
-                    this.UpdateEnemyPosition(distance);
-                }
-                else
-                {
-                    this.CheckPlayerVisibilityTime();
-                }
-                // Set walking or idle animation
-                this.SetMovementAnimation();
-            }
-            else if (distance <= this.turnRadius)
-            {
-                this.FaceTarget();
-            }
+            this.HandleEnemyMovement();
+            // Set walking or idle animation
+            this.SetMovementAnimation();
         }
         else
         {
             // Disable collider to avoid bothering player movement
-            if (this.enemyCollider.enabled) this.enemyCollider.enabled = false;
+            if (this.enemyCollider.enabled) {
+                this.enemyCollider.enabled = false;
+            }
         }
     }
 
-    void UpdateEnemyPosition(float distance)
+    void HandleEnemyMovement()
+    {
+        // If visible, get closer
+        float distance = Vector3.Distance(this.target.position, this.transform.position);
+
+        // If player is not visible to the NPC do nothing
+        if (this.playerIsVisible) {
+            if (distance <= this.lookRadius) {
+                this.ReactToVisiblePlayer(distance);
+            } else {
+                this.CheckPlayerVisibilityTime();
+            } 
+        } else if (!this.EnemyIsMoving() && distance <= this.turnRadius) {
+            this.FaceTarget();
+        }
+    }
+    void ReactToVisiblePlayer(float distance)
     {
         // Want to start chasing player
         this.agent.SetDestination(this.target.position);
@@ -106,19 +106,19 @@ public class EnemyController : MonoBehaviour
 
     void SetMovementAnimation()
     {
-        Debug.Log(this.agent.velocity.magnitude);
-        float currentVelocity = this.agent.velocity.magnitude;
-        if (currentVelocity > 0)
-        {
+        if (this.EnemyIsMoving()) {
             this.shooter.SetWalkAnimation();
-        }
-        else
-        {
+        } else {
             this.shooter.SetIdleAnimation();
         }
     }
 
-    public void setPlayerVisibility(bool playerIsVisible)
+    bool EnemyIsMoving()
+    {
+        return this.agent.velocity.magnitude > 0;
+    }
+
+    public void SetPlayerVisibility(bool playerIsVisible)
     {
         this.playerIsVisible = playerIsVisible;
     }
