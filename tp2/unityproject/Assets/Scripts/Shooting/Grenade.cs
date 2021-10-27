@@ -10,6 +10,7 @@ public class Grenade : MonoBehaviour
     public float timeToExplode = 5f;
     private float currentTime = 0f;
     private bool isActive = false;
+    private bool exploded = false;
 
     public GameObject explosionEffectPrefab;
     private MeshRenderer meshRenderer;
@@ -27,7 +28,7 @@ public class Grenade : MonoBehaviour
 
     void Update()
     {
-        if (this.isActive)
+        if (this.isActive && !this.exploded)
         {
             this.currentTime += Time.deltaTime;
             this.CheckIfExplode();
@@ -38,6 +39,7 @@ public class Grenade : MonoBehaviour
     {
         if (this.currentTime >= this.timeToExplode)
         {
+            this.exploded = true;
             this.Explode();
         }
     }
@@ -47,13 +49,18 @@ public class Grenade : MonoBehaviour
         // Show explosion
         if (this.explosionEffectPrefab != null) GameObject.Instantiate(this.explosionEffectPrefab, this.transform.position, Quaternion.identity);
         // Look for all objects to damage
-        Collider[] colliders = Physics.OverlapSphere(this.transform.position, this.explosionRadius);
+        LayerMask mask = LayerMask.GetMask("Damageable");
+        Collider[] colliders = Physics.OverlapSphere(this.transform.position, this.explosionRadius, mask);
+        bool hitPlayer = false;
         foreach (Collider nearbyObject in colliders)
         {
-            Shootable obj = nearbyObject.GetComponent<Shootable>();
-            if (obj != null)
-            {
-                obj.ApplyDamage(this.GetDamage(Vector3.Distance(this.transform.position, obj.transform.position)));
+            if (!(nearbyObject.gameObject.CompareTag("Player") && hitPlayer)) {
+                Shootable obj = nearbyObject.GetComponent<Shootable>();
+                if (obj != null)
+                {
+                    obj.ApplyDamage(this.GetDamage(Vector3.Distance(this.transform.position, obj.transform.position)));
+                }
+                hitPlayer = hitPlayer || nearbyObject.gameObject.CompareTag("Player");
             }
         }
         Destroy(this.gameObject);

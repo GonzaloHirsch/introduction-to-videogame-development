@@ -55353,6 +55353,10 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 558021276}
+    - target: {fileID: 5068768216208900669, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
+      propertyPath: healthRecoveryRate
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5204359402994958371, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
       propertyPath: interactText
       value: 
