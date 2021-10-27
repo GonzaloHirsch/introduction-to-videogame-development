@@ -23,7 +23,7 @@ public class EnemyController : MonoBehaviour
     // Reference to the Shooter script
     private Shooter shooter;
     private Shootable shootable;
-    private Collider enemyCollider;
+    private CapsuleCollider enemyCollider;
 
 
     void Start()
@@ -32,31 +32,30 @@ public class EnemyController : MonoBehaviour
         this.agent = this.GetComponent<NavMeshAgent>();
         this.shooter = this.GetComponent<Shooter>();
         this.shootable = this.GetComponent<Shootable>();
-        this.enemyCollider = this.GetComponent<Collider>();
+        this.enemyCollider = this.GetComponent<CapsuleCollider>();
     }
 
     void Update()
     {
+        float distance = Vector3.Distance(this.target.position, this.transform.position);
+
         if (!this.shootable.IsDead())
         {
-            this.HandleEnemyMovement();
-            // Set walking or idle animation
-            this.SetMovementAnimation();
+            this.HandleEnemyMovement(distance);
+            this.HandleEnemyShooting(distance);
         }
         else
         {
             // Disable collider to avoid bothering player movement
-            if (this.enemyCollider.enabled) {
-                this.enemyCollider.enabled = false;
-            }
+            this.enemyCollider.enabled = false;
         }
     }
 
-    void HandleEnemyMovement()
+    //**************************************//
+    //***********ENEMY MOVEMENT*************//
+    //**************************************//
+    void HandleEnemyMovement(float distance)
     {
-        // If visible, get closer
-        float distance = Vector3.Distance(this.target.position, this.transform.position);
-
         // If player is not visible to the NPC do nothing
         if (this.playerIsVisible) {
             if (distance <= this.lookRadius) {
@@ -67,7 +66,10 @@ public class EnemyController : MonoBehaviour
         } else if (!this.EnemyIsMoving() && distance <= this.turnRadius) {
             this.FaceTarget();
         }
+        // Set walking or idle animation
+        this.SetMovementAnimation();
     }
+
     void ReactToVisiblePlayer(float distance)
     {
         // Want to start chasing player
@@ -121,5 +123,23 @@ public class EnemyController : MonoBehaviour
     public void SetPlayerVisibility(bool playerIsVisible)
     {
         this.playerIsVisible = playerIsVisible;
+    }
+
+
+    //**************************************//
+    //***********ENEMY SHOOTING*************//
+    //**************************************//
+    void HandleEnemyShooting(float distance)
+    {
+        if (this.playerIsVisible && distance < this.shooter.weapon.range) {
+            Ray ray = new Ray(
+                Helper.GetEnemyRaycastOrigin(this.transform, this.enemyCollider),
+                this.transform.forward
+            );
+            // Shoot logic
+            this.shooter.Shoot(ray);
+            // Trigger animation
+            this.shooter.HandleShootAnimation();        
+        }
     }
 }

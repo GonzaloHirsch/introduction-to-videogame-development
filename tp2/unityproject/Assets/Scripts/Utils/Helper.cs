@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class Helper
 {
+    public static Vector3 GetEnemyRaycastOrigin(Transform transform, CapsuleCollider enemyCollider)
+    {
+        Vector3 rayOrigin = transform.position;
+        // Add the capsule height
+        rayOrigin += new Vector3(0, enemyCollider.height - 1, 0);
+        // Add the capsule radius in the forward direction
+        rayOrigin += transform.forward * enemyCollider.radius;
+        // return enemy ray origin
+        return rayOrigin;  
+    }
+ 
     public static GameObject FindChildGameObjectWithTag(GameObject obj, string tag)
     {
         Transform t = obj.transform;

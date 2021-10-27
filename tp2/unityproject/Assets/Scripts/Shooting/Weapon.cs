@@ -6,6 +6,7 @@ public class Weapon : MonoBehaviour
 {
     public Transform gunEndPoint;
     public ParticleSystem muzzleFlash;
+    public bool emitBulletEvent = false;
     public int currentAmmo = 60;
     public int ammoPerMag = 60;
     public int extraAmmo = 360;
@@ -15,7 +16,6 @@ public class Weapon : MonoBehaviour
     public float range = 50f;
     public float hitForce = 100f;
     private float cooldownFire = 0f;
-
     private EvnBulletsChange evn;
 
     void Start(){
@@ -78,10 +78,12 @@ public class Weapon : MonoBehaviour
 
     void SendBulletsEvent()
     {
-        evn = EvnBulletsChange.notifier;
-        evn.current = this.currentAmmo;
-        evn.total = this.extraAmmo;
-        FrameLord.GameEventDispatcher.Instance.Dispatch(this, evn);
+        if (this.emitBulletEvent) {
+            evn = EvnBulletsChange.notifier;
+            evn.current = this.currentAmmo;
+            evn.total = this.extraAmmo;
+            FrameLord.GameEventDispatcher.Instance.Dispatch(this, evn);
+        }
     }
 
     public void RefillWeapon() {

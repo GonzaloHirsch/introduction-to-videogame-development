@@ -9,7 +9,7 @@ public class Shooter : MonoBehaviour
     [Header("Weapon")]
     public Weapon weapon;
     private GameObject weaponGo;
-    private WaitForSeconds shotDuration = new WaitForSeconds(0.07f);    // WaitForSeconds object used by our ShotEffect coroutine, determines time laser line will remain visible
+    private WaitForSeconds shotDuration;    // WaitForSeconds object used by our ShotEffect coroutine, determines time laser line will remain visible
     private WaitForSeconds reloadDuration = new WaitForSeconds(1.4f);    // WaitForSeconds object used by our ShotEffect coroutine, determines time laser line will remain visible
     private LineRenderer laserLine;
     private bool isShooting = false;                                       // Reference to the LineRenderer component which will display our laserline
@@ -22,6 +22,7 @@ public class Shooter : MonoBehaviour
         this.weapon = this.GetComponentInChildren<Weapon>();
         this.laserLine = GetComponent<LineRenderer>();
         this.characterAnimator = GetComponent<Animator>();
+        this.shotDuration = new WaitForSeconds(this.weapon.fireRate);
 
         // Set initial animation, start idle
         this.SetIdleAnimation();
@@ -30,17 +31,8 @@ public class Shooter : MonoBehaviour
     }
 
     //*****************************************//
-    //*************PRIVATE METHODS*************//
+    //*************SHOOTING METHODS************//
     //*****************************************//
-
-    // TODO: PREG A GONZA PQ YA NO ANDA MAS ESTE METODO
-    private Weapon GetWeapon()
-    {
-        this.weaponGo = Helper.FindChildGameObjectWithTag(this.gameObject, "Weapon");
-        return this.weaponGo != null
-            ? weaponGo.GetComponent<Weapon>()
-            : null;
-    }
 
     private void ApplyCollisionDamage(RaycastHit hit)
     {
@@ -52,67 +44,6 @@ public class Shooter : MonoBehaviour
         }
     }
 
-    private IEnumerator ShotEffect()
-    {
-        // Turn on our line renderer
-        if (this.isDebug) this.laserLine.enabled = true;
-
-        //Wait for .07 seconds
-        yield return shotDuration;
-
-        // Deactivate our line renderer after waiting
-        if (this.isDebug) this.laserLine.enabled = false;
-    }
-
-    private void StartReloading()
-    {
-        Debug.Log("Reloading...");
-        Debug.Log("Ammo before: " + this.weapon.currentAmmo);
-        // Setting class variable state
-        this.isShooting = false;
-        this.isReloading = true;
-        // Triggering the animation
-        this.SetShootAnimation(this.isShooting);
-        this.SetReloadAnimation(this.isReloading);
-    }
-
-    private void FinishReloading()
-    {
-        this.isReloading = false;
-        // Triggering the animation
-        this.SetReloadAnimation(this.isReloading);
-        // Add the reloaded bullets to the weapon ammo
-        this.weapon.Reload();
-        // Debug
-        Debug.Log("Ammo after: " + this.weapon.currentAmmo);
-    }
-
-    private IEnumerator ReloadEffect()
-    {
-        //Wait for reload to finish
-        yield return reloadDuration;
-        // After waiting, set reload logic and finish animation
-        this.FinishReloading();
-    }
-
-    //*****************************************//
-    //*************PUBLIC METHODS**************//
-    //*****************************************//
-
-    public void SetDead(bool status) {
-        this.isDead = status;
-        // Mark as dead not to be able to shoot
-        if (this.isDead) {
-            Shooter s = this.GetComponent<Shooter>();
-            if (s != null) {
-                s.isDead = true;
-            }
-            Thrower t = this.GetComponent<Thrower>();
-            if (t != null) {
-                t.isDead = true;
-            }
-        }
-    }
     public bool CanShoot()
     {
         return !this.isReloading && !this.weapon.NeedsCooldown();
@@ -177,12 +108,6 @@ public class Shooter : MonoBehaviour
         this.SetShootAnimation(this.isShooting);
     }
 
-    public void Reload()
-    {
-        this.StartReloading();
-        StartCoroutine(this.ReloadEffect());
-    }
-
     private void StartShooting()
     {
         Debug.Log("Shooting...");
@@ -194,6 +119,78 @@ public class Shooter : MonoBehaviour
         this.SetShootAnimation(this.isShooting);
     }
 
+    private IEnumerator ShotEffect()
+    {
+        // Turn on our line renderer
+        if (this.isDebug) this.laserLine.enabled = true;
+
+        yield return this.shotDuration;
+
+        this.FinishShooting();
+        // Deactivate our line renderer after waiting
+        if (this.isDebug) this.laserLine.enabled = false;
+    }
+
+    //*****************************************//
+    //************RELOADING METHODS************//
+    //*****************************************//
+
+    public void Reload()
+    {
+        this.StartReloading();
+        StartCoroutine(this.ReloadEffect());
+    }
+
+    private void StartReloading()
+    {
+        Debug.Log("Reloading...");
+        Debug.Log("Ammo before: " + this.weapon.currentAmmo);
+        // Setting class variable state
+        this.isShooting = false;
+        this.isReloading = true;
+        // Triggering the animation
+        this.SetShootAnimation(this.isShooting);
+        this.SetReloadAnimation(this.isReloading);
+    }
+
+    private void FinishReloading()
+    {
+        this.isReloading = false;
+        // Triggering the animation
+        this.SetReloadAnimation(this.isReloading);
+        // Add the reloaded bullets to the weapon ammo
+        this.weapon.Reload();
+        // Debug
+        Debug.Log("Ammo after: " + this.weapon.currentAmmo);
+    }
+
+    private IEnumerator ReloadEffect()
+    {
+        //Wait for reload to finish
+        yield return reloadDuration;
+        // After waiting, set reload logic and finish animation
+        this.FinishReloading();
+    }
+
+    //*****************************************//
+    //**************EXTRA METHODS**************//
+    //*****************************************//
+
+    public void SetDead(bool status) {
+        this.isDead = status;
+        // Mark as dead not to be able to shoot
+        if (this.isDead) {
+            Shooter s = this.GetComponent<Shooter>();
+            if (s != null) {
+                s.isDead = true;
+            }
+            Thrower t = this.GetComponent<Thrower>();
+            if (t != null) {
+                t.isDead = true;
+            }
+        }
+    }
+    
     public void DebugDrawRay(Vector3 rayOrigin, Vector3 rayDirection)
     {
         // Draw a line in the Scene View  from the point lineOrigin 
@@ -203,7 +200,9 @@ public class Shooter : MonoBehaviour
         }
     }
 
-    // Animator functions
+    //*****************************************//
+    //************ANIMATION METHODS************//
+    //*****************************************//
 
     public void SetIdleAnimation()
     {

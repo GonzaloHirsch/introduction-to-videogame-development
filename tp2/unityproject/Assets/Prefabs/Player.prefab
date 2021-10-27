@@ -2738,13 +2738,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunEndPoint: {fileID: 2909592839986835375}
   muzzleFlash: {fileID: 87112862737389829}
+  emitBulletEvent: 1
   currentAmmo: 60
   ammoPerMag: 60
   extraAmmo: 360
   totalInitialAmmo: 360
-  damage: 17
-  fireRate: 0.25
-  range: 50
+  damage: 25
+  fireRate: 0.7
+  range: 40
   hitForce: 100
 --- !u!1 &6246602696641688727
 GameObject:

@@ -94,12 +94,7 @@ public class Interacter : MonoBehaviour
 
         if (this.isNPC)
         {
-            rayOrigin = this.transform.position;
-            // Add the capsule height
-            rayOrigin += new Vector3(0, this.enemyCollider.height, 0);
-            // Add the capsule radius in the forward direction
-            rayOrigin += this.transform.forward * this.enemyCollider.radius;
-            // Set the direction
+            rayOrigin = Helper.GetEnemyRaycastOrigin(this.transform, this.enemyCollider);
             rayDirection = this.transform.forward;
         }
         else
