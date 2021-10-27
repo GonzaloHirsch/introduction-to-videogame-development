@@ -59,7 +59,6 @@ public class Shootable : MonoBehaviour
         {
             // Remove damage amount from health
             this.currentHealth = Mathf.Ceil(this.currentHealth - amount);
-            Debug.Log(amount + "  -  " + this.currentHealth);
             this.bloodParticles.Play();
             // Check if alter UI
             if (this.showInUI)

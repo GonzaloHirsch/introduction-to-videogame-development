@@ -2746,7 +2746,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grenadePrefab: {fileID: 8000234351361499383, guid: e7738b90d82d74f47852b1554ecc21b1, type: 3}
-  force: 750
+  force: 1100
   cooldown: 1
   intialAmmo: 20
   grenadeOriginDistance: 1

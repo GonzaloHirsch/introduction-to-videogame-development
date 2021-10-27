@@ -55349,6 +55349,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3600812343983473663, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
+      propertyPath: force
+      value: 1100
+      objectReference: {fileID: 0}
     - target: {fileID: 5068768216208900669, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
       propertyPath: healthBar
       value: 

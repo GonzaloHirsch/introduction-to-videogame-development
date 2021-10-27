@@ -26,12 +26,18 @@ public class Thrower : MonoBehaviour
 
     private bool isHolding = false;
 
-    void Start()
-    {
+    private Animator characterAnimator;
+
+    void Awake() {
         this.fpsCam = GetComponentInChildren<Camera>();
+        this.characterAnimator = GetComponent<Animator>();
         // Make sure it can throw without waiting at the start
         this.timeBetweenThrows = this.cooldown;
         this.ammo = this.intialAmmo;
+    }
+
+    void Start()
+    {
         this.SendThrowEvent();
     }
 
@@ -76,13 +82,8 @@ public class Thrower : MonoBehaviour
     
     void ThrowGrenade()
     {
-        // Update internal state
-        this.timeBetweenThrows = 0f;
-        // Add force as a throw
-        this.thrownGrenadeRb.isKinematic = false;
-        this.thrownGrenadeRb.AddForce(this.fpsCam.transform.forward * this.force);
         // Make it visible
-        this.thrownGrenadeScript.ThrowGrenade();
+        this.SetThrowAnimation();
     }
 
     void SendThrowEvent()
@@ -95,5 +96,36 @@ public class Thrower : MonoBehaviour
     public void RefillGrenades() {
         this.ammo = this.intialAmmo;
         this.SendThrowEvent();
+    }
+
+    public void SetThrowAnimation()
+    {
+        // Store the previous weapon
+        int prevWeapon = this.characterAnimator.GetInteger("WeaponType_int");
+        // Mark as grenade
+        this.characterAnimator.SetInteger("WeaponType_int", 10);    // Grenade
+        // Use coroutine to make it look better, store the previous direction to not be affected by animation
+        StartCoroutine(this.reallyThrowGrenade(1.6f, this.fpsCam.transform.forward));
+        // Revert after 2
+        StartCoroutine(this.revertAnimation(2.3f, prevWeapon));
+    }
+
+    IEnumerator revertAnimation(float secs, int animation)
+    {
+        yield return new WaitForSeconds(secs);
+        
+        this.characterAnimator.SetInteger("WeaponType_int", animation);
+    }
+    
+    IEnumerator reallyThrowGrenade(float secs, Vector3 storedDirection)
+    {
+        yield return new WaitForSeconds(secs);
+
+        // Update internal state
+        this.timeBetweenThrows = 0f;
+        // Add force as a throw
+        this.thrownGrenadeRb.isKinematic = false;
+        this.thrownGrenadeRb.AddForce(storedDirection * this.force);
+        this.thrownGrenadeScript.ThrowGrenade();
     }
 }
