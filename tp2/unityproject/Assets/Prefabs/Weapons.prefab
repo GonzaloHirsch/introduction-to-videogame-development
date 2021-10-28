@@ -5416,10 +5416,10 @@ MonoBehaviour:
   gunEndPoint: {fileID: 5424885764145817922}
   muzzleFlash: {fileID: 7069700571024269288}
   emitBulletEvent: 1
-  currentAmmo: 60
-  ammoPerMag: 60
-  extraAmmo: 360
-  totalInitialAmmo: 360
+  currentAmmo: 6
+  ammoPerMag: 6
+  extraAmmo: 32
+  totalInitialAmmo: 32
   damage: 25
   fireRate: 0.7
   range: 40

@@ -210,8 +210,6 @@ public class PlayerController : MonoBehaviour, IInteractable
         // If shooting and not reloading
         if (this.shoot && this.shooter.CanShoot()) 
         {
-            // Trigger animation
-            this.shooter.HandleShootAnimation();
             // Shoot the weapon
             this.shooter.Shoot(new Ray(camaraTransform.position, camaraTransform.forward));
         }

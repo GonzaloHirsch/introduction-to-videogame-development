@@ -48,6 +48,7 @@ public class EnemyController : MonoBehaviour
         {
             this.HandleEnemyMovement(distance);
             this.HandleEnemyShooting(distance);
+            this.HandleEnemyReloading();
         }
         else
         {
@@ -155,7 +156,6 @@ public class EnemyController : MonoBehaviour
         this.playerIsVisible = playerIsVisible;
     }
 
-
     //**************************************//
     //***********ENEMY SHOOTING*************//
     //**************************************//
@@ -168,9 +168,7 @@ public class EnemyController : MonoBehaviour
                 Helper.GetEnemyRaycastDirection(this.transform, this.target)
             );
             // Shoot logic
-            this.shooter.Shoot(ray);
-            // Trigger animation
-            this.shooter.HandleShootAnimation();        
+            this.shooter.Shoot(ray);       
         }
     }
 
@@ -188,5 +186,19 @@ public class EnemyController : MonoBehaviour
         this.angleDifference = Quaternion.Angle(this.transform.rotation, lookRotation);
         // Return if player can shoot with the current angle
         return this.angleDifference <= this.angleDifferenceLimit;
+    }
+
+    //**************************************//
+    //***********ENEMY RELOADING************//
+    //**************************************//
+    
+    void HandleEnemyReloading()
+    {
+        int ammo = this.shooter.weapon.currentAmmo;
+        int ammoPerMag = this.shooter.weapon.ammoPerMag;
+
+        if (ammo == 0 || (!this.playerIsVisible && ammo < ammoPerMag/2)) {
+            this.shooter.Reload();
+        }
     }
 }

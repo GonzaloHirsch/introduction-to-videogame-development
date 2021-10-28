@@ -49,7 +49,14 @@ public class Shooter : MonoBehaviour
         return !this.isReloading && !this.weapon.NeedsCooldown();
     }
 
-    public bool Shoot(Ray ray)
+    public void Shoot(Ray ray) {
+        // Trigger animation
+        this.HandleShootAnimation();
+        // Shoot the weapon
+        this.ShootWithRaycast(ray);
+    }
+
+    public bool ShootWithRaycast(Ray ray)
     {
         RaycastHit hit = new RaycastHit();
 
