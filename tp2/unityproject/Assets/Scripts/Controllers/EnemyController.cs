@@ -29,8 +29,6 @@ public class EnemyController : MonoBehaviour
     private Shootable shootable;
     private float lastHealth;
     private CapsuleCollider enemyCollider;
-    
-
 
     void Start()
     {
@@ -70,6 +68,9 @@ public class EnemyController : MonoBehaviour
             } else {
                 this.CheckPlayerVisibilityTime();
             } 
+            // Only move vertically once spotted
+            this.SetVerticalMovementAnimation();
+
         } else if (!this.EnemyIsMoving() && distance <= this.turnRadius) {
             this.FaceTarget();
         }
@@ -89,8 +90,6 @@ public class EnemyController : MonoBehaviour
         this.agent.SetDestination(this.target.position);
         if (distance <= this.agent.stoppingDistance)
         {
-            // Attack the target
-            // Face the target
             FaceTarget();
         }
     }
@@ -134,6 +133,18 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    void SetVerticalMovementAnimation() 
+    {
+        // Direction of the player
+        Vector3 directionToPlayer = Helper.GetEnemyRaycastDirection(this.transform, this.target);
+        // Projection of the direction over the XZ plane
+        Vector3 projection = new Vector3(directionToPlayer.x, 0f, directionToPlayer.z);
+        // Angle between the direction and the projection
+        float yAngle = Vector3.Angle(directionToPlayer, projection);
+        // Set the vertical animation of the character
+        this.shooter.SetBodyRotationAnimation(-1 * yAngle);
+    }
+
     bool EnemyIsMoving()
     {
         return this.agent.velocity.magnitude > 0;
@@ -175,7 +186,6 @@ public class EnemyController : MonoBehaviour
         Quaternion lookRotation = this.GetLookRotationToPlayer();
         // Angle between how where enemy is and how much enemy needs to rotate to face the player
         this.angleDifference = Quaternion.Angle(this.transform.rotation, lookRotation);
-        Debug.Log("difference: " + this.angleDifference);
         // Return if player can shoot with the current angle
         return this.angleDifference <= this.angleDifferenceLimit;
     }
