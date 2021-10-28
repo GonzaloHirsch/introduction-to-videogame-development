@@ -8038,6 +8038,26 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 5546723747237932033, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
+      propertyPath: fireRate
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5546723747237932033, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
+      propertyPath: extraAmmo
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 5546723747237932033, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
+      propertyPath: ammoPerMag
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5546723747237932033, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
+      propertyPath: currentAmmo
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5546723747237932033, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
+      propertyPath: totalInitialAmmo
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 5843873087366336871, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: m_Layer
       value: 6
