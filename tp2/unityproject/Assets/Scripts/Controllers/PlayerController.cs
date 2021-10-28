@@ -193,7 +193,7 @@ public class PlayerController : MonoBehaviour, IInteractable
     void CheckReloading()
     {
         // When reloading
-        if (this.reload)
+        if (this.reload && this.shooter.CanReload())
         {
             this.shooter.Reload();
         }

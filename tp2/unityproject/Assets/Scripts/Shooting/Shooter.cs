@@ -22,7 +22,7 @@ public class Shooter : MonoBehaviour
         this.weapon = this.GetComponentInChildren<Weapon>();
         this.laserLine = GetComponent<LineRenderer>();
         this.characterAnimator = GetComponent<Animator>();
-        this.shotDuration = new WaitForSeconds(this.weapon.fireRate);
+        this.shotDuration = new WaitForSeconds(this.weapon.animationDuration);
 
         // Set initial animation, start idle
         this.SetIdleAnimation();
@@ -141,6 +141,10 @@ public class Shooter : MonoBehaviour
     //*****************************************//
     //************RELOADING METHODS************//
     //*****************************************//
+
+    public bool CanReload() {
+        return this.weapon.CanReload();
+    }
 
     public void Reload()
     {

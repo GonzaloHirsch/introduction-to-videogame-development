@@ -13,6 +13,7 @@ public class Weapon : MonoBehaviour
     public int totalInitialAmmo = 360;
     public int damage = 17;
     public float fireRate = .25f;
+    public float animationDuration = 0.284f;
     public float range = 50f;
     public float hitForce = 100f;
     private float cooldownFire = 0f;
@@ -44,6 +45,10 @@ public class Weapon : MonoBehaviour
     public bool CanFireShot()
     {
         return !(this.NeedsReload() || this.NeedsCooldown());
+    }
+
+    public bool CanReload(){
+        return this.extraAmmo > 0 && this.ammoPerMag != this.currentAmmo;
     }
 
     public void Reload()
