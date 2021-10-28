@@ -15,11 +15,32 @@ public class Helper
         return rayOrigin;  
     }
 
-    public static Vector3 GetEnemyRaycastDirection(Transform enemy, Transform target)
-    {
+    public static Vector3 GetEnemyRaycastDirection(
+        Transform enemy, 
+        Transform target,
+        float axisAccuracyProbability = 0f,
+        float axisAccuracyDelta = 0f
+    ) {
+        int[] multipliers = {-1, 1};
+        // Direction to the target
         Vector3 direction = (target.position - enemy.position).normalized;
-        // add randomisation of accuracy
-        return direction;
+        // Inaccuracy to be added to the raycast
+        Vector3 accuracyDelta = new Vector3(0f, 0f, 0f);
+        // Add inaccuracy to each axis
+        for (int i = 0; i < 3; i++)
+        {
+            if (axisAccuracyProbability >= Random.Range(0f, 1f)) 
+            {
+                // Debug.Log("HERE");
+                // Add degrees of inaccuracy
+                accuracyDelta[i] = Random.Range(0.5f, axisAccuracyDelta);
+                // Define if it will be positive or negative degree
+                accuracyDelta[i] *= multipliers[Random.Range(0, 2)];
+            }
+        }
+        Debug.Log("Inaccuracy = " + accuracyDelta);
+        // Return the direct direction with the added inaccuracy
+        return direction + accuracyDelta;
     }
  
     public static GameObject FindChildGameObjectWithTag(GameObject obj, string tag)

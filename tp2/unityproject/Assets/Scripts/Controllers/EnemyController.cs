@@ -5,11 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
-    // Degree offset the enemy can be from the player to start shooting
-    public float angleDifferenceLimit = 5f;
-    // Current angle between enemy rotation and rotation needed to face the enemy
-    private float angleDifference = 0f;
-    // If player within this distance, enemy will turn to face them
+    [Header("Movement")]
     public float turnRadius = 10f;
     // Only want enemies to attack us if we are within a certain range
     public float lookRadius = 30f;
@@ -21,6 +17,17 @@ public class EnemyController : MonoBehaviour
     // Marks if the player is visible to the NPC
     private bool playerIsVisible = false;
     // Need a reference to what we are chasing
+
+    [Header("Shooting")]
+    // Probability of adding unaccuracy in an axis
+    public float axisAccuracyProbability = 0.15f;
+    // Accuracy delta in degrees added to the axis
+    public float axisAccuracyDelta = 2f;
+    // Degree offset the enemy can be from the player to start shooting
+    public float angleDifferenceLimit = 5f;
+    // Current angle between enemy rotation and rotation needed to face the enemy
+    private float angleDifference = 0f;
+    // If player within this distance, enemy will turn to face them
     private Transform target;
     // Need a reference to our nav mesh agent to move our enemy
     private NavMeshAgent agent;
@@ -163,10 +170,14 @@ public class EnemyController : MonoBehaviour
     void HandleEnemyShooting(float distance)
     {
         if (this.EnemyCanShoot(distance)) {
-            Ray ray = new Ray(
-                Helper.GetEnemyRaycastOrigin(this.transform, this.enemyCollider),
-                Helper.GetEnemyRaycastDirection(this.transform, this.target)
+            Vector3 rayOrigin = Helper.GetEnemyRaycastOrigin(this.transform, this.enemyCollider);
+            Vector3 rayDirection = Helper.GetEnemyRaycastDirection(
+                this.transform, 
+                this.target,
+                this.axisAccuracyProbability,
+                this.axisAccuracyDelta
             );
+            Ray ray = new Ray(rayOrigin, rayDirection);
             // Shoot logic
             this.shooter.Shoot(ray);       
         }
