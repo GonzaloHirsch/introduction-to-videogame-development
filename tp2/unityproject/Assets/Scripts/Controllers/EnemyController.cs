@@ -23,6 +23,7 @@ public class EnemyController : MonoBehaviour
     // Reference to the Shooter script
     private Shooter shooter;
     private Shootable shootable;
+    private float lastHealth;
     private CapsuleCollider enemyCollider;
 
 
@@ -33,6 +34,7 @@ public class EnemyController : MonoBehaviour
         this.shooter = this.GetComponent<Shooter>();
         this.shootable = this.GetComponent<Shootable>();
         this.enemyCollider = this.GetComponent<CapsuleCollider>();
+        this.lastHealth = this.shootable.maxHealth;
     }
 
     void Update()
@@ -56,6 +58,11 @@ public class EnemyController : MonoBehaviour
     //**************************************//
     void HandleEnemyMovement(float distance)
     {
+        // Player was shot, enemy knows his position
+        if (this.shootable.currentHealth < this.lastHealth) {
+            this.playerIsVisible = true;
+        }
+
         // If player is not visible to the NPC do nothing
         if (this.playerIsVisible) {
             if (distance <= this.lookRadius) {
@@ -68,6 +75,8 @@ public class EnemyController : MonoBehaviour
         }
         // Set walking or idle animation
         this.SetMovementAnimation();
+        // Update the health status
+        this.lastHealth = this.shootable.currentHealth;
     }
 
     void ReactToVisiblePlayer(float distance)
