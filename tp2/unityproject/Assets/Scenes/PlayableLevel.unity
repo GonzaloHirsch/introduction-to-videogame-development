@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465785, g: 0.49641252, b: 0.574817, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -55362,6 +55362,10 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5204359402994958371, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
+      propertyPath: isNPC
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5204359402994958371, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
       propertyPath: interactText
       value: 
       objectReference: {fileID: 34132978}
@@ -55373,6 +55377,10 @@ PrefabInstance:
       propertyPath: interactTextPanel
       value: 
       objectReference: {fileID: 141450616}
+    - target: {fileID: 7709615569625016783, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
+      propertyPath: verticalSpeed
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 9063044396543569733, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
       propertyPath: m_RootOrder
       value: 7

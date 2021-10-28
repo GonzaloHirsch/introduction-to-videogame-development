@@ -14,6 +14,13 @@ public class Helper
         // return enemy ray origin
         return rayOrigin;  
     }
+
+    public static Vector3 GetEnemyRaycastDirection(Transform enemy, Transform target)
+    {
+        Vector3 direction = (target.position - enemy.position).normalized;
+        // add randomisation of accuracy
+        return direction;
+    }
  
     public static GameObject FindChildGameObjectWithTag(GameObject obj, string tag)
     {

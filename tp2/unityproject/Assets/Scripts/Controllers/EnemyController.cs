@@ -5,6 +5,10 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
+    // Degree offset the enemy can be from the player to start shooting
+    public float angleDifferenceLimit = 5f;
+    // Current angle between enemy rotation and rotation needed to face the enemy
+    private float angleDifference = 0f;
     // If player within this distance, enemy will turn to face them
     public float turnRadius = 10f;
     // Only want enemies to attack us if we are within a certain range
@@ -25,6 +29,7 @@ public class EnemyController : MonoBehaviour
     private Shootable shootable;
     private float lastHealth;
     private CapsuleCollider enemyCollider;
+    
 
 
     void Start()
@@ -58,11 +63,6 @@ public class EnemyController : MonoBehaviour
     //**************************************//
     void HandleEnemyMovement(float distance)
     {
-        // Player was shot, enemy knows his position
-        if (this.shootable.currentHealth < this.lastHealth) {
-            this.playerIsVisible = true;
-        }
-
         // If player is not visible to the NPC do nothing
         if (this.playerIsVisible) {
             if (distance <= this.lookRadius) {
@@ -75,7 +75,11 @@ public class EnemyController : MonoBehaviour
         }
         // Set walking or idle animation
         this.SetMovementAnimation();
-        // Update the health status
+
+        // Player was shot, enemy knows his position
+        if (this.shootable.currentHealth < this.lastHealth) {
+            this.playerIsVisible = true;
+        }
         this.lastHealth = this.shootable.currentHealth;
     }
 
@@ -93,12 +97,18 @@ public class EnemyController : MonoBehaviour
 
     void FaceTarget()
     {
+        Quaternion lookRotation = this.GetLookRotationToPlayer();
+        // Update our own rotation with smoothing to point in that direction
+        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, lookRotation, Time.deltaTime * 5f);
+    }
+
+    Quaternion GetLookRotationToPlayer()
+    {
         // Get direction to the target
         Vector3 direction = (this.target.position - this.transform.position).normalized;
         // Rotation where we point to that target
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-        // Update our own rotation with smoothing to point in that direction
-        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, lookRotation, Time.deltaTime * 5f);
+        return Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+        
     }
 
     void CheckPlayerVisibilityTime()
@@ -138,17 +148,35 @@ public class EnemyController : MonoBehaviour
     //**************************************//
     //***********ENEMY SHOOTING*************//
     //**************************************//
+    
     void HandleEnemyShooting(float distance)
     {
-        if (this.playerIsVisible && distance < this.shooter.weapon.range) {
+        if (this.EnemyCanShoot(distance)) {
             Ray ray = new Ray(
                 Helper.GetEnemyRaycastOrigin(this.transform, this.enemyCollider),
-                this.transform.forward
+                Helper.GetEnemyRaycastDirection(this.transform, this.target)
             );
             // Shoot logic
             this.shooter.Shoot(ray);
             // Trigger animation
             this.shooter.HandleShootAnimation();        
         }
+    }
+
+    bool EnemyCanShoot(float distance)
+    {
+        return this.playerIsVisible 
+            && distance < this.shooter.weapon.range
+            && this.AngleAllowsShooting();
+    }
+
+    bool AngleAllowsShooting()
+    {
+        Quaternion lookRotation = this.GetLookRotationToPlayer();
+        // Angle between how where enemy is and how much enemy needs to rotate to face the player
+        this.angleDifference = Quaternion.Angle(this.transform.rotation, lookRotation);
+        Debug.Log("difference: " + this.angleDifference);
+        // Return if player can shoot with the current angle
+        return this.angleDifference <= this.angleDifferenceLimit;
     }
 }
