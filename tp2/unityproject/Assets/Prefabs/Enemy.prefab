@@ -5017,6 +5017,9 @@ MonoBehaviour:
   turnRadius: 10
   lookRadius: 30
   playerVisibilityTimeLimit: 5
+  axisAccuracyProbability: 0.15
+  axisAccuracyDelta: 2
+  angleDifferenceLimit: 5
 --- !u!54 &2846588905021424535
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8091,11 +8094,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5546723747237932033, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: damage
-      value: 15
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5546723747237932033, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: fireRate
-      value: 1
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 5546723747237932033, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: gunEndPoint

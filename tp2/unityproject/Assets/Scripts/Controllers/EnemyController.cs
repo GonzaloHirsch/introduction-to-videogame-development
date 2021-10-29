@@ -61,6 +61,7 @@ public class EnemyController : MonoBehaviour
         {
             // Disable collider to avoid bothering player movement
             this.enemyCollider.enabled = false;
+            this.agent.isStopped = true;
         }
     }
 

@@ -10,7 +10,7 @@ public class Helper
         // Add the capsule height
         rayOrigin += new Vector3(0, enemyCollider.height - 1, 0);
         // Add the capsule radius in the forward direction
-        rayOrigin += transform.forward * enemyCollider.radius;
+        rayOrigin += transform.forward * (enemyCollider.radius + 0.65f);
         // return enemy ray origin
         return rayOrigin;  
     }

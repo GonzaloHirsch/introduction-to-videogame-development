@@ -148,9 +148,9 @@ public class GameController : MonoBehaviour
     }
 
     void RecoverOutlines(){
-        this.bombOutlines = new Outline[this.bombs.Length];
-        for (int i = 0; i < this.bombs.Length; i++) {
-            this.bombOutlines[i] = this.bombs[i].GetComponent<Outline>();
+        this.bombOutlines = new Outline[this.possibleBombLocations.Length];
+        for (int i = 0; i < this.possibleBombLocations.Length; i++) {
+            this.bombOutlines[i] = this.possibleBombLocations[i].GetComponent<Outline>();
             this.bombOutlines[i].OutlineMode = Outline.Mode.OutlineVisible;
         }
         this.enemyOutlines = new Outline[this.enemies.Length];
@@ -166,6 +166,9 @@ public class GameController : MonoBehaviour
     void CheckKillstreak(){
         for (int i = 0; i < this.killstreakKills.Length; i++) {
             if (this.killstreakKilledEnemies >= this.killstreakKills[i]) {
+                Debug.Log("STREAK START");
+                Debug.Log(i);
+                Debug.Log("STREAK END");
                 if (i == 0) {
                     this.ActivateEnemyVisionStreak();
                 } else if (i == 1) {
