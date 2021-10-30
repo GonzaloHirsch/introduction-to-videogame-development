@@ -44,8 +44,9 @@ public class GameController : MonoBehaviour
     {
     }
 
-    void Update() {
-        this.timeSinceLastKill = Time.deltaTime;
+    void Update()
+    {
+        this.timeSinceLastKill += Time.deltaTime;
         this.CheckActiveStreaks();
     }
 
@@ -64,7 +65,8 @@ public class GameController : MonoBehaviour
     private void OnBombDefuse(System.Object sender, FrameLord.GameEvent e)
     {
         this.activeBombs--;
-        if (this.activeBombs == 0) {
+        if (this.activeBombs == 0)
+        {
             this.timerController.StopTimer();
             GameStatus.Instance.SetPlayerWon(true);
             GameStatus.Instance.AddCompletedLevel(GameStatus.Instance.GetLevel());
@@ -74,13 +76,17 @@ public class GameController : MonoBehaviour
 
     private void OnEnemyDeath(System.Object sender, FrameLord.GameEvent e)
     {
-        this.timeSinceLastKill = 0f;
-        // COunt killstreak time
-        if (this.timeSinceLastKill >= this.killstreakIntervalTime) {
+        // Count killstreak time
+        if (this.timeSinceLastKill >= this.killstreakIntervalTime)
+        {
             this.killstreakKilledEnemies = 1;
-        } else {
+        }
+        else
+        {
             this.killstreakKilledEnemies++;
         }
+        // Reset kill time
+        this.timeSinceLastKill = 0f;
         // Check killstreak
         this.CheckKillstreak();
     }
@@ -90,7 +96,7 @@ public class GameController : MonoBehaviour
         GameStatus.Instance.SetPlayerWon(false);
         SceneController.LoadGameOver();
     }
-    
+
     private void OnPlayerDeath(System.Object sender, FrameLord.GameEvent e)
     {
         // Mark player as dead
@@ -102,19 +108,21 @@ public class GameController : MonoBehaviour
     IEnumerator finishGameCourotine(int secs)
     {
         yield return new WaitForSeconds(secs);
-        
+
         SceneController.LoadGameOver();
     }
 
     /* ------------------------------ BOMBS ------------------------------ */
 
-    void SetActiveBombs() {
+    void SetActiveBombs()
+    {
         // Mark number of active bombs
         this.activeBombs = this.activeBombsPerLevel[GameStatus.Instance.GetLevel()];
         // Get random indexes
         int[] indexes = Helper.GetUniqueRandomNumbersBetween(0, this.possibleBombLocations.Length, this.activeBombs);
         Bomb currentBomb;
-        foreach (int i in indexes) {
+        foreach (int i in indexes)
+        {
             // Set the bomb timer
             currentBomb = this.possibleBombLocations[i].GetComponentInChildren<Bomb>();
             currentBomb.SetTimeToExplode(this.bombTimersPerLevel[GameStatus.Instance.GetLevel()]);
@@ -123,55 +131,65 @@ public class GameController : MonoBehaviour
         }
     }
 
-    void SetTimer() {
+    void SetTimer()
+    {
         this.timerController.SetTimerLimit(this.bombTimersPerLevel[GameStatus.Instance.GetLevel()]);
     }
 
     /* ------------------------------ ENEMIES ------------------------------ */
 
-    void SetActiveEnemies() {
+    void SetActiveEnemies()
+    {
         // Mark number of active bombs
         this.activeEnemies = this.activeEnemiesPerLevel[GameStatus.Instance.GetLevel()];
         // Get random indexes
         int[] indexes = Helper.GetUniqueRandomNumbersBetween(0, this.enemies.Length, this.activeEnemies);
-        foreach (int i in indexes) {
+        foreach (int i in indexes)
+        {
             // Set bomb active
             this.enemies[i].SetActive(true);
         }
     }
 
     /* ------------------------------ OBJECTS ------------------------------ */
-    
-    void RecoverObjects() {
+
+    void RecoverObjects()
+    {
         this.enemies = GameObject.FindGameObjectsWithTag("Enemy");
         this.bombs = GameObject.FindGameObjectsWithTag("Bomb");
     }
 
-    void RecoverOutlines(){
+    void RecoverOutlines()
+    {
         this.bombOutlines = new Outline[this.possibleBombLocations.Length];
-        for (int i = 0; i < this.possibleBombLocations.Length; i++) {
+        for (int i = 0; i < this.possibleBombLocations.Length; i++)
+        {
             this.bombOutlines[i] = this.possibleBombLocations[i].GetComponent<Outline>();
             this.bombOutlines[i].OutlineMode = Outline.Mode.OutlineVisible;
         }
         this.enemyOutlines = new Outline[this.enemies.Length];
-        for (int i = 0; i < this.enemies.Length; i++) {
+        for (int i = 0; i < this.enemies.Length; i++)
+        {
             this.enemyOutlines[i] = this.enemies[i].GetComponent<Outline>();
             this.enemyOutlines[i].OutlineWidth = 0f;
             this.enemyOutlines[i].OutlineMode = Outline.Mode.OutlineAll;
         }
     }
-    
+
     /* ------------------------------ STREAKS ------------------------------ */
 
-    void CheckKillstreak(){
-        for (int i = 0; i < this.killstreakKills.Length; i++) {
-            if (this.killstreakKilledEnemies >= this.killstreakKills[i]) {
-                Debug.Log("STREAK START");
-                Debug.Log(i);
-                Debug.Log("STREAK END");
-                if (i == 0) {
+    void CheckKillstreak()
+    {
+        for (int i = 0; i < this.killstreakKills.Length; i++)
+        {
+            if (this.killstreakKilledEnemies >= this.killstreakKills[i])
+            {
+                if (i == 0)
+                {
                     this.ActivateEnemyVisionStreak();
-                } else if (i == 1) {
+                }
+                else if (i == 1)
+                {
                     this.ActivateBombVisionStreak();
                 }
                 // Set time to live for the streak
@@ -180,14 +198,21 @@ public class GameController : MonoBehaviour
         }
     }
 
-    void CheckActiveStreaks() {
-        for (int i = 0; i < this.killstreakKills.Length; i++){
-            if (this.killstreakCurrentTimes.ContainsKey(i)) {
+    void CheckActiveStreaks()
+    {
+        for (int i = 0; i < this.killstreakKills.Length; i++)
+        {
+            if (this.killstreakCurrentTimes.ContainsKey(i))
+            {
                 this.killstreakCurrentTimes[i] -= Time.deltaTime;
-                if (this.killstreakCurrentTimes[i] <= 0) {
-                    if (i == 0) {
+                if (this.killstreakCurrentTimes[i] <= 0)
+                {
+                    if (i == 0)
+                    {
                         this.DeactivateEnemyVisionStreak();
-                    } else if (i == 1) {
+                    }
+                    else if (i == 1)
+                    {
                         this.DeactivateBombVisionStreak();
                     }
                 }
@@ -195,27 +220,34 @@ public class GameController : MonoBehaviour
         }
     }
 
-    void ActivateBombVisionStreak(){
-        for (int i = 0; i < this.bombOutlines.Length; i++){
+    void ActivateBombVisionStreak()
+    {
+        for (int i = 0; i < this.bombOutlines.Length; i++)
+        {
             this.bombOutlines[i].OutlineMode = Outline.Mode.OutlineAll;
         }
     }
-    
-    void DeactivateBombVisionStreak(){
-        for (int i = 0; i < this.bombOutlines.Length; i++){
+
+    void DeactivateBombVisionStreak()
+    {
+        for (int i = 0; i < this.bombOutlines.Length; i++)
+        {
             this.bombOutlines[i].OutlineMode = Outline.Mode.OutlineVisible;
         }
     }
 
-    void ActivateEnemyVisionStreak(){
-        Debug.Log("ENEMY");
-        for (int i = 0; i < this.enemyOutlines.Length; i++){
+    void ActivateEnemyVisionStreak()
+    {
+        for (int i = 0; i < this.enemyOutlines.Length; i++)
+        {
             this.enemyOutlines[i].OutlineWidth = 2f;
         }
     }
-    
-    void DeactivateEnemyVisionStreak(){
-        for (int i = 0; i < this.enemyOutlines.Length; i++){
+
+    void DeactivateEnemyVisionStreak()
+    {
+        for (int i = 0; i < this.enemyOutlines.Length; i++)
+        {
             this.enemyOutlines[i].OutlineWidth = 0f;
         }
     }

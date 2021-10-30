@@ -21,10 +21,18 @@ public class Bomb : MonoBehaviour, IInteractable
     public ProgressBar defuseBar;
     public Outline outline;
 
-    void Start() {
+    [Header("Sounds")]
+    private AudioManager audioManager;
+
+    void Awake() {
         this.outline = GetComponent<Outline>();
         if (this.outline) this.outline.OutlineColor = new Color(1f, 0f, 0f);
+        this.audioManager = GetComponent<AudioManager>();
+    }
+
+    void Start() {
         this.ResetProgressBar();
+        this.audioManager.Play(Sounds.AUDIO_TYPE.BOMB_TICK);
     }
 
     void Update()
@@ -80,6 +88,7 @@ public class Bomb : MonoBehaviour, IInteractable
         if (this.isDefusing && this.currentDefuseTime >= this.defuseTime)
         {
             this.isDefused = true;
+            this.audioManager.Stop(Sounds.AUDIO_TYPE.BOMB_TICK);
             FrameLord.GameEventDispatcher.Instance.Dispatch(this, EvnBombDefuse.notifier);
             // Green outline
             if (this.outline) this.outline.OutlineColor = new Color(0f, 1f, 0f);
@@ -118,6 +127,7 @@ public class Bomb : MonoBehaviour, IInteractable
         if (this.currentTickTime >= this.timeToExplode)
         {
             this.isExploded = true;
+            this.audioManager.Play(Sounds.AUDIO_TYPE.BOMB_EXPLOSION);
             FrameLord.GameEventDispatcher.Instance.Dispatch(this, EvnBombExplode.notifier);
         }
     }

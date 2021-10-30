@@ -23,6 +23,11 @@ public class Shootable : MonoBehaviour
     private Animator characterAnimator;
     public ParticleSystem bloodParticles;
 
+    [Header("Sounds")]
+
+    public bool playGlobalSound = false;
+    private AudioManager audioManager;
+
     [Header("Events")]
     public bool emitPlayerDeath = false;
     public bool emitEnemyDeath = false;
@@ -31,6 +36,7 @@ public class Shootable : MonoBehaviour
     {
         this.bloodParticles.Stop();
         this.characterAnimator = GetComponent<Animator>();
+        this.audioManager = GetComponent<AudioManager>();
         // In case we show health in UI
         if (this.showInUI)
         {
@@ -57,6 +63,8 @@ public class Shootable : MonoBehaviour
     {
         if (!this.isDead)
         {
+            // Play sounds
+            this.SetShotSounds();
             // Remove damage amount from health
             this.currentHealth = Mathf.Ceil(this.currentHealth - amount);
             this.bloodParticles.Play();
@@ -82,6 +90,7 @@ public class Shootable : MonoBehaviour
         if (this.characterAnimator != null) this.characterAnimator.SetBool("Death_b", true);
         if (this.emitPlayerDeath) FrameLord.GameEventDispatcher.Instance.Dispatch(this, EvnPlayerDeath.notifier);
         if (this.emitEnemyDeath) FrameLord.GameEventDispatcher.Instance.Dispatch(this, EvnEnemyDeath.notifier);
+        this.SetDeadSound();
     }
 
     public bool IsDead()
@@ -97,6 +106,23 @@ public class Shootable : MonoBehaviour
             {
                 this.healthBar.SetValue(this.currentHealth);
             }
+        }
+    }
+
+    private void SetShotSounds() {
+        if (this.playGlobalSound) {
+            AudioManagerSingleton.Instance.Play(Sounds.AUDIO_TYPE.ENTITY_GRUNT);
+        } else {
+            this.audioManager.Play(Sounds.AUDIO_TYPE.ENTITY_GRUNT);
+        }
+    }
+    
+    private void SetDeadSound() {
+        if (this.playGlobalSound) {
+            AudioManagerSingleton.Instance.Stop(Sounds.AUDIO_TYPE.ENTITY_WALK);
+            AudioManagerSingleton.Instance.Stop(Sounds.AUDIO_TYPE.ENTITY_RUN);
+        } else {
+            this.audioManager.Stop(Sounds.AUDIO_TYPE.ENTITY_WALK);
         }
     }
 }

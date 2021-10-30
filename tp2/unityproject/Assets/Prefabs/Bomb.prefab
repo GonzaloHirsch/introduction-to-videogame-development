@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 180629355732772255}
   - component: {fileID: -1851847577876005444}
   - component: {fileID: -3627835596264429588}
+  - component: {fileID: 2449964629113412021}
   m_Layer: 0
   m_Name: Bomb
   m_TagString: Bomb
@@ -290,6 +291,32 @@ MonoBehaviour:
     - {x: 0.57735026, y: 0.57735026, z: -0.57735026}
     - {x: 0.57735026, y: 0.57735026, z: 0.57735026}
     - {x: 0.57735026, y: -0.57735026, z: 0.57735026}
+--- !u!114 &2449964629113412021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180629355732772252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1430b99a895e04dbbba183c9f44f1ef2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - type: 9
+    clip: {fileID: 8300000, guid: b5eac62ee9b4e4addaaef0f8ddd1d950, type: 3}
+    volume: 0.75
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - type: 10
+    clip: {fileID: 8300000, guid: 033a1a8a080074da786a14453d223149, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  maxSoundDistance: 25
 --- !u!1001 &180629356153137254
 PrefabInstance:
   m_ObjectHideFlags: 0

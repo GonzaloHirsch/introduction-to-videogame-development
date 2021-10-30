@@ -17,6 +17,10 @@ public class Shooter : MonoBehaviour
     public bool isDebug = true;
     public bool isDead = false;
 
+    [Header("Sounds")]
+    public bool playGlobalSound = false;
+    private AudioManager audioManager;
+
     void Start()
     {
         this.weapon = this.GetComponentInChildren<Weapon>();
@@ -28,6 +32,7 @@ public class Shooter : MonoBehaviour
         this.SetIdleAnimation();
 
         // _shootableMask = LayerMask.GetMask("Shootable");
+        this.audioManager = GetComponent<AudioManager>();
     }
 
     //*****************************************//
@@ -49,7 +54,8 @@ public class Shooter : MonoBehaviour
         return !this.isReloading && !this.weapon.NeedsCooldown();
     }
 
-    public void Shoot(Ray ray) {
+    public void Shoot(Ray ray)
+    {
         // Trigger animation
         this.HandleShootAnimation();
         // Shoot the weapon
@@ -104,6 +110,7 @@ public class Shooter : MonoBehaviour
              * Will never fall here when cooldown is > 0 since it
              * is called from the update
              */
+            this.SetEmptyGunSound();
         }
     }
 
@@ -142,7 +149,8 @@ public class Shooter : MonoBehaviour
     //************RELOADING METHODS************//
     //*****************************************//
 
-    public bool CanReload() {
+    public bool CanReload()
+    {
         return this.weapon.CanReload();
     }
 
@@ -187,26 +195,31 @@ public class Shooter : MonoBehaviour
     //**************EXTRA METHODS**************//
     //*****************************************//
 
-    public void SetDead(bool status) {
+    public void SetDead(bool status)
+    {
         this.isDead = status;
         // Mark as dead not to be able to shoot
-        if (this.isDead) {
+        if (this.isDead)
+        {
             Shooter s = this.GetComponent<Shooter>();
-            if (s != null) {
+            if (s != null)
+            {
                 s.isDead = true;
             }
             Thrower t = this.GetComponent<Thrower>();
-            if (t != null) {
+            if (t != null)
+            {
                 t.isDead = true;
             }
         }
     }
-    
+
     public void DebugDrawRay(Vector3 rayOrigin, Vector3 rayDirection)
     {
         // Draw a line in the Scene View  from the point lineOrigin 
         // in the direction of fpsCam.transform.forward * weaponRange, using the color green
-        if (this.isDebug) {
+        if (this.isDebug)
+        {
             Debug.DrawRay(rayOrigin, rayDirection * this.weapon.range, Color.green);
         }
     }
@@ -254,9 +267,91 @@ public class Shooter : MonoBehaviour
     public void SetReloadAnimation(bool isReloading)
     {
         this.characterAnimator.SetBool("Reload_b", isReloading);
+        if (isReloading)
+        {
+            this.SetReloadSound();
+        }
     }
     public void SetShootAnimation(bool isShooting)
     {
         this.characterAnimator.SetBool("Shoot_b", isShooting);
+        if (isShooting)
+        {
+            this.SetShotSound();
+        }
+    }
+
+    //*****************************************//
+    //************SOUND METHODS************//
+    //*****************************************//
+
+    public void SetRunSound()
+    {
+        if (this.playGlobalSound)
+        {
+            AudioManagerSingleton.Instance.Stop(Sounds.AUDIO_TYPE.ENTITY_WALK);
+            AudioManagerSingleton.Instance.Play(Sounds.AUDIO_TYPE.ENTITY_RUN, true);
+        }
+    }
+
+    public void SetWalkSound()
+    {
+        if (this.playGlobalSound)
+        {
+            AudioManagerSingleton.Instance.Play(Sounds.AUDIO_TYPE.ENTITY_WALK, true);
+            AudioManagerSingleton.Instance.Stop(Sounds.AUDIO_TYPE.ENTITY_RUN);
+        } else {
+            this.audioManager.Play(Sounds.AUDIO_TYPE.ENTITY_WALK, true);
+        }
+    }
+
+    public void SetIdleSound()
+    {
+        if (this.playGlobalSound)
+        {
+            AudioManagerSingleton.Instance.Stop(Sounds.AUDIO_TYPE.ENTITY_WALK);
+            AudioManagerSingleton.Instance.Stop(Sounds.AUDIO_TYPE.ENTITY_RUN);
+        } else {
+            this.audioManager.Stop(Sounds.AUDIO_TYPE.ENTITY_WALK);
+        }
+    }
+
+    public void SetShotSound()
+    {
+        if (this.playGlobalSound)
+        {
+            // Can overlap, multiple guns at the same time
+            AudioManagerSingleton.Instance.Play(Sounds.AUDIO_TYPE.GUN_PISTOL_FIRE);
+        } else {
+            this.audioManager.Play(Sounds.AUDIO_TYPE.GUN_PISTOL_FIRE);
+        }
+    }
+
+    public void SetReloadSound()
+    {
+        if (this.playGlobalSound)
+        {
+            StartCoroutine(this.playReloadSoundCoroutine(1.1f));
+        }
+    }
+
+    IEnumerator playReloadSoundCoroutine(float secs)
+    {
+        yield return new WaitForSeconds(secs);
+        if (this.playGlobalSound) {
+            AudioManagerSingleton.Instance.Play(Sounds.AUDIO_TYPE.GUN_PISTOL_RELOAD);
+        } else {
+            this.audioManager.Play(Sounds.AUDIO_TYPE.GUN_PISTOL_RELOAD);
+
+        }
+    }
+
+    public void SetEmptyGunSound()
+    {
+        if (this.playGlobalSound)
+        {
+            // Can overlap, multiple guns at the same time
+            AudioManagerSingleton.Instance.Play(Sounds.AUDIO_TYPE.GUN_PISTOL_EMPTY);
+        }
     }
 }

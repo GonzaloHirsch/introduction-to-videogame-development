@@ -8,6 +8,7 @@ public class MainMenuController : MonoBehaviour
     void Start() {
         Cursor.lockState = CursorLockMode.None;
         this.SeeMenu();
+        this.PlayBgMusic();
     }
     
     public void LoadLevel(int level) {
@@ -23,5 +24,9 @@ public class MainMenuController : MonoBehaviour
     public void SeeControls(){
         this.menuPanel.SetActive(false);
         this.controlsPanel.SetActive(true);
+    }
+
+    private void PlayBgMusic() {
+        AudioManagerSingleton.Instance.Play(Sounds.AUDIO_TYPE.BG_MUSIC, true);
     }
 }

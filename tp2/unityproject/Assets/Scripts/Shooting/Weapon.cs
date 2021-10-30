@@ -50,7 +50,7 @@ public class Weapon : MonoBehaviour
     public bool CanReload(){
         return this.extraAmmo > 0 && this.ammoPerMag != this.currentAmmo;
     }
-
+    
     public void Reload()
     {
         // Do not reload if the mag is full

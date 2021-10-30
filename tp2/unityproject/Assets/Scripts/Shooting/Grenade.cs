@@ -14,10 +14,15 @@ public class Grenade : MonoBehaviour
 
     public GameObject explosionEffectPrefab;
     private MeshRenderer meshRenderer;
+    private AudioSource audioSource;
 
     void Awake()
     {
         this.meshRenderer = GetComponentInChildren<MeshRenderer>();
+        this.audioSource = GetComponent<AudioSource>();
+        if (this.audioSource != null) {
+            this.audioSource.maxDistance = this.explosionRadius * 5f;
+        }
     }
 
     void Start()
@@ -48,6 +53,8 @@ public class Grenade : MonoBehaviour
     {
         // Show explosion
         if (this.explosionEffectPrefab != null) GameObject.Instantiate(this.explosionEffectPrefab, this.transform.position, Quaternion.identity);
+        // Play sound
+        if (this.audioSource != null) this.audioSource.Play();
         // Look for all objects to damage
         LayerMask mask = LayerMask.GetMask("Damageable");
         Collider[] colliders = Physics.OverlapSphere(this.transform.position, this.explosionRadius, mask);
@@ -63,7 +70,8 @@ public class Grenade : MonoBehaviour
                 hitPlayer = hitPlayer || nearbyObject.gameObject.CompareTag("Player");
             }
         }
-        Destroy(this.gameObject);
+        if (this.audioSource != null) Destroy(this.gameObject, this.audioSource.clip.length / 2f);
+        else Destroy(this.gameObject);
     }
 
     float GetDamageMultiplier(float distance)

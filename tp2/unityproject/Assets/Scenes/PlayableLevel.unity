@@ -21271,7 +21271,7 @@ MonoBehaviour:
   - {fileID: 127907933}
   enemyOutlines: []
   killstreakKilledEnemies: 0
-  killstreakIntervalTime: 4
+  killstreakIntervalTime: 6
   killstreakKills: 0200000003000000
   killstreakTimes:
   - 10
@@ -37208,7 +37208,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400020, guid: d9981ea3bed272e43bee83ef04280429, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.26
       objectReference: {fileID: 0}
     - target: {fileID: 400020, guid: d9981ea3bed272e43bee83ef04280429, type: 3}
       propertyPath: m_LocalPosition.z

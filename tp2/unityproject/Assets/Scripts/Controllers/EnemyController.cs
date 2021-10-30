@@ -137,8 +137,10 @@ public class EnemyController : MonoBehaviour
     {
         if (this.EnemyIsMoving()) {
             this.shooter.SetWalkAnimation();
+            this.shooter.SetWalkSound();
         } else {
             this.shooter.SetIdleAnimation();
+            this.shooter.SetIdleSound();
         }
     }
 

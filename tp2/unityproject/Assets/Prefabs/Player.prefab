@@ -2699,6 +2699,7 @@ MonoBehaviour:
   showInUI: 1
   healthBar: {fileID: 0}
   bloodParticles: {fileID: 7709615568101037022}
+  playGlobalSound: 1
   emitPlayerDeath: 1
   emitEnemyDeath: 0
 --- !u!114 &5204359402994958371
@@ -2733,6 +2734,7 @@ MonoBehaviour:
   weapon: {fileID: 3445262810601515756}
   isDebug: 0
   isDead: 0
+  playGlobalSound: 1
 --- !u!114 &3600812343983473663
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -130,31 +130,24 @@ public class PlayerController : MonoBehaviour, IInteractable
             if (this.isSprinting)
             {
                 this.shooter.SetRunAnimation();
+                this.shooter.SetRunSound();
             }
             else
             {
                 this.shooter.SetWalkAnimation();
+                this.shooter.SetWalkSound();
             }
         }
         else
         {
             this.shooter.SetIdleAnimation();
+            this.shooter.SetIdleSound();
         }
     }
 
     void UpdateCameraRotation()
     {
         this.transform.Rotate(0, this.horizontalRotation * this.mouseSensitivity, 0);
-        // this.cameraTransform.Rotate(-this.verticalRotation*this.mouseSensitivity,0,0);
-        // Debug.Log(-this.verticalRotation*this.mouseSensitivity);
-        // Rotate hands accordingly
-        // this.hands.transform.Rotate(-this.verticalRotation*this.mouseSensitivity, this.horizontalRotation * this.mouseSensitivity, 0);
-
-        // Vector3 currentRotation = this.cameraTransform.localEulerAngles;
-        // if (currentRotation.x > 180) currentRotation.x -= 360;
-        // currentRotation.x = Mathf.Clamp(currentRotation.x, this.upCameraLimit, this.downCameraLimit);
-        // this.cameraTransform.localRotation = Quaternion.Euler(currentRotation);
-
         this.currentVerticalRotation += -this.verticalRotation * this.mouseSensitivity;
         this.currentVerticalRotation = Mathf.Clamp(this.currentVerticalRotation, this.upCameraLimit, this.downCameraLimit);
         this.shooter.SetBodyRotationAnimation(this.currentVerticalRotation);
@@ -163,29 +156,14 @@ public class PlayerController : MonoBehaviour, IInteractable
 
     void UpdateCrouching()
     {
-        /* float newHeight = this.initialHeight;
-
-        if (this.isCrouching && !this.isJumping && !this.isSprinting) {
-            newHeight = this.crouchFactor * this.initialHeight;
-        }
-
-        float lastHeight = this.cc.height;
-
-        // lerp CharacterController height
-        this.cc.height = Mathf.Lerp(this.cc.height, newHeight, this.crouchTime * Time.deltaTime );
-        
-        // fix vertical position
-        this.transform.position = this.transform.position + new Vector3(0f, ( this.cc.height - lastHeight ) * this.crouchFactor, 0f);  */
         if (this.startedCrouching)
         {
             this.isCrouching = true;
-            // this.cc.center = this.transform.forward + new Vector3(0f, this.cc.center.y, 0f);
             this.shooter.SetCrouchAnimation(true);
         }
         else if (this.stoppedCrouching)
         {
             this.isCrouching = false;
-            // this.cc.center = new Vector3(0f, this.cc.center.y, 0f);
             this.shooter.SetCrouchAnimation(false);
         }
     }
