@@ -40,6 +40,7 @@ public class PauseController : MonoBehaviour
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.Confined;
         if (this.pausePanel != null) this.pausePanel.SetActive(true);
+        this.PauseSounds();
     }
 
     public void Unpause()
@@ -49,6 +50,7 @@ public class PauseController : MonoBehaviour
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
         if (this.pausePanel != null) this.pausePanel.SetActive(false);
+        this.UnpauseSounds();
     }
 
     public void GoToMainMenu()
@@ -58,5 +60,13 @@ public class PauseController : MonoBehaviour
         GameStatus.Instance.SetGamePaused(false);
         Time.timeScale = 1f;
         SceneController.LoadMainMenu();
+    }
+
+    private void PauseSounds(){
+        AudioListener.volume = 0f;
+    }
+
+    private void UnpauseSounds(){
+        AudioListener.volume = 1f;
     }
 }
