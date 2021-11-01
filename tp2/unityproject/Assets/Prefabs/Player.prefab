@@ -2768,6 +2768,7 @@ MonoBehaviour:
   speed: 5
   sprintSpeed: 10
   verticalSpeed: 6
+  crouchSpeed: 1.5
   mouseSensitivity: 2
   upCameraLimit: -50
   downCameraLimit: 50

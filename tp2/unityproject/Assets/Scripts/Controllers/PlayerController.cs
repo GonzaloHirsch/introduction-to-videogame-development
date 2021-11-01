@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour, IInteractable
     public float speed;
     public float sprintSpeed;
     public float verticalSpeed;
+    public float crouchSpeed;
 
     // Components
     private CharacterController cc;
@@ -117,7 +118,7 @@ public class PlayerController : MonoBehaviour, IInteractable
 
         Vector3 gravityMove = new Vector3(0, dy, 0);
         Vector3 move = this.transform.forward * this.verticalMove + this.transform.right * this.horizontalMove;
-        this.cc.Move((this.isSprinting ? this.sprintSpeed : this.speed) * Time.deltaTime * move + gravityMove);
+        this.cc.Move((this.isCrouching ? this.crouchSpeed : (this.isSprinting ? this.sprintSpeed : this.speed)) * Time.deltaTime * move + gravityMove);
 
         if (currentYPosition < 0f)
         {
