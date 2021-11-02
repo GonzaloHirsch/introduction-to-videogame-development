@@ -12,6 +12,8 @@ public class Interacter : MonoBehaviour
     private RaycastHit hit;
     private IInteractable interactableHit;
     private Camera fpsCam;
+    public float raycastIntervalTime = 1f;
+    private float currentRaycastTime;
 
     [Header("UI")]
     public Text interactText;
@@ -32,12 +34,17 @@ public class Interacter : MonoBehaviour
             this.enemy = this.GetComponent<EnemyController>();
             this.enemyCollider = this.GetComponent<CapsuleCollider>();
             this.interactRange = this.enemy.lookRadius;
+            this.currentRaycastTime = this.raycastIntervalTime;
         }
     }
 
     void Update()
     {
-        this.CheckInteractableItem();
+        this.currentRaycastTime += Time.deltaTime;
+        if ((this.isNPC && this.currentRaycastTime >= this.raycastIntervalTime && this.enemy.TargetIsWithinRange()) || !this.isNPC) {
+            this.currentRaycastTime = 0f;
+            this.CheckInteractableItem();
+        }
     }
 
     private void CheckInteractableItem()

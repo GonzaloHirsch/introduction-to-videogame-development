@@ -14,6 +14,8 @@ public class Thrower : MonoBehaviour
     public int intialAmmo = 3;
     private int ammo = 3;
     public float grenadeOriginDistance = 5f;
+    public float throwAnimationTime = 1.6f;
+    public float completeAnimationTime = 2.3f;
 
     [Header("Internal Variables")]
     private Camera fpsCam;
@@ -53,11 +55,10 @@ public class Thrower : MonoBehaviour
     void CheckIfThrow()
     {
         // Make sure it has ammo and the cooldown is ok
-        if (ActionMapper.GetGrenadeHold() && this.ammo > 0 && this.timeBetweenThrows >= this.cooldown)
-        {
+        if (!this.isHolding && ActionMapper.GetGrenade() && this.ammo > 0 && this.timeBetweenThrows >= this.cooldown){
             this.isHolding = true;
             this.ActivateGrenade();
-        } else if (this.isHolding && ActionMapper.GetGrenadeThrow()) {
+        } else if (this.isHolding && !ActionMapper.GetGrenade()) {
             this.isHolding = false;
             this.ThrowGrenade();
         }
@@ -105,9 +106,9 @@ public class Thrower : MonoBehaviour
         // Mark as grenade
         this.characterAnimator.SetInteger("WeaponType_int", 10);    // Grenade
         // Use coroutine to make it look better, store the previous direction to not be affected by animation
-        StartCoroutine(this.reallyThrowGrenade(1.6f, this.fpsCam.transform.forward));
+        StartCoroutine(this.reallyThrowGrenade(this.throwAnimationTime, this.fpsCam.transform.forward));
         // Revert after 2
-        StartCoroutine(this.revertAnimation(2.3f, prevWeapon));
+        StartCoroutine(this.revertAnimation(this.completeAnimationTime, prevWeapon));
     }
 
     IEnumerator revertAnimation(float secs, int animation)

@@ -17,6 +17,8 @@ public class EnemyController : MonoBehaviour
     // Marks if the player is visible to the NPC
     private bool playerIsVisible = false;
     // Need a reference to what we are chasing
+    private float distanceToTarget;
+    private bool enemyIsShot;
 
     [Header("Shooting")]
     // Probability of adding unaccuracy in an axis
@@ -49,12 +51,12 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        float distance = Vector3.Distance(this.target.position, this.transform.position);
+        this.distanceToTarget = this.GetDistanceToTarget();
 
         if (!this.shootable.IsDead())
         {
-            this.HandleEnemyMovement(distance);
-            this.HandleEnemyShooting(distance);
+            this.HandleEnemyMovement(this.distanceToTarget);
+            this.HandleEnemyShooting(this.distanceToTarget);
             this.HandleEnemyReloading();
         }
         else
@@ -68,11 +70,20 @@ public class EnemyController : MonoBehaviour
     //**************************************//
     //***********ENEMY MOVEMENT*************//
     //**************************************//
+
+    public float GetDistanceToTarget() {
+        return Vector3.Distance(this.target.position, this.transform.position);
+    }
+    
+    public bool TargetIsWithinRange() {
+        return this.distanceToTarget <= this.lookRadius;
+    }
+
     void HandleEnemyMovement(float distance)
     {
         // If player is not visible to the NPC do nothing
         if (this.playerIsVisible) {
-            if (distance <= this.lookRadius) {
+            if (distance <= this.lookRadius || this.enemyIsShot) {
                 this.ReactToVisiblePlayer(distance);
             } else {
                 this.CheckPlayerVisibilityTime();
@@ -89,6 +100,8 @@ public class EnemyController : MonoBehaviour
         // Player was shot, enemy knows his position
         if (this.shootable.currentHealth < this.lastHealth) {
             this.playerIsVisible = true;
+            if (!this.enemyIsShot) this.FaceTarget();
+            this.enemyIsShot = true;
         }
         this.lastHealth = this.shootable.currentHealth;
     }

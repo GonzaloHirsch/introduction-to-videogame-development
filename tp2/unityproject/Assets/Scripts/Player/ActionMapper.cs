@@ -22,12 +22,8 @@ public class ActionMapper
         return Input.GetMouseButtonDown(0);
     }
     
-    public static bool GetGrenadeHold() {
-        return Input.GetKeyDown(KeyCode.G);
-    }
-    
-    public static bool GetGrenadeThrow() {
-        return Input.GetKeyUp(KeyCode.G);
+    public static bool GetGrenade() {
+        return Input.GetKey(KeyCode.G);
     }
 
     public static bool GetReload() {

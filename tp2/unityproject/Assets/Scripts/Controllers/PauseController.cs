@@ -59,6 +59,7 @@ public class PauseController : MonoBehaviour
         this.isPaused = false;
         GameStatus.Instance.SetGamePaused(false);
         Time.timeScale = 1f;
+        this.UnpauseSounds();
         SceneController.LoadMainMenu();
     }
 
