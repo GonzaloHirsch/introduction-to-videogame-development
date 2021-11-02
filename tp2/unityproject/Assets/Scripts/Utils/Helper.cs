@@ -31,14 +31,12 @@ public class Helper
         {
             if (axisAccuracyProbability >= Random.Range(0f, 1f)) 
             {
-                // Debug.Log("HERE");
                 // Add degrees of inaccuracy
                 accuracyDelta[i] = Random.Range(0.5f, axisAccuracyDelta);
                 // Define if it will be positive or negative degree
                 accuracyDelta[i] *= multipliers[Random.Range(0, 2)];
             }
         }
-        Debug.Log("Inaccuracy = " + accuracyDelta);
         // Return the direct direction with the added inaccuracy
         return direction + accuracyDelta;
     }

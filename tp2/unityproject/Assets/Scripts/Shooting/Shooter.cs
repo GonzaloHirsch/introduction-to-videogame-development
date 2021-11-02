@@ -73,9 +73,6 @@ public class Shooter : MonoBehaviour
         // Check if the raycast collided with something
         if (Physics.Raycast(ray, out hit, this.weapon.range))
         {
-
-            print("hit " + hit.collider.gameObject);
-
             if (this.isDebug) this.laserLine.SetPosition(1, hit.point);
 
             // Apply damage to the obj if a shot was fired
@@ -96,7 +93,6 @@ public class Shooter : MonoBehaviour
     public void HandleShootAnimation()
     {
         bool canFire = this.weapon.CanFireShot();
-        Debug.Log("Fired successfully: " + canFire);
 
         if (canFire)
         {
@@ -124,7 +120,6 @@ public class Shooter : MonoBehaviour
 
     private void StartShooting()
     {
-        Debug.Log("Shooting...");
         // Setting laser effect
         StartCoroutine(this.ShotEffect());
         // Setting class variable state
@@ -162,8 +157,6 @@ public class Shooter : MonoBehaviour
 
     private void StartReloading()
     {
-        Debug.Log("Reloading...");
-        Debug.Log("Ammo before: " + this.weapon.currentAmmo);
         // Setting class variable state
         this.isShooting = false;
         this.isReloading = true;
@@ -179,8 +172,6 @@ public class Shooter : MonoBehaviour
         this.SetReloadAnimation(this.isReloading);
         // Add the reloaded bullets to the weapon ammo
         this.weapon.Reload();
-        // Debug
-        Debug.Log("Ammo after: " + this.weapon.currentAmmo);
     }
 
     private IEnumerator ReloadEffect()

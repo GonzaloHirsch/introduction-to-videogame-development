@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Shootable : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class Shootable : MonoBehaviour
     public float healthRecoveryRate = 5f;
     public float recoveryCooldown = 4f;
     public float currentRecoveryTime = 0f;
+    public GameObject bloodPanel;
+    private Image bloodImage;
+    private float bloodAlpha = 0f;
 
     [Header("UI")]
 
@@ -42,8 +46,10 @@ public class Shootable : MonoBehaviour
         {
             this.healthBar.SetMaxValue(this.currentHealth);
         }
-        if (this.recoversHealth) {
+        if (this.recoversHealth)
+        {
             this.currentRecoveryTime = this.recoveryCooldown;
+            this.bloodImage = bloodPanel.GetComponent<Image>();
         }
     }
 
@@ -72,6 +78,8 @@ public class Shootable : MonoBehaviour
             if (this.showInUI)
             {
                 this.healthBar.SetValue(this.currentHealth);
+                // Set the blood level
+                this.SetBloodLevel();
             }
             // Check if health has fallen below zero
             if (this.currentHealth <= 0)
@@ -98,30 +106,53 @@ public class Shootable : MonoBehaviour
         return this.isDead;
     }
 
-    private void RecoverHealth() {
-        if (this.currentRecoveryTime >= this.recoveryCooldown) {
+    private void RecoverHealth()
+    {
+        if (this.currentRecoveryTime >= this.recoveryCooldown)
+        {
             this.currentHealth = Mathf.Clamp(this.currentHealth + (Time.deltaTime * this.healthRecoveryRate), 0, this.maxHealth);
             // Check if alter UI
             if (this.showInUI)
             {
                 this.healthBar.SetValue(this.currentHealth);
+                // Set the blood level
+                this.SetBloodLevel();
             }
         }
     }
 
-    private void SetShotSounds() {
-        if (this.playGlobalSound) {
+    private void SetBloodLevel()
+    {
+        // Set the blood level
+        if (this.bloodImage != null)
+        {
+            // this.bloodAlpha = Mathf.Clamp((Mathf.Log10((-1 * this.currentHealth) + this.maxHealth))/2f, 0f, 1f);
+            this.bloodAlpha = Mathf.Clamp(1 - (this.currentHealth / this.maxHealth), 0f, 1f);
+            this.bloodImage.color = new Color(this.bloodImage.color.r, this.bloodImage.color.g, this.bloodImage.color.b, this.bloodAlpha);
+        }
+    }
+
+    private void SetShotSounds()
+    {
+        if (this.playGlobalSound)
+        {
             AudioManagerSingleton.Instance.Play(Sounds.AUDIO_TYPE.ENTITY_GRUNT);
-        } else {
+        }
+        else
+        {
             this.audioManager.Play(Sounds.AUDIO_TYPE.ENTITY_GRUNT);
         }
     }
-    
-    private void SetDeadSound() {
-        if (this.playGlobalSound) {
+
+    private void SetDeadSound()
+    {
+        if (this.playGlobalSound)
+        {
             AudioManagerSingleton.Instance.Stop(Sounds.AUDIO_TYPE.ENTITY_WALK);
             AudioManagerSingleton.Instance.Stop(Sounds.AUDIO_TYPE.ENTITY_RUN);
-        } else {
+        }
+        else
+        {
             this.audioManager.Stop(Sounds.AUDIO_TYPE.ENTITY_WALK);
         }
     }

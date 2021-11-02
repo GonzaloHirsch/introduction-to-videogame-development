@@ -27,7 +27,6 @@ public class Grenade : MonoBehaviour
 
     void Start()
     {
-        Debug.Log(this.meshRenderer);
         this.meshRenderer.enabled = false;
     }
 

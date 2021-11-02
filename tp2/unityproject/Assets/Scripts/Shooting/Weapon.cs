@@ -71,7 +71,6 @@ public class Weapon : MonoBehaviour
         {
             return false;
         }
-        Debug.Log("Fired: " + this.currentAmmo);
         this.cooldownFire = this.fireRate;
         this.currentAmmo--;
         // Muzzle flash
