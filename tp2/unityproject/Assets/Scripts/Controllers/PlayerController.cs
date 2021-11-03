@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour, IInteractable
 {
     private Shooter shooter;
+    private Thrower thrower;
 
     // Movement speed variables
     [Header("Movement")]
@@ -54,10 +55,11 @@ public class PlayerController : MonoBehaviour, IInteractable
     void Start()
     {
         this.shooter = GetComponent<Shooter>();
+        this.thrower = GetComponent<Thrower>();
         this.fpsCam = GetComponentInChildren<Camera>();
         Cursor.lockState = CursorLockMode.Locked;
         // _shootableMask = LayerMask.GetMask("Shootable");
-    
+
         this.cc = GetComponent<CharacterController>();
         this.initialHeight = this.cc.height;
     }
@@ -68,11 +70,19 @@ public class PlayerController : MonoBehaviour, IInteractable
         if (!GameStatus.Instance.GetGamePaused() && !this.shooter.isDead)
         {
             ReadInput();
-            UpdateMovement();
-            UpdateCrouching();
             UpdateCameraRotation();
-            CheckShooting();
-            CheckReloading();
+            if (!this.thrower.IsThrowingGrenade())
+            {
+                UpdateMovement();
+                UpdateCrouching();
+                CheckShooting();
+                CheckReloading();
+            }
+            else if (this.thrower.IsThrowingGrenade())
+            {
+                this.shooter.SetIdleAnimation();
+                this.shooter.SetIdleSound();
+            }
         }
     }
 
@@ -187,7 +197,7 @@ public class PlayerController : MonoBehaviour, IInteractable
         this.shooter.DebugDrawRay(rayOrigin, camaraTransform.forward);
 
         // If shooting and not reloading
-        if (this.shoot && this.shooter.CanShoot()) 
+        if (this.shoot && this.shooter.CanShoot())
         {
             // Shoot the weapon
             this.shooter.Shoot(new Ray(camaraTransform.position, camaraTransform.forward));
@@ -204,7 +214,7 @@ public class PlayerController : MonoBehaviour, IInteractable
         return this.shooter;
     }
 
-    public void Interact() 
+    public void Interact()
     {
         // Do nothing since this method
         // is for Player interactions.

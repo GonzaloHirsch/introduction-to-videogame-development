@@ -28,6 +28,8 @@ public class Thrower : MonoBehaviour
 
     private bool isHolding = false;
 
+    private bool isThrowing = false;
+
     private Animator characterAnimator;
 
     void Awake() {
@@ -101,6 +103,7 @@ public class Thrower : MonoBehaviour
 
     public void SetThrowAnimation()
     {
+        this.isThrowing = true;
         // Store the previous weapon
         int prevWeapon = this.characterAnimator.GetInteger("WeaponType_int");
         // Mark as grenade
@@ -124,9 +127,14 @@ public class Thrower : MonoBehaviour
 
         // Update internal state
         this.timeBetweenThrows = 0f;
+        this.isThrowing = false;
         // Add force as a throw
         this.thrownGrenadeRb.isKinematic = false;
         this.thrownGrenadeRb.AddForce(storedDirection * this.force);
         this.thrownGrenadeScript.ThrowGrenade();
+    }
+
+    public bool IsThrowingGrenade() {
+        return this.isThrowing || this.isHolding;
     }
 }
