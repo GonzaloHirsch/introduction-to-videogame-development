@@ -53,4 +53,12 @@ public class ActionMapper
     public static bool GetPaused() {
         return Input.GetKeyDown(KeyCode.P);
     }
+
+    public static bool GetWeapon1() {
+        return Input.GetKeyDown(KeyCode.Alpha1);
+    }
+    
+    public static bool GetWeapon2() {
+        return Input.GetKeyDown(KeyCode.Alpha2);
+    }
 }

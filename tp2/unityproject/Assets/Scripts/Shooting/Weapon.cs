@@ -18,8 +18,16 @@ public class Weapon : MonoBehaviour
     public float hitForce = 100f;
     private float cooldownFire = 0f;
     private EvnBulletsChange evn;
+    public int animationIndex;
+    public float animationHeadH;
+    public float animationBodyH;
+    public WeaponType type;
 
-    void Start(){
+    public Sounds.AUDIO_TYPE reloadSound = Sounds.AUDIO_TYPE.GUN_PISTOL_RELOAD;
+    public Sounds.AUDIO_TYPE shotSound = Sounds.AUDIO_TYPE.GUN_PISTOL_FIRE;
+
+    void Start()
+    {
         if (this.muzzleFlash) this.muzzleFlash.Stop();
         this.SendBulletsEvent();
     }
@@ -47,10 +55,11 @@ public class Weapon : MonoBehaviour
         return !(this.NeedsReload() || this.NeedsCooldown());
     }
 
-    public bool CanReload(){
+    public bool CanReload()
+    {
         return this.extraAmmo > 0 && this.ammoPerMag != this.currentAmmo;
     }
-    
+
     public void Reload()
     {
         // Do not reload if the mag is full
@@ -80,9 +89,10 @@ public class Weapon : MonoBehaviour
         return true;
     }
 
-    void SendBulletsEvent()
+    public void SendBulletsEvent()
     {
-        if (this.emitBulletEvent) {
+        if (this.emitBulletEvent)
+        {
             evn = EvnBulletsChange.notifier;
             evn.current = this.currentAmmo;
             evn.total = this.extraAmmo;
@@ -90,9 +100,15 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    public void RefillWeapon() {
+    public void RefillWeapon()
+    {
         this.currentAmmo = this.ammoPerMag;
         this.extraAmmo = this.totalInitialAmmo;
         this.SendBulletsEvent();
+    }
+
+    public enum WeaponType
+    {
+        PISTOL, SHOTGUN, SNIPER, RIFLE
     }
 }

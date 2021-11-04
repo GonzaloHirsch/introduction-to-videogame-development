@@ -32483,6 +32483,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eab21da045b846f8bb9ea11658860bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gunIcons:
+  - icon: {fileID: 1637148382}
+    type: 0
+  - icon: {fileID: 2145867387}
+    type: 1
+  - icon: {fileID: 1155669515}
+    type: 2
+  - icon: {fileID: 716203446}
+    type: 3
   currentBullets: {fileID: 1910261990}
   totalBullets: {fileID: 1877694968}
   currentGrenades: {fileID: 1608628839}

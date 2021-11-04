@@ -31,8 +31,10 @@ public class AmmoBox : MonoBehaviour, IInteractable
     private void GiveAmmo(GameObject caller){
         this.isAlreadyUsed = true;
         // Refill weapon
-        Weapon weapon = caller.GetComponentInChildren<Weapon>();
-        weapon.RefillWeapon();
+        Weapon[] weapons = caller.GetComponentsInChildren<Weapon>();
+        foreach (Weapon weapon in weapons) {
+            weapon.RefillWeapon();
+        }
         // Refill grenades
         Thrower thrower = caller.GetComponent<Thrower>();
         thrower.RefillGrenades();

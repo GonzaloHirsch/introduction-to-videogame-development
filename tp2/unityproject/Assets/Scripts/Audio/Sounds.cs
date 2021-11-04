@@ -12,6 +12,8 @@ public static class Sounds
         GUN_PISTOL_EMPTY,
         GRENADE_EXPLOSION,
         BOMB_TICK,
-        BOMB_EXPLOSION
+        BOMB_EXPLOSION,
+        GUN_SHOTGUN_FIRE,
+        GUN_SHOTGUN_RELOAD
     }
 }

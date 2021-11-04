@@ -30,6 +30,7 @@ public class Shooter : MonoBehaviour
 
         // Set initial animation, start idle
         this.SetIdleAnimation();
+        this.SetWeaponAnimation();
 
         // _shootableMask = LayerMask.GetMask("Shootable");
         this.audioManager = GetComponent<AudioManager>();
@@ -215,9 +216,20 @@ public class Shooter : MonoBehaviour
         }
     }
 
+    public void SetWeapon(Weapon _weapon) {
+        this.weapon = _weapon;
+        this.SetWeaponAnimation();
+    }
+
     //*****************************************//
     //************ANIMATION METHODS************//
     //*****************************************//
+
+    public void SetWeaponAnimation(){
+        this.characterAnimator.SetInteger("WeaponType_int", this.weapon.animationIndex);
+        this.characterAnimator.SetFloat("Head_Horizontal_f", this.weapon.animationHeadH);
+        this.characterAnimator.SetFloat("Body_Horizontal_f", this.weapon.animationBodyH);
+    }
 
     public void SetIdleAnimation()
     {
@@ -312,7 +324,7 @@ public class Shooter : MonoBehaviour
         if (this.playGlobalSound)
         {
             // Can overlap, multiple guns at the same time
-            AudioManagerSingleton.Instance.Play(Sounds.AUDIO_TYPE.GUN_PISTOL_FIRE);
+            AudioManagerSingleton.Instance.Play(this.weapon.shotSound);
         } else {
             this.audioManager.Play(Sounds.AUDIO_TYPE.GUN_PISTOL_FIRE);
         }
@@ -330,7 +342,7 @@ public class Shooter : MonoBehaviour
     {
         yield return new WaitForSeconds(secs);
         if (this.playGlobalSound) {
-            AudioManagerSingleton.Instance.Play(Sounds.AUDIO_TYPE.GUN_PISTOL_RELOAD);
+            AudioManagerSingleton.Instance.Play(this.weapon.reloadSound);
         } else {
             this.audioManager.Play(Sounds.AUDIO_TYPE.GUN_PISTOL_RELOAD);
 
