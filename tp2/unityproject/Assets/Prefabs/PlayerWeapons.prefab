@@ -88,14 +88,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 393321885119735052}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.46174863, z: 0, w: 0.8870109}
   m_LocalPosition: {x: 0.19946998, y: 0.004708649, z: 0.0017971015}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7215629361468242672}
   m_Father: {fileID: 672889973515058503}
   m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 55, z: 0}
 --- !u!33 &195674894367804503
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -168,11 +168,11 @@ MonoBehaviour:
   damage: 80
   fireRate: 1
   animationDuration: 0.7
-  range: 12.5
+  range: 17.5
   hitForce: 200
   animationIndex: 4
-  animationHeadH: -0.75
-  animationBodyH: 0.5
+  animationHeadH: 0
+  animationBodyH: 0
   type: 1
   reloadSound: 12
   shotSound: 11
