@@ -57,11 +57,11 @@ public class PlayerController : MonoBehaviour, IInteractable
         this.shooter = GetComponent<Shooter>();
         this.thrower = GetComponent<Thrower>();
         this.fpsCam = GetComponentInChildren<Camera>();
-        Cursor.lockState = CursorLockMode.Locked;
         // _shootableMask = LayerMask.GetMask("Shootable");
 
         this.cc = GetComponent<CharacterController>();
         this.initialHeight = this.cc.height;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
