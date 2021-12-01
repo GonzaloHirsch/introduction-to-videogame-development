@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-
 public class EvnBombDefuse : FrameLord.GameEvent
 {
     public new const FrameLord.GameEvent.Event EventName = FrameLord.GameEvent.Event.BOMB_DEFUSE;

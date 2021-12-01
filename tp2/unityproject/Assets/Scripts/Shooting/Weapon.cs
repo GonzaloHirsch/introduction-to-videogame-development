@@ -22,6 +22,7 @@ public class Weapon : MonoBehaviour
     public float animationHeadH;
     public float animationBodyH;
     public WeaponType type;
+    public bool hasBullets = true;
 
     public Sounds.AUDIO_TYPE reloadSound = Sounds.AUDIO_TYPE.GUN_PISTOL_RELOAD;
     public Sounds.AUDIO_TYPE shotSound = Sounds.AUDIO_TYPE.GUN_PISTOL_FIRE;
@@ -52,12 +53,12 @@ public class Weapon : MonoBehaviour
 
     public bool CanFireShot()
     {
-        return !(this.NeedsReload() || this.NeedsCooldown());
+        return !this.hasBullets || (!(this.NeedsReload() || this.NeedsCooldown()));
     }
 
     public bool CanReload()
     {
-        return this.extraAmmo > 0 && this.ammoPerMag != this.currentAmmo;
+        return this.hasBullets || (this.extraAmmo > 0 && this.ammoPerMag != this.currentAmmo);
     }
 
     public void Reload()
@@ -96,6 +97,7 @@ public class Weapon : MonoBehaviour
             evn = EvnBulletsChange.notifier;
             evn.current = this.currentAmmo;
             evn.total = this.extraAmmo;
+            evn.showBullets = this.hasBullets;
             FrameLord.GameEventDispatcher.Instance.Dispatch(this, evn);
         }
     }
@@ -109,6 +111,6 @@ public class Weapon : MonoBehaviour
 
     public enum WeaponType
     {
-        PISTOL, SHOTGUN, SNIPER, RIFLE
+        PISTOL, SHOTGUN, SNIPER, RIFLE, KNIFE
     }
 }

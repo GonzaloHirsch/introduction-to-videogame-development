@@ -14,6 +14,8 @@ public static class Sounds
         BOMB_TICK,
         BOMB_EXPLOSION,
         GUN_SHOTGUN_FIRE,
-        GUN_SHOTGUN_RELOAD
+        GUN_SHOTGUN_RELOAD,
+        NONE,
+        KNIFE_SWING
     }
 }

@@ -1024,6 +1024,7 @@ Transform:
   - {fileID: 400004}
   - {fileID: 400002}
   - {fileID: 5019202066002599988}
+  - {fileID: 3557536756023850114}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1156,14 +1157,100 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunEndPoint: {fileID: 2853568111235591891}
   muzzleFlash: {fileID: 7571309842052588822}
+  emitBulletEvent: 0
   currentAmmo: 60
   ammoPerMag: 60
   extraAmmo: 360
   totalInitialAmmo: 360
   damage: 17
   fireRate: 0.25
+  animationDuration: 0.284
   range: 50
   hitForce: 100
+  animationIndex: 0
+  animationHeadH: 0
+  animationBodyH: 0
+  type: 0
+  reloadSound: 6
+  shotSound: 5
+--- !u!1001 &3553531506107200984
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 400026}
+    m_Modifications:
+    - target: {fileID: 1634110288462620, guid: ddc7fe1a97255b642b7ca3b01467ee69, type: 3}
+      propertyPath: m_Name
+      value: Weapon_Knife
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634110288462620, guid: ddc7fe1a97255b642b7ca3b01467ee69, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018472159789402, guid: ddc7fe1a97255b642b7ca3b01467ee69, type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018472159789402, guid: ddc7fe1a97255b642b7ca3b01467ee69, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018472159789402, guid: ddc7fe1a97255b642b7ca3b01467ee69, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018472159789402, guid: ddc7fe1a97255b642b7ca3b01467ee69, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018472159789402, guid: ddc7fe1a97255b642b7ca3b01467ee69, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018472159789402, guid: ddc7fe1a97255b642b7ca3b01467ee69, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018472159789402, guid: ddc7fe1a97255b642b7ca3b01467ee69, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018472159789402, guid: ddc7fe1a97255b642b7ca3b01467ee69, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018472159789402, guid: ddc7fe1a97255b642b7ca3b01467ee69, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018472159789402, guid: ddc7fe1a97255b642b7ca3b01467ee69, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018472159789402, guid: ddc7fe1a97255b642b7ca3b01467ee69, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018472159789402, guid: ddc7fe1a97255b642b7ca3b01467ee69, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018472159789402, guid: ddc7fe1a97255b642b7ca3b01467ee69, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018472159789402, guid: ddc7fe1a97255b642b7ca3b01467ee69, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ddc7fe1a97255b642b7ca3b01467ee69, type: 3}
+--- !u!4 &3557536756023850114 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4018472159789402, guid: ddc7fe1a97255b642b7ca3b01467ee69, type: 3}
+  m_PrefabInstance: {fileID: 3553531506107200984}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7088122949086962801
 PrefabInstance:
   m_ObjectHideFlags: 0

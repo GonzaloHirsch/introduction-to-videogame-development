@@ -173,6 +173,16 @@ public class Interacter : MonoBehaviour
                     interactableObject.InteractWithCaller(this.gameObject);
                 }
                 break;
+            case InteractType.Weapon:
+                WeaponPickup weaponPickup = (WeaponPickup)interactableObject;
+                this.interactText.text = "Press \"E\" to pick up " + weaponPickup.GetWeaponLabel();
+                this.interactTextPanel.SetActive(true);
+                // Interact if is player and interacting
+                if (ActionMapper.IsInteracting())
+                {
+                    interactableObject.InteractWithCaller(this.gameObject);
+                }
+                break;
             case InteractType.Player:
                 this.interactTextPanel.SetActive(false);
                 break;

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class WeaponSwitcher : MonoBehaviour
@@ -44,6 +45,10 @@ public class WeaponSwitcher : MonoBehaviour
             this.weaponSwitchIndex = 1;
         } else if (ActionMapper.GetWeapon2()) {
             this.weaponSwitchIndex = 2;
+        } else if (ActionMapper.GetWeapon3() && weaponSlots.Length >= 3) {
+            this.weaponSwitchIndex = 3;
+        } else if (ActionMapper.GetWeapon4() && weaponSlots.Length >= 4) {
+            this.weaponSwitchIndex = 4;
         } else {
             this.weaponSwitchIndex = -1;
         }
@@ -79,6 +84,22 @@ public class WeaponSwitcher : MonoBehaviour
 
     public Weapon GetCurrentWeapon() {
         return this.currentWeapon;
+    }
+
+    public void AddNewWeapon(GameObject weapon, int index) {
+        // Generate slot
+        WeaponSlot slot = new WeaponSlot();
+        slot.weaponGo = weapon;
+        slot.weaponIndex = index;
+        // Append to slot list
+        Array.Resize(ref this.weaponSlots, this.weaponSlots.Length + 1);
+        this.weaponSlots[this.weaponSlots.Length - 1] = slot;
+        // Add to map
+        this.weapons[slot.weaponIndex] = slot.weaponGo.GetComponent<Weapon>();
+    }
+
+    public int GetNumberOfWeapons() {
+        return this.weaponSlots.Length;
     }
 
     // Inner classes

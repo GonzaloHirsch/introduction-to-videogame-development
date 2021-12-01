@@ -6218,6 +6218,12 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  - type: 14
+    clip: {fileID: 8300000, guid: 8105ded2851db44db85cda94e4172149, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!1001 &1287474781
 PrefabInstance:
   m_ObjectHideFlags: 0

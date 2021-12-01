@@ -61,4 +61,10 @@ public class ActionMapper
     public static bool GetWeapon2() {
         return Input.GetKeyDown(KeyCode.Alpha2);
     }
+    public static bool GetWeapon3() {
+        return Input.GetKeyDown(KeyCode.Alpha3);
+    }
+    public static bool GetWeapon4() {
+        return Input.GetKeyDown(KeyCode.Alpha4);
+    }
 }

@@ -41,6 +41,7 @@ public class AudioManagerSingleton : MonoBehaviour
 
     public void Play(Sounds.AUDIO_TYPE audioType, bool noOverlap = false) 
     {
+        if (audioType == Sounds.AUDIO_TYPE.NONE) return;
         Sound s = GetSoundByType(audioType);
         if (s == null) {
             Debug.LogWarning("Sound of type " + audioType + " not found!"); 
@@ -56,6 +57,7 @@ public class AudioManagerSingleton : MonoBehaviour
 
     public void Stop(Sounds.AUDIO_TYPE audioType) 
     {
+        if (audioType == Sounds.AUDIO_TYPE.NONE) return;
         Sound s = GetSoundByType(audioType);
         if (s == null) {
             Debug.LogWarning("Sound of type " + audioType + " not found!"); 
