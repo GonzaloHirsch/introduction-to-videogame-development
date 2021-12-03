@@ -31,7 +31,8 @@ namespace FrameLord
 			GRENADES_CHANGE,
 			ENEMY_DEATH,
 			WEAPON_CHANGE,
-			MESSAGE
+			MESSAGE,
+			AIM
 		}
 	}
 }

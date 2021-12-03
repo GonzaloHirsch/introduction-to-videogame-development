@@ -23,6 +23,8 @@ public class Weapon : MonoBehaviour
     public float animationBodyH;
     public WeaponType type;
     public bool hasBullets = true;
+    public bool canAim = false;
+    public bool canRefill = true;
 
     public Sounds.AUDIO_TYPE reloadSound = Sounds.AUDIO_TYPE.GUN_PISTOL_RELOAD;
     public Sounds.AUDIO_TYPE shotSound = Sounds.AUDIO_TYPE.GUN_PISTOL_FIRE;
@@ -58,7 +60,7 @@ public class Weapon : MonoBehaviour
 
     public bool CanReload()
     {
-        return this.hasBullets || (this.extraAmmo > 0 && this.ammoPerMag != this.currentAmmo);
+        return (this.hasBullets && this.extraAmmo > 0 && this.ammoPerMag != this.currentAmmo);
     }
 
     public void Reload()
@@ -104,9 +106,12 @@ public class Weapon : MonoBehaviour
 
     public void RefillWeapon()
     {
-        this.currentAmmo = this.ammoPerMag;
-        this.extraAmmo = this.totalInitialAmmo;
-        this.SendBulletsEvent();
+        if (this.canRefill)
+        {
+            this.currentAmmo = this.ammoPerMag;
+            this.extraAmmo = this.totalInitialAmmo;
+            this.SendBulletsEvent();
+        }
     }
 
     public enum WeaponType

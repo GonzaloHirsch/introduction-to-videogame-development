@@ -16,6 +16,7 @@ public static class Sounds
         GUN_SHOTGUN_FIRE,
         GUN_SHOTGUN_RELOAD,
         NONE,
-        KNIFE_SWING
+        KNIFE_SWING,
+        GUN_SNIPER_FIRE
     }
 }

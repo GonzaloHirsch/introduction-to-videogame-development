@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour, IInteractable
     private bool jumped = false;
     private bool shoot = false;
     private bool reload = false;
+    private bool aim = false;
 
     // Camera and rotation
     [Header("Camera and Rotation")]
@@ -38,6 +39,12 @@ public class PlayerController : MonoBehaviour, IInteractable
     public float downCameraLimit = 50f;
     private float currentVerticalRotation = 0f;
     private Camera fpsCam;                                                // Holds a reference to the first person camera
+
+    // Aiming
+    private bool isAiming = false;
+    private EvnAim aimEvent;
+    private float normalFov = 60f;
+    public float aimFov = 5f;
 
     // Jumping
     private float currentJumpSpeed = 0f;
@@ -75,6 +82,7 @@ public class PlayerController : MonoBehaviour, IInteractable
             {
                 UpdateMovement();
                 UpdateCrouching();
+                CheckAiming();
                 CheckShooting();
                 CheckReloading();
             }
@@ -97,6 +105,7 @@ public class PlayerController : MonoBehaviour, IInteractable
         this.startedCrouching = ActionMapper.StartedCrouching();
         this.stoppedCrouching = ActionMapper.StoppedCrouching();
         this.shoot = ActionMapper.GetShoot();
+        this.aim = ActionMapper.GetAim();
         this.reload = ActionMapper.GetReload();
     }
 
@@ -206,6 +215,29 @@ public class PlayerController : MonoBehaviour, IInteractable
         else if (!this.shoot)
         {
             this.shooter.FinishShooting();
+        }
+    }
+
+    void CheckAiming()
+    {
+        // If trying to aim and have the weapon can do it
+        if (this.aim && this.shooter.CanAim() && !this.isAiming)
+        {
+            this.isAiming = true;
+            // Set the aim event
+            this.aimEvent = EvnAim.notifier;
+            this.aimEvent.isAiming = true;
+            FrameLord.GameEventDispatcher.Instance.Dispatch(this, this.aimEvent);
+            this.fpsCam.fieldOfView = this.aimFov;
+        }
+        else if (!this.aim && this.isAiming)
+        {
+            this.isAiming = false;
+            // Set the aim event
+            this.aimEvent = EvnAim.notifier;
+            this.aimEvent.isAiming = false;
+            FrameLord.GameEventDispatcher.Instance.Dispatch(this, this.aimEvent);
+            this.fpsCam.fieldOfView = this.normalFov;
         }
     }
 
