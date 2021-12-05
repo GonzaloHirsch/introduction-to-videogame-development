@@ -1,10 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
+    [Header("Patrolling")]
+    public float patrolSpeed = 5f;
+    public Transform[] patrolPoints;
+    private int targetPatrolPoint = 0;
+    private bool isPatrolling = true;
+
     [Header("Movement")]
     public float turnRadius = 10f;
     // Only want enemies to attack us if we are within a certain range
@@ -41,6 +48,7 @@ public class EnemyController : MonoBehaviour
 
     void Start()
     {
+        this.AddStartPositionToPatrol();
         this.target = PlayerManager.Instance.player.transform;
         this.agent = this.GetComponent<NavMeshAgent>();
         this.shooter = this.GetComponent<Shooter>();
@@ -66,6 +74,17 @@ public class EnemyController : MonoBehaviour
             this.agent.isStopped = true;
         }
     }
+
+    //**************************************//
+    //**********ENEMY PATROLLING************//
+    //**************************************//
+
+    void AddStartPositionToPatrol() {
+        // add the starting position to the patrol
+        Array.Resize(ref this.patrolPoints, this.patrolPoints.Length + 1);
+        this.patrolPoints[this.patrolPoints.Length - 1] = this.transform;
+    }
+
 
     //**************************************//
     //***********ENEMY MOVEMENT*************//
