@@ -9,10 +9,15 @@ public class EnemyController : MonoBehaviour
     [Header("Patrolling")]
     public float patrolSpeed = 5f;
     public Transform[] patrolPoints;
-    private int targetPatrolPoint = 0;
+    private Vector3[] patrolPositions;
+    private int targetPatrolIdx = 0;
     private bool isPatrolling = true;
 
     [Header("Movement")]
+    // Stopping distance of the enemy to the targets
+    public float targetStoppingDistance;
+    // How fast enemy chases player
+    public float targetChaseSpeed;
     public float turnRadius = 10f;
     // Only want enemies to attack us if we are within a certain range
     public float lookRadius = 30f;
@@ -46,15 +51,21 @@ public class EnemyController : MonoBehaviour
     private float lastHealth;
     private CapsuleCollider enemyCollider;
 
+    void Awake() 
+    {
+        this.CreatePatrolPositions();
+    }
+
     void Start()
     {
-        this.AddStartPositionToPatrol();
         this.target = PlayerManager.Instance.player.transform;
         this.agent = this.GetComponent<NavMeshAgent>();
         this.shooter = this.GetComponent<Shooter>();
         this.shootable = this.GetComponent<Shootable>();
         this.enemyCollider = this.GetComponent<CapsuleCollider>();
         this.lastHealth = this.shootable.maxHealth;
+        this.targetStoppingDistance = this.agent.stoppingDistance;
+        this.targetChaseSpeed = this.agent.speed;
     }
 
     void Update()
@@ -63,6 +74,7 @@ public class EnemyController : MonoBehaviour
 
         if (!this.shootable.IsDead())
         {
+            this.HandleEnemyPatrolling();
             this.HandleEnemyMovement(this.distanceToTarget);
             this.HandleEnemyShooting(this.distanceToTarget);
             this.HandleEnemyReloading();
@@ -79,10 +91,39 @@ public class EnemyController : MonoBehaviour
     //**********ENEMY PATROLLING************//
     //**************************************//
 
-    void AddStartPositionToPatrol() {
+    void CreatePatrolPositions() {
         // add the starting position to the patrol
-        Array.Resize(ref this.patrolPoints, this.patrolPoints.Length + 1);
-        this.patrolPoints[this.patrolPoints.Length - 1] = this.transform;
+        this.patrolPositions = new Vector3[this.patrolPoints.Length + 1];
+        for (int i = 0; i < this.patrolPoints.Length; i++) {
+            this.patrolPositions[i] = this.patrolPoints[i].position;
+        }
+        this.patrolPositions[this.patrolPositions.Length - 1] = this.transform.position;
+    }
+
+    void HandleEnemyPatrolling()
+    {
+        if (this.isPatrolling) {
+            // When patrolling, reach your target and walk slower
+            this.agent.stoppingDistance = 0f;
+            this.agent.speed = 1.5f;
+            // Position to next patrol point
+            Vector3 targetPatrolPos = this.patrolPositions[this.targetPatrolIdx];
+            // Distance to the patrol point
+            float distance = Vector3.Distance(
+                targetPatrolPos, this.transform.position
+            );
+            // If the target was reached, move to the next one
+            if (distance < 1f) {
+                this.targetPatrolIdx = (this.targetPatrolIdx + 1) % this.patrolPositions.Length;
+                targetPatrolPos = this.patrolPositions[this.targetPatrolIdx];
+            }
+            // Use the nav mesh to move to the patrol point
+            this.agent.SetDestination(targetPatrolPos);
+        
+        } else {
+            this.agent.stoppingDistance = this.targetStoppingDistance;
+            this.agent.speed = this.targetChaseSpeed;
+        }
     }
 
 
@@ -102,6 +143,7 @@ public class EnemyController : MonoBehaviour
     {
         // If player is not visible to the NPC do nothing
         if (this.playerIsVisible) {
+            this.isPatrolling = false;
             if (distance <= this.lookRadius || this.enemyIsShot) {
                 this.ReactToVisiblePlayer(distance);
             } else {
@@ -111,6 +153,7 @@ public class EnemyController : MonoBehaviour
             this.SetVerticalMovementAnimation();
 
         } else if (!this.EnemyIsMoving() && distance <= this.turnRadius) {
+            this.isPatrolling = false;
             this.FaceTarget();
         }
         // Set walking or idle animation

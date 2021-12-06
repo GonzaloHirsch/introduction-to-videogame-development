@@ -22688,6 +22688,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2075562018}
     m_Modifications:
+    - target: {fileID: 636222231058642896, guid: c9b5c01866d364f419f12791a092abe5, type: 3}
+      propertyPath: m_StoppingDistance
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1747978292282379211, guid: c9b5c01866d364f419f12791a092abe5, type: 3}
       propertyPath: patrolPoints.Array.size
       value: 0
@@ -47888,6 +47892,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2075562018}
     m_Modifications:
+    - target: {fileID: 636222231058642896, guid: c9b5c01866d364f419f12791a092abe5, type: 3}
+      propertyPath: m_Speed
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 1747978292282379211, guid: c9b5c01866d364f419f12791a092abe5, type: 3}
       propertyPath: patrolPoints.Array.size
       value: 1
