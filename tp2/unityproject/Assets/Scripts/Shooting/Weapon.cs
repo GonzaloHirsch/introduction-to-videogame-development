@@ -43,7 +43,7 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    bool NeedsReload()
+    public bool NeedsReload()
     {
         return this.currentAmmo == 0;
     }

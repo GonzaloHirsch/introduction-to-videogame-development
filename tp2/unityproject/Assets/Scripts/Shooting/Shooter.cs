@@ -10,7 +10,7 @@ public class Shooter : MonoBehaviour
     public Weapon weapon;
     private GameObject weaponGo;
     private WaitForSeconds shotDuration;    // WaitForSeconds object used by our ShotEffect coroutine, determines time laser line will remain visible
-    private WaitForSeconds reloadDuration = new WaitForSeconds(1.4f);    // WaitForSeconds object used by our ShotEffect coroutine, determines time laser line will remain visible
+    private WaitForSeconds reloadDuration = new WaitForSeconds(1.5f);    // WaitForSeconds object used by our ShotEffect coroutine, determines time laser line will remain visible
     private LineRenderer laserLine;
     private bool isShooting = false;                                       // Reference to the LineRenderer component which will display our laserline
     private bool isReloading = false;
@@ -61,6 +61,8 @@ public class Shooter : MonoBehaviour
         this.HandleShootAnimation();
         // Shoot the weapon
         this.ShootWithRaycast(ray);
+        
+        StartCoroutine(this.AutomaticReload());
     }
 
     public bool ShootWithRaycast(Ray ray)
@@ -181,6 +183,18 @@ public class Shooter : MonoBehaviour
         yield return reloadDuration;
         // After waiting, set reload logic and finish animation
         this.FinishReloading();
+    }
+
+    private IEnumerator AutomaticReload()
+    {
+        //Wait for shot to finish
+        yield return this.shotDuration;
+        
+        // Reload automatically if no ammo in current mag
+        if (this.weapon.NeedsReload() && this.CanReload()) {
+            this.Reload();
+        }
+
     }
 
     //*****************************************//
