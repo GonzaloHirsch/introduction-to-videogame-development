@@ -23,9 +23,20 @@ public class EnemyController : MonoBehaviour
     public float lookRadius = 30f;
     // Amount of time the enemy will consider the player visible once 
     // it leaves the lookRadius (as if enemy is still alert and searching)
-    public float playerVisibilityTimeLimit = 5f;
+    public float playerVisibilityTimeLimit = 4f;
     // Current amount of time player is considered visible
     private float currentPlayerVisibilityTime = 0f;
+    // Turned but so no enemy time limit
+    public float rotationNoVisibilityTimeLimit = 2f;
+    // Current amount of time enemy has been turned but not did not see the player
+    private float currentRotationNoVisibilityTime = 0f;
+
+    // Time spent inside the turn radius before enemy follows player
+    public float closeProximityTimeLimit = 10f;
+    // Current amount of time player has been inside enemy turn radius
+    private float currentCloseProximityTime = 0f;
+    // Previous rotation status
+    private bool isFollowTimeLimit = false;
     // Marks if the player is visible to the NPC
     private bool playerIsVisible = false;
     // Need a reference to what we are chasing
@@ -41,6 +52,8 @@ public class EnemyController : MonoBehaviour
     public float angleDifferenceLimit = 5f;
     // Current angle between enemy rotation and rotation needed to face the enemy
     private float angleDifference = 0f;
+    // Player object
+    private PlayerController player;
     // If player within this distance, enemy will turn to face them
     private Transform target;
     // Need a reference to our nav mesh agent to move our enemy
@@ -58,6 +71,7 @@ public class EnemyController : MonoBehaviour
 
     void Start()
     {
+        this.player = PlayerManager.Instance.player;
         this.target = PlayerManager.Instance.player.transform;
         this.agent = this.GetComponent<NavMeshAgent>();
         this.shooter = this.GetComponent<Shooter>();
@@ -151,11 +165,20 @@ public class EnemyController : MonoBehaviour
             } 
             // Only move vertically once spotted
             this.SetVerticalMovementAnimation();
-
-        } else if (!this.EnemyIsMoving() && distance <= this.turnRadius) {
+            // Set the no visibility time to 0
+            this.resetNoVisibilityTimers();
+        } 
+        else if (distance <= this.turnRadius) {
             this.isPatrolling = false;
             this.FaceTarget();
+            this.CheckCloseProximityTime(distance);
         }
+        // Not visible, not in turn radius, but not patrolling 
+        // Means enemy was near me but did not see them
+        else if (!this.isPatrolling) {
+            this.CheckRotatedNoVisibilityTime();
+        }
+
         // Set walking or idle animation
         this.SetMovementAnimation();
 
@@ -208,6 +231,47 @@ public class EnemyController : MonoBehaviour
         this.playerIsVisible = !playerVisibilityTimeReached;
     }
 
+    void CheckRotatedNoVisibilityTime()
+    {
+        // Enemy turned when player was close but did not see them. Wait for a 
+        // few seconds before starting patrol again in case they are not close.
+        bool rotNoVisibilityTimeReached =
+            this.currentRotationNoVisibilityTime >= this.rotationNoVisibilityTimeLimit;
+        
+        // Reset the timer or keep adding to it
+        this.currentRotationNoVisibilityTime = rotNoVisibilityTimeReached
+            ? 0f
+            : this.currentRotationNoVisibilityTime + Time.deltaTime;
+
+        // If not within turn radius, continue patrolling
+        if (rotNoVisibilityTimeReached) {
+            this.isPatrolling = true;
+        }
+    }
+
+    void CheckCloseProximityTime(float distance)
+    {
+        // Enemy turned when player was close. If close for long, follow the player.
+        bool rotCloseProximityTimeReached =
+            this.currentCloseProximityTime >= this.closeProximityTimeLimit;
+        
+        // Reset the timer or keep adding to it
+        this.currentCloseProximityTime = rotCloseProximityTimeReached
+            ? 0f
+            : this.currentCloseProximityTime + Time.deltaTime;
+
+        // If within turn radius when limit reached, follow player
+        if (rotCloseProximityTimeReached) {
+            this.ReactToVisiblePlayer(distance);
+            this.playerIsVisible = true;
+        }
+    }
+
+    void resetNoVisibilityTimers() {
+        this.currentRotationNoVisibilityTime = 0f;
+        this.currentCloseProximityTime = 0f;
+    }
+
     void SetMovementAnimation()
     {
         if (this.EnemyIsMoving()) {
@@ -234,6 +298,11 @@ public class EnemyController : MonoBehaviour
     bool EnemyIsMoving()
     {
         return this.agent.velocity.magnitude > 0;
+    }
+
+    bool PlayerIsMoving()
+    {
+        return this.player.speed > 0;
     }
 
     public void SetPlayerVisibility(bool playerIsVisible)

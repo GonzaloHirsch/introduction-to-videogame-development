@@ -5019,7 +5019,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 095c849bfd19dbb02a48bf6bf13baec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolSpeed: 5
+  patrolSpeed: 1.7
   patrolPoints: []
   targetStoppingDistance: 0
   targetChaseSpeed: 0
