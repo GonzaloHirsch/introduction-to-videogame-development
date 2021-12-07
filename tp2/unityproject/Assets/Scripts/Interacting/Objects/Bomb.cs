@@ -20,6 +20,7 @@ public class Bomb : MonoBehaviour, IInteractable
     public bool showInUI = false;
     public ProgressBar defuseBar;
     public Outline outline;
+    public GameObject minimapIcon;
 
     [Header("Sounds")]
     private AudioManager audioManager;
@@ -95,6 +96,8 @@ public class Bomb : MonoBehaviour, IInteractable
             if (this.showInUI) {
                 this.defuseBar.SetValue(0f);
             }
+            // Disable icon in minimap
+            this.minimapIcon.SetActive(false);
         }
     }
 

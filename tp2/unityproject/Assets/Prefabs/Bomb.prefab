@@ -68,6 +68,7 @@ MonoBehaviour:
   showInUI: 0
   defuseBar: {fileID: 0}
   outline: {fileID: 0}
+  minimapIcon: {fileID: 2614144825508935441}
 --- !u!114 &-3627835596264429588
 MonoBehaviour:
   m_ObjectHideFlags: 0

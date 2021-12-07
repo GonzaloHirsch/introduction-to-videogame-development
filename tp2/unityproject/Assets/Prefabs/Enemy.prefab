@@ -5026,9 +5026,12 @@ MonoBehaviour:
   turnRadius: 20
   lookRadius: 30
   playerVisibilityTimeLimit: 5
+  rotationNoVisibilityTimeLimit: 2
+  closeProximityTimeLimit: 10
   axisAccuracyProbability: 0.15
   axisAccuracyDelta: 2
   angleDifferenceLimit: 5
+  minimapIcon: {fileID: 7367439326935694629}
 --- !u!54 &2846588905021424535
 Rigidbody:
   m_ObjectHideFlags: 0

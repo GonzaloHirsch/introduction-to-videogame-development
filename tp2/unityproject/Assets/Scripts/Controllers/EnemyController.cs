@@ -36,7 +36,6 @@ public class EnemyController : MonoBehaviour
     // Current amount of time player has been inside enemy turn radius
     private float currentCloseProximityTime = 0f;
     // Previous rotation status
-    private bool isFollowTimeLimit = false;
     // Marks if the player is visible to the NPC
     private bool playerIsVisible = false;
     // Need a reference to what we are chasing
@@ -63,6 +62,9 @@ public class EnemyController : MonoBehaviour
     private Shootable shootable;
     private float lastHealth;
     private CapsuleCollider enemyCollider;
+
+    [Header("Minimap")]
+    public GameObject minimapIcon;
 
     void Awake() 
     {
@@ -98,6 +100,8 @@ public class EnemyController : MonoBehaviour
             // Disable collider to avoid bothering player movement
             this.enemyCollider.enabled = false;
             this.agent.isStopped = true;
+            // Disable map indicator
+            this.minimapIcon.SetActive(false);
         }
     }
 

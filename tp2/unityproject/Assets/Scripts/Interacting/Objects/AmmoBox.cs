@@ -6,6 +6,7 @@ public class AmmoBox : MonoBehaviour, IInteractable
 {
     private bool isAlreadyUsed = false;
     private Outline outline;
+    public GameObject minimapIcon;
 
     void Awake() {
         this.outline = GetComponent<Outline>();
@@ -20,6 +21,7 @@ public class AmmoBox : MonoBehaviour, IInteractable
     {
         if (!this.isAlreadyUsed) {
             this.GiveAmmo(caller);
+            this.minimapIcon.SetActive(false);
         }
     }
 

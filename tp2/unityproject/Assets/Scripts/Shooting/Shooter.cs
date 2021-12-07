@@ -61,8 +61,6 @@ public class Shooter : MonoBehaviour
         this.HandleShootAnimation();
         // Shoot the weapon
         this.ShootWithRaycast(ray);
-        
-        StartCoroutine(this.AutomaticReload());
     }
 
     public bool ShootWithRaycast(Ray ray)
@@ -110,6 +108,8 @@ public class Shooter : MonoBehaviour
              * is called from the update
              */
             this.SetEmptyGunSound();
+            // Automatic reload when the player clicks
+            this.AutomaticReload();
         }
     }
 
@@ -185,11 +185,8 @@ public class Shooter : MonoBehaviour
         this.FinishReloading();
     }
 
-    private IEnumerator AutomaticReload()
+    private void AutomaticReload()
     {
-        //Wait for shot to finish
-        yield return this.shotDuration;
-        
         // Reload automatically if no ammo in current mag
         if (this.weapon.NeedsReload() && this.CanReload()) {
             this.Reload();

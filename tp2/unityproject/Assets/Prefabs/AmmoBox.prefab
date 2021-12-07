@@ -111,6 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6ce8942bbc46461597390848751708d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minimapIcon: {fileID: 2244539032233953854}
 --- !u!114 &-863674249750017594
 MonoBehaviour:
   m_ObjectHideFlags: 0
