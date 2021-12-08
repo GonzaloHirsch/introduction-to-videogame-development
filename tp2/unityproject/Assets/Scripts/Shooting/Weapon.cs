@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    [Header("Objects")]
     public Transform gunEndPoint;
     public ParticleSystem muzzleFlash;
+
+    [Header("Bullets")]
     public bool emitBulletEvent = false;
     public int currentAmmo = 60;
     public int ammoPerMag = 60;
@@ -13,24 +16,40 @@ public class Weapon : MonoBehaviour
     public int totalInitialAmmo = 360;
     public int damage = 17;
     public float fireRate = .25f;
-    public float animationDuration = 0.284f;
     public float range = 50f;
     public float hitForce = 100f;
     private float cooldownFire = 0f;
     private EvnBulletsChange evn;
+
+    [Header("Animation")]
+    public float animationDuration = 0.284f;
     public int animationIndex;
     public float animationHeadH;
     public float animationBodyH;
+    
+    [Header("Weapon")]
     public WeaponType type;
     public bool hasBullets = true;
     public bool canAim = false;
     public bool canRefill = true;
 
+    [Header("Sounds")]
+
     public Sounds.AUDIO_TYPE reloadSound = Sounds.AUDIO_TYPE.GUN_PISTOL_RELOAD;
     public Sounds.AUDIO_TYPE shotSound = Sounds.AUDIO_TYPE.GUN_PISTOL_FIRE;
 
+    [Header("Recoil")]
+
+    public float recoilRangeTime = 0.5f;
+    private float currentRecoilTime = 0f;
+    public int cumulativeRecoilLimit = 5;
+    private int cumulativeRecoil = 0;
+    public float verticalRecoilStrength = 1f;
+    public float horizontalRecoilStrength = 1f;
+
     void Start()
     {
+        this.currentRecoilTime = this.recoilRangeTime;
         if (this.muzzleFlash) this.muzzleFlash.Stop();
         this.SendBulletsEvent();
     }
@@ -40,6 +59,14 @@ public class Weapon : MonoBehaviour
         if (this.NeedsCooldown())
         {
             this.cooldownFire -= Time.deltaTime;
+        } else {
+            // Count towards recoil
+            this.currentRecoilTime += Time.deltaTime;
+            // Reduce recoil if time exceeded
+            if (this.currentRecoilTime >= (this.recoilRangeTime / 2f) && this.cumulativeRecoil > 0) {
+                this.cumulativeRecoil--;
+                this.currentRecoilTime = 0f;
+            }
         }
     }
 
@@ -89,6 +116,12 @@ public class Weapon : MonoBehaviour
         if (this.muzzleFlash) this.muzzleFlash.Play();
         // Send shot event
         this.SendBulletsEvent();
+        // Determine if it has recoil
+        if (this.currentRecoilTime <= this.recoilRangeTime) {
+            this.cumulativeRecoil = Mathf.Min(this.cumulativeRecoilLimit, this.cumulativeRecoil + 1);
+        }
+        // Reset recoil time
+        this.currentRecoilTime = 0f;
         return true;
     }
 
@@ -112,6 +145,10 @@ public class Weapon : MonoBehaviour
             this.extraAmmo = this.totalInitialAmmo;
             this.SendBulletsEvent();
         }
+    }
+
+    public int HasRecoil() {
+        return this.cumulativeRecoil;
     }
 
     public enum WeaponType

@@ -168,9 +168,9 @@ MonoBehaviour:
   totalInitialAmmo: 8
   damage: 80
   fireRate: 1
-  animationDuration: 0.7
   range: 17.5
   hitForce: 200
+  animationDuration: 0.7
   animationIndex: 4
   animationHeadH: 0
   animationBodyH: 0
@@ -180,6 +180,10 @@ MonoBehaviour:
   canRefill: 1
   reloadSound: 12
   shotSound: 11
+  recoilRangeTime: 0.5
+  cumulativeRecoilLimit: 5
+  verticalRecoilStrength: 1
+  horizontalRecoilStrength: 1
 --- !u!1 &415257842332185370
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,9 +452,9 @@ MonoBehaviour:
   totalInitialAmmo: 1000
   damage: 75
   fireRate: 1
-  animationDuration: 0.284
   range: 5
   hitForce: 100
+  animationDuration: 0.284
   animationIndex: 1
   animationHeadH: 0
   animationBodyH: 0
@@ -460,6 +464,10 @@ MonoBehaviour:
   canRefill: 0
   reloadSound: 13
   shotSound: 14
+  recoilRangeTime: 0.5
+  cumulativeRecoilLimit: 5
+  verticalRecoilStrength: 1
+  horizontalRecoilStrength: 1
 --- !u!1 &2256460676757665930
 GameObject:
   m_ObjectHideFlags: 0
@@ -677,10 +685,10 @@ MonoBehaviour:
   extraAmmo: 32
   totalInitialAmmo: 32
   damage: 25
-  fireRate: 0.7
-  animationDuration: 0.284
+  fireRate: 0.5
   range: 40
   hitForce: 100
+  animationDuration: 0.186
   animationIndex: 1
   animationHeadH: 0
   animationBodyH: 0
@@ -690,6 +698,10 @@ MonoBehaviour:
   canRefill: 1
   reloadSound: 6
   shotSound: 5
+  recoilRangeTime: 0.75
+  cumulativeRecoilLimit: 5
+  verticalRecoilStrength: 0.35
+  horizontalRecoilStrength: 0.05
 --- !u!1 &4160545319531737680
 GameObject:
   m_ObjectHideFlags: 0
@@ -795,9 +807,9 @@ MonoBehaviour:
   totalInitialAmmo: 0
   damage: 100
   fireRate: 2
-  animationDuration: 0.284
   range: 100
   hitForce: 200
+  animationDuration: 0.284
   animationIndex: 5
   animationHeadH: 0
   animationBodyH: 0
@@ -807,6 +819,10 @@ MonoBehaviour:
   canRefill: 0
   reloadSound: 6
   shotSound: 15
+  recoilRangeTime: 1
+  cumulativeRecoilLimit: 3
+  verticalRecoilStrength: 0.6
+  horizontalRecoilStrength: 0.3
 --- !u!1 &4239048507805863907
 GameObject:
   m_ObjectHideFlags: 0

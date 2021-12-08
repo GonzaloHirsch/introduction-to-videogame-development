@@ -5,6 +5,7 @@ using UnityEngine;
 public class Shooter : MonoBehaviour
 {
     private Animator characterAnimator;
+    public GameObject debugObject;
 
     [Header("Weapon")]
     public Weapon weapon;
@@ -60,10 +61,18 @@ public class Shooter : MonoBehaviour
         // Trigger animation
         this.HandleShootAnimation();
         // Shoot the weapon
-        this.ShootWithRaycast(ray);
+        this.ShootWithRaycast(ray, LayerMask.GetMask("Enemy", "Player", "Default"));
+    }
+    
+    public void ShootWithMask(Ray ray, int layerMask)
+    {
+        // Trigger animation
+        this.HandleShootAnimation();
+        // Shoot the weapon
+        this.ShootWithRaycast(ray, layerMask);
     }
 
-    public bool ShootWithRaycast(Ray ray)
+    public bool ShootWithRaycast(Ray ray, int layerMask)
     {
         RaycastHit hit = new RaycastHit();
 
@@ -72,9 +81,10 @@ public class Shooter : MonoBehaviour
         bool shotFired = this.weapon.ShotFired();
 
         // Check if the raycast collided with something
-        if (Physics.Raycast(ray, out hit, this.weapon.range))
+        if (Physics.Raycast(ray, out hit, this.weapon.range, layerMask))
         {
             if (this.isDebug) this.laserLine.SetPosition(1, hit.point);
+            if (this.debugObject) Instantiate(this.debugObject, hit.point, Quaternion.identity);
 
             // Apply damage to the obj if a shot was fired
             if (shotFired)
@@ -188,7 +198,8 @@ public class Shooter : MonoBehaviour
     private void AutomaticReload()
     {
         // Reload automatically if no ammo in current mag
-        if (this.weapon.NeedsReload() && this.CanReload()) {
+        if (this.weapon.NeedsReload() && this.CanReload())
+        {
             this.Reload();
         }
 
@@ -198,8 +209,34 @@ public class Shooter : MonoBehaviour
     //**************AIM METHODS**************//
     //*****************************************//
 
-    public bool CanAim() {
+    public bool CanAim()
+    {
         return this.weapon.canAim;
+    }
+
+    //*****************************************//
+    //*************RECOIL METHODS************//
+    //*****************************************//
+
+    public int HasRecoil()
+    {
+        return this.weapon.HasRecoil();
+    }
+
+    public Vector3 ApplyRecoil(Vector3 originalDirection, int recoilNumber)
+    {
+        // Calculate X and Y drift
+        float recoilX = ((float)recoilNumber) / (2f * this.weapon.cumulativeRecoilLimit);
+        float recoilY = this.GetRecoilYDelta(recoilX, this.weapon.verticalRecoilStrength);
+        // Only apply in Y and X
+        originalDirection.x += (Mathf.Sign(Random.Range(-1f, 1f)) * recoilX * this.weapon.horizontalRecoilStrength);
+        originalDirection.y += recoilY;
+        return originalDirection;
+    }
+
+    private float GetRecoilYDelta(float recoilX, float m)
+    {
+        return Mathf.Exp(m * recoilX) - 1;
     }
 
     //*****************************************//
@@ -235,7 +272,8 @@ public class Shooter : MonoBehaviour
         }
     }
 
-    public void SetWeapon(Weapon _weapon) {
+    public void SetWeapon(Weapon _weapon)
+    {
         this.weapon = _weapon;
         this.SetWeaponAnimation();
     }
@@ -244,7 +282,8 @@ public class Shooter : MonoBehaviour
     //************ANIMATION METHODS************//
     //*****************************************//
 
-    public void SetWeaponAnimation(){
+    public void SetWeaponAnimation()
+    {
         this.characterAnimator.SetInteger("WeaponType_int", this.weapon.animationIndex);
         this.characterAnimator.SetFloat("Head_Horizontal_f", this.weapon.animationHeadH);
         this.characterAnimator.SetFloat("Body_Horizontal_f", this.weapon.animationBodyH);
@@ -322,7 +361,9 @@ public class Shooter : MonoBehaviour
         {
             AudioManagerSingleton.Instance.Play(Sounds.AUDIO_TYPE.ENTITY_WALK, true);
             AudioManagerSingleton.Instance.Stop(Sounds.AUDIO_TYPE.ENTITY_RUN);
-        } else {
+        }
+        else
+        {
             this.audioManager.Play(Sounds.AUDIO_TYPE.ENTITY_WALK, true);
         }
     }
@@ -333,7 +374,9 @@ public class Shooter : MonoBehaviour
         {
             AudioManagerSingleton.Instance.Stop(Sounds.AUDIO_TYPE.ENTITY_WALK);
             AudioManagerSingleton.Instance.Stop(Sounds.AUDIO_TYPE.ENTITY_RUN);
-        } else {
+        }
+        else
+        {
             this.audioManager.Stop(Sounds.AUDIO_TYPE.ENTITY_WALK);
         }
     }
@@ -344,7 +387,9 @@ public class Shooter : MonoBehaviour
         {
             // Can overlap, multiple guns at the same time
             AudioManagerSingleton.Instance.Play(this.weapon.shotSound);
-        } else {
+        }
+        else
+        {
             this.audioManager.Play(Sounds.AUDIO_TYPE.GUN_PISTOL_FIRE);
         }
     }
@@ -360,9 +405,12 @@ public class Shooter : MonoBehaviour
     IEnumerator playReloadSoundCoroutine(float secs)
     {
         yield return new WaitForSeconds(secs);
-        if (this.playGlobalSound) {
+        if (this.playGlobalSound)
+        {
             AudioManagerSingleton.Instance.Play(this.weapon.reloadSound);
-        } else {
+        }
+        else
+        {
             this.audioManager.Play(Sounds.AUDIO_TYPE.GUN_PISTOL_RELOAD);
 
         }

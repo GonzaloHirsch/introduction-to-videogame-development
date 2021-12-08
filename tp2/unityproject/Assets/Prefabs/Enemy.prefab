@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4939564160197568401}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: BloodSprayFx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 4939564161617836235}
   - component: {fileID: 5061343831908151899}
   - component: {fileID: 5062067865278951635}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Particle System_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4868,7 +4868,7 @@ GameObject:
   - component: {fileID: 8586152104204785445}
   - component: {fileID: 636222231058642896}
   - component: {fileID: 1817734187904498949}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -4978,6 +4978,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 619016dfac7eb44c8bf9907a91103629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugObject: {fileID: 0}
   weapon: {fileID: 280998556869047421}
   isDebug: 0
   isDead: 0
@@ -5132,7 +5133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4936770459261416384}
   - component: {fileID: 4936770459250133174}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: MS_Terrorist_04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5237,7 +5238,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4936770459261393780}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Chest_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5272,7 +5273,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4936770459261399358}
   - component: {fileID: 4936770459250186080}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: MS_GasMask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5378,7 +5379,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4936770459261462730}
   - component: {fileID: 4936770459250192852}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: MS_Soldier_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5483,7 +5484,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4936770459261417234}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Hand_Right_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5514,7 +5515,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4936770459261433542}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: UpperLeg_Left_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5545,7 +5546,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4936770459261344904}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Toe_Right_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5576,7 +5577,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4936770459261416946}
   - component: {fileID: 4936770459249996062}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: MS_SpecialForces_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5682,7 +5683,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4936770459261390634}
   - component: {fileID: 4936770459250178852}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: MS_Soldier_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5787,7 +5788,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4936770459261465144}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Foot_Left_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5818,7 +5819,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4936770459261386752}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Hand_Left_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5848,7 +5849,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4936770459261415548}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Forearm_Left_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5879,7 +5880,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4936770459261454806}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Arm_Right_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5911,7 +5912,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4936770459261434982}
   - component: {fileID: 4936770459250176090}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: MS_Female
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6017,7 +6018,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4936770459261430742}
   - component: {fileID: 4936770459249965676}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: MS_Terrorist_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6123,7 +6124,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4936770459261339448}
   - component: {fileID: 4936770459249979484}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: MS_BombDisposal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6228,7 +6229,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4936770459261456554}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Neck_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6260,7 +6261,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4936770459261344986}
   - component: {fileID: 4936770459249979418}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: MS_Pilot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6365,7 +6366,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4936770459261419812}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Hips_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6398,7 +6399,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4936770459261442338}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Toe_Left_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6430,7 +6431,7 @@ GameObject:
   - component: {fileID: 4936770459261454898}
   - component: {fileID: 4936770459249975216}
   - component: {fileID: 3875284275393507478}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: MS_Terrorist_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6550,7 +6551,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4936770459261411786}
   - component: {fileID: 4936770459250163830}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: MS_FemaleMedic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6655,7 +6656,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4936770459261372440}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Shoulder_Left_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6686,7 +6687,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4936770459261454798}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: LowerLeg_Right_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6717,7 +6718,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4936770459261467090}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Spine_jnt 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6748,7 +6749,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4936770459261413202}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Foot_Right_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6779,7 +6780,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4936770459261409980}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Shoulder_Right_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6811,7 +6812,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4936770459261460032}
   - component: {fileID: 4936770459249992142}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: MS_Officer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6917,7 +6918,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4936770459261398768}
   - component: {fileID: 4936770459250190272}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: MS_Soldier_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7022,7 +7023,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4936770459261397272}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Head_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7053,7 +7054,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4936770459261398988}
   - component: {fileID: 4936770459249948262}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: MS_Medic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7158,7 +7159,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4936770459261345566}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Forearm_Right_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7189,7 +7190,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4936770459261468180}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Spine_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7221,7 +7222,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4936770459261395128}
   - component: {fileID: 4936770459249986484}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: MS_Mercenary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7326,7 +7327,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4936770459261396200}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: LowerLeg_Left_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7358,7 +7359,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4936770459261394318}
   - component: {fileID: 4936770459249952944}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: MS_JungleCommando
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7464,7 +7465,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4936770459261456034}
   - component: {fileID: 4936770459250187586}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: MS_SpecialForces_04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7570,7 +7571,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4936770459261379836}
   - component: {fileID: 4936770459249990970}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: MS_SpecialForces_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7676,7 +7677,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4936770459261432650}
   - component: {fileID: 4936770459249940810}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: MS_SpecialForces_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7781,7 +7782,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4936770459261400684}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Arm_Left_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7813,7 +7814,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4936770459261421422}
   - component: {fileID: 4936770459249976464}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: MS_Terrorist_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7918,7 +7919,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4936770459261402128}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: UpperLeg_Right_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7951,7 +7952,7 @@ GameObject:
   - component: {fileID: 1448266562750121426}
   - component: {fileID: 7592852797703288063}
   - component: {fileID: 5773056992002206203}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: MinimapIcon
   m_TagString: UI
   m_Icon: {fileID: 0}
@@ -8031,11 +8032,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 225275738125509483, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 258466536290350461, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 309387852642619856, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: m_Name
@@ -8043,15 +8044,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 309387852642619856, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 676725707339234668, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 691555425179735650, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1131960432271224118, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: m_RootOrder
@@ -8103,23 +8104,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1851985354276251899, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2647810891967948983, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3998740605088526658, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4269444117444274694, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4566126882780733985, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5021665935469023021, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5546723747237932033, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: range
@@ -8147,23 +8152,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5843873087366336871, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5977148747772724496, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6119306481665617677, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6239566094324488980, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7584105710104745766, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9f67420cdf544481b89844d009bebc7, type: 3}

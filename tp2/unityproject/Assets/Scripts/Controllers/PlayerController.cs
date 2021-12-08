@@ -59,6 +59,8 @@ public class PlayerController : MonoBehaviour, IInteractable
     // The larger the faster we can crouch
     public float crouchTime = 5f;
 
+    private Vector3 shootingDirection;
+
     void Start()
     {
         this.shooter = GetComponent<Shooter>();
@@ -202,14 +204,20 @@ public class PlayerController : MonoBehaviour, IInteractable
         Transform camaraTransform = this.fpsCam.transform;
         // Create a vector at the center of our camera's viewport
         Vector3 rayOrigin = this.fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, this.fpsCam.nearClipPlane));
+        this.shootingDirection = camaraTransform.forward;
 
-        this.shooter.DebugDrawRay(rayOrigin, camaraTransform.forward);
+        this.shooter.DebugDrawRay(rayOrigin, this.shootingDirection);
 
         // If shooting and not reloading
         if (this.shoot && this.shooter.CanShoot())
         {
+            int recoil = this.shooter.HasRecoil();
+            // Apply recoil if necessary
+            if (recoil > 0) {
+                this.shootingDirection = this.shooter.ApplyRecoil(this.shootingDirection, recoil);
+            }
             // Shoot the weapon
-            this.shooter.Shoot(new Ray(camaraTransform.position, camaraTransform.forward));
+            this.shooter.ShootWithMask(new Ray(camaraTransform.position, this.shootingDirection), LayerMask.GetMask("Enemy", "Default"));
         }
         // When shooting action is stopped
         else if (!this.shoot)

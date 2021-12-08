@@ -55,7 +55,7 @@ public class Grenade : MonoBehaviour
         // Play sound
         if (this.audioSource != null) this.audioSource.Play();
         // Look for all objects to damage
-        LayerMask mask = LayerMask.GetMask("Damageable");
+        LayerMask mask = LayerMask.GetMask("Enemy", "Player");
         Collider[] colliders = Physics.OverlapSphere(this.transform.position, this.explosionRadius, mask);
         bool hitPlayer = false;
         foreach (Collider nearbyObject in colliders)

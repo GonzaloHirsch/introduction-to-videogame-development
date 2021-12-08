@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4465785, g: 0.49641252, b: 0.574817, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -56942,6 +56942,10 @@ PrefabInstance:
       propertyPath: interactTextPanel
       value: 
       objectReference: {fileID: 141450616}
+    - target: {fileID: 3509180253011089712, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
+      propertyPath: m_Radius
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 3509180253011089715, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
       propertyPath: m_Name
       value: Player
@@ -57014,26 +57018,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1224790073}
     m_Modifications:
-    - target: {fileID: 3600812343983473663, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
-      propertyPath: force
-      value: 1100
-      objectReference: {fileID: 0}
-    - target: {fileID: 5068768216208900669, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
-      propertyPath: healthBar
-      value: 
-      objectReference: {fileID: 558021276}
-    - target: {fileID: 5068768216208900669, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
-      propertyPath: bloodPanel
-      value: 
-      objectReference: {fileID: 564824207}
-    - target: {fileID: 5068768216208900669, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
-      propertyPath: healthRecoveryRate
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5204359402994958371, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
-      propertyPath: isNPC
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 226194380900881217, guid: 845977bf83bf4485bbebaa5a72eeb280, type: 3}
       propertyPath: m_Name
       value: AmmoBox-1
@@ -57088,6 +57072,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 226194380903140737, guid: 845977bf83bf4485bbebaa5a72eeb280, type: 3}
       propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3600812343983473663, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
+      propertyPath: force
+      value: 1100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068768216208900669, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 558021276}
+    - target: {fileID: 5068768216208900669, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
+      propertyPath: bloodPanel
+      value: 
+      objectReference: {fileID: 564824207}
+    - target: {fileID: 5068768216208900669, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
+      propertyPath: healthRecoveryRate
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5204359402994958371, guid: bc04b8435747e4c848e00ba9b4415ced, type: 3}
+      propertyPath: isNPC
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

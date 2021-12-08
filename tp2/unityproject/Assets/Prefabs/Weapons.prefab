@@ -558,10 +558,18 @@ MonoBehaviour:
   totalInitialAmmo: 32
   damage: 25
   fireRate: 0.7
-  animationDuration: 0.284
+  animationDuration: 0.186
   range: 40
   hitForce: 100
   animationIndex: 1
+  animationHeadH: 0
+  animationBodyH: 0
+  type: 0
+  hasBullets: 1
+  canAim: 0
+  canRefill: 1
+  reloadSound: 6
+  shotSound: 5
 --- !u!1 &4269444117444274694
 GameObject:
   m_ObjectHideFlags: 0
