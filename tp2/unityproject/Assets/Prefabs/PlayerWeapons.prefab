@@ -701,7 +701,7 @@ MonoBehaviour:
   recoilRangeTime: 0.75
   cumulativeRecoilLimit: 5
   verticalRecoilStrength: 0.35
-  horizontalRecoilStrength: 0.05
+  horizontalRecoilStrength: 0.1
 --- !u!1 &4160545319531737680
 GameObject:
   m_ObjectHideFlags: 0
@@ -821,8 +821,8 @@ MonoBehaviour:
   shotSound: 15
   recoilRangeTime: 1
   cumulativeRecoilLimit: 3
-  verticalRecoilStrength: 0.6
-  horizontalRecoilStrength: 0.3
+  verticalRecoilStrength: 0.35
+  horizontalRecoilStrength: 0.2
 --- !u!1 &4239048507805863907
 GameObject:
   m_ObjectHideFlags: 0

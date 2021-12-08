@@ -5,7 +5,6 @@ using UnityEngine;
 public class Shooter : MonoBehaviour
 {
     private Animator characterAnimator;
-    public GameObject debugObject;
 
     [Header("Weapon")]
     public Weapon weapon;
@@ -63,7 +62,7 @@ public class Shooter : MonoBehaviour
         // Shoot the weapon
         this.ShootWithRaycast(ray, LayerMask.GetMask("Enemy", "Player", "Default"));
     }
-    
+
     public void ShootWithMask(Ray ray, int layerMask)
     {
         // Trigger animation
@@ -84,12 +83,16 @@ public class Shooter : MonoBehaviour
         if (Physics.Raycast(ray, out hit, this.weapon.range, layerMask))
         {
             if (this.isDebug) this.laserLine.SetPosition(1, hit.point);
-            if (this.debugObject) Instantiate(this.debugObject, hit.point, Quaternion.identity);
 
             // Apply damage to the obj if a shot was fired
             if (shotFired)
             {
                 this.ApplyCollisionDamage(hit);
+                // Instantiate bullet hole if not player or enemy hit
+                if (!hit.collider.CompareTag("Enemy") && !hit.collider.CompareTag("Player"))
+                {
+                    BulletHolePool.SharedInstance.ActivatePooledObject(hit.point + (hit.normal * 0.025f), Quaternion.FromToRotation(Vector3.forward, hit.normal));
+                }
             }
         }
         else if (this.isDebug)
@@ -226,17 +229,18 @@ public class Shooter : MonoBehaviour
     public Vector3 ApplyRecoil(Vector3 originalDirection, int recoilNumber)
     {
         // Calculate X and Y drift
-        float recoilX = ((float)recoilNumber) / (2f * this.weapon.cumulativeRecoilLimit);
-        float recoilY = this.GetRecoilYDelta(recoilX, this.weapon.verticalRecoilStrength);
+        float _recoilX = ((float)recoilNumber) / (2f * this.weapon.cumulativeRecoilLimit);
+        float recoilX = this.GetRecoilDelta(_recoilX, this.weapon.horizontalRecoilStrength);
+        float recoilY = this.GetRecoilDelta(_recoilX, this.weapon.verticalRecoilStrength);
         // Only apply in Y and X
-        originalDirection.x += (Mathf.Sign(Random.Range(-1f, 1f)) * recoilX * this.weapon.horizontalRecoilStrength);
+        originalDirection.x += (Mathf.Sign(Random.Range(-1f, 1f)) * recoilX);
         originalDirection.y += recoilY;
         return originalDirection;
     }
 
-    private float GetRecoilYDelta(float recoilX, float m)
+    private float GetRecoilDelta(float x, float m)
     {
-        return Mathf.Exp(m * recoilX) - 1;
+        return Mathf.Exp(m * x) - 1;
     }
 
     //*****************************************//
