@@ -89,7 +89,8 @@ public class Shooter : MonoBehaviour
             {
                 this.ApplyCollisionDamage(hit);
                 // Instantiate bullet hole if not player or enemy hit
-                if (!hit.collider.CompareTag("Enemy") && !hit.collider.CompareTag("Player"))
+                // No hole if with knife
+                if (!hit.collider.CompareTag("Enemy") && !hit.collider.CompareTag("Player") && this.weapon.hasBullets)
                 {
                     BulletHolePool.SharedInstance.ActivatePooledObject(hit.point + (hit.normal * 0.025f), Quaternion.FromToRotation(Vector3.forward, hit.normal));
                 }

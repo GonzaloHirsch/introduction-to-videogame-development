@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 400000}
   - component: {fileID: 3300000}
   - component: {fileID: 2300000}
-  - component: {fileID: 1995919342554163927}
+  - component: {fileID: -6974243360673791528}
   m_Layer: 0
   m_Name: fuel_tank_small
   m_TagString: Untagged
@@ -83,8 +83,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1995919342554163927
-BoxCollider:
+--- !u!64 &-6974243360673791528
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -93,6 +93,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.7296624, y: 4.8755836, z: 3.64}
-  m_Center: {x: -0.000000059604645, y: 2.4377918, z: -0.07}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 69b4cd8eed5150644bb007affc12358f, type: 3}

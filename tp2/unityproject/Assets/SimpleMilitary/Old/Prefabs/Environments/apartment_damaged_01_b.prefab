@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 400000}
   - component: {fileID: 3300000}
   - component: {fileID: 2300000}
-  - component: {fileID: -5885750204094183498}
+  - component: {fileID: -6854597833309411577}
   m_Layer: 0
   m_Name: apartment_damaged_01_b
   m_TagString: Untagged
@@ -83,8 +83,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &-5885750204094183498
-BoxCollider:
+--- !u!64 &-6854597833309411577
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -93,6 +93,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 11.489822, y: 9.586296, z: 11.819447}
-  m_Center: {x: 0.07106686, y: 4.793148, z: 0}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 9c8f9e9f32bbd944aadf9fa9c41b2b55, type: 3}

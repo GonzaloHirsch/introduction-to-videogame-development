@@ -183,7 +183,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 619016dfac7eb44c8bf9907a91103629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugObject: {fileID: 7310040226783712799, guid: 8389464ce05c24a0286bfd2bdfbb7e5c, type: 3}
   weapon: {fileID: 0}
   isDebug: 0
   isDead: 0
@@ -241,9 +240,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.3
-  m_Height: 2.5
+  m_Height: 3
   m_Direction: 1
-  m_Center: {x: 0, y: 1.25, z: -0.1}
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!1 &3509180253064170114
 GameObject:
   m_ObjectHideFlags: 0
@@ -8170,6 +8169,10 @@ PrefabInstance:
       propertyPath: shooter
       value: 
       objectReference: {fileID: 3509180253011089710}
+    - target: {fileID: 5553395131518356910, guid: 881290f1aeb674640ac2fba93e3028ea, type: 3}
+      propertyPath: fireRate
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5797392298804497253, guid: 881290f1aeb674640ac2fba93e3028ea, type: 3}
       propertyPath: m_Layer
       value: 7
