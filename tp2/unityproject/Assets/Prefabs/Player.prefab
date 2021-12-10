@@ -143,7 +143,10 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 100
   recoversHealth: 1
-  healthRecoveryRate: 7
+  healthRecoveryRatePerLevel:
+  - 7
+  - 5
+  - 3
   recoveryCooldown: 5
   currentRecoveryTime: 0
   bloodPanel: {fileID: 0}

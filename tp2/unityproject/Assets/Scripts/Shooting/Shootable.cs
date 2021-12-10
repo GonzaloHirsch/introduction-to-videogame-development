@@ -9,12 +9,13 @@ public class Shootable : MonoBehaviour
     public float maxHealth = 100;
     public float currentHealth = 100;
     public bool recoversHealth = false;
-    public float healthRecoveryRate = 5f;
+    public float[] healthRecoveryRatePerLevel;
     public float recoveryCooldown = 4f;
     public float currentRecoveryTime = 0f;
     public GameObject bloodPanel;
     private Image bloodImage;
     private float bloodAlpha = 0f;
+    private float healthRecoveryRate = 5f;
 
     [Header("UI")]
 
@@ -50,6 +51,8 @@ public class Shootable : MonoBehaviour
         {
             this.currentRecoveryTime = this.recoveryCooldown;
             this.bloodImage = bloodPanel.GetComponent<Image>();
+            // Set recovery rate
+            this.healthRecoveryRate = this.healthRecoveryRatePerLevel[GameStatus.Instance.GetLevel()];
         }
     }
 

@@ -41,7 +41,7 @@ public class Interacter : MonoBehaviour
     void Update()
     {
         this.currentRaycastTime += Time.deltaTime;
-        if ((this.isNPC && this.currentRaycastTime >= this.raycastIntervalTime && this.enemy.TargetIsWithinRange()) || !this.isNPC) {
+        if ((this.isNPC && this.currentRaycastTime >= this.raycastIntervalTime && this.enemy.TargetIsWithinRange() && !this.enemy.IsDead()) || !this.isNPC) {
             this.currentRaycastTime = 0f;
             this.CheckInteractableItem();
         }

@@ -330,7 +330,7 @@ public class EnemyController : MonoBehaviour
             );
             Ray ray = new Ray(rayOrigin, rayDirection);
             // Shoot logic
-            this.shooter.Shoot(ray);       
+            this.shooter.ShootWithMask(ray, LayerMask.GetMask("Player", "Default"));       
         }
     }
 
@@ -362,5 +362,13 @@ public class EnemyController : MonoBehaviour
         if (ammo == 0 || (!this.playerIsVisible && ammo < ammoPerMag/2)) {
             this.shooter.Reload();
         }
+    }
+
+    //**************************************//
+    //**************ENEMY STATE*************//
+    //**************************************//
+
+    public bool IsDead() {
+        return this.shootable.IsDead();
     }
 }
