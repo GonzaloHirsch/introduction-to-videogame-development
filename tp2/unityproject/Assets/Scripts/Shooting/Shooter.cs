@@ -42,11 +42,18 @@ public class Shooter : MonoBehaviour
 
     private void ApplyCollisionDamage(RaycastHit hit)
     {
-        Shootable shootable = hit.collider.GetComponent<Shootable>();
-        if (shootable != null)
-        {
-            // If obj is shootable, apply the weapon damage
-            shootable.ApplyDamage(this.weapon.damage);
+        Shootable shootable = null;
+        int damage = this.weapon.damage;
+
+        if (hit.collider.CompareTag("EnemyHead")) {
+            shootable = hit.collider.GetComponentInParent<Shootable>();
+            damage = (int)Mathf.Ceil(shootable.maxHealth);
+        } else {
+            shootable = hit.collider.GetComponent<Shootable>();
+        } 
+
+        if (shootable != null) {
+            shootable.ApplyDamage(damage);
         }
     }
 
@@ -60,7 +67,7 @@ public class Shooter : MonoBehaviour
         // Trigger animation
         this.HandleShootAnimation();
         // Shoot the weapon
-        this.ShootWithRaycast(ray, LayerMask.GetMask("Enemy", "Player", "Default"));
+        this.ShootWithRaycast(ray, LayerMask.GetMask("EnemyHead", "Enemy", "Player", "Default"));
     }
 
     public void ShootWithMask(Ray ray, int layerMask)
@@ -78,7 +85,6 @@ public class Shooter : MonoBehaviour
         if (this.isDebug) this.laserLine.SetPosition(0, this.weapon.gunEndPoint.position);
 
         bool shotFired = this.weapon.ShotFired();
-
         // Check if the raycast collided with something
         if (Physics.Raycast(ray, out hit, this.weapon.range, layerMask))
         {
