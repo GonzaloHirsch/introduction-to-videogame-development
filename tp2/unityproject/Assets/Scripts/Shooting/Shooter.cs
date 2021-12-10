@@ -92,6 +92,7 @@ public class Shooter : MonoBehaviour
         // Check if the raycast collided with something
         if (Physics.Raycast(ray, out hit, this.weapon.range, layerMask))
         {
+            Debug.DrawRay(ray.origin, ray.direction * this.weapon.range, Color.magenta);
             if (this.isDebug) this.laserLine.SetPosition(1, hit.point);
 
             // Apply damage to the obj if a shot was fired

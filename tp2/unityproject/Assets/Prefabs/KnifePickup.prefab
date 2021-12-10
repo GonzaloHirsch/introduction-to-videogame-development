@@ -17,7 +17,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7881799881218259734
 Transform:
@@ -89,6 +89,18 @@ PrefabInstance:
     - target: {fileID: 4991062542083456054, guid: e5e5a2ee8e19f104c8c11161e4b525cd, type: 3}
       propertyPath: m_Name
       value: Weapon_Knife
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991062542083456054, guid: e5e5a2ee8e19f104c8c11161e4b525cd, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299700362854547047, guid: e5e5a2ee8e19f104c8c11161e4b525cd, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5886353602618198715, guid: e5e5a2ee8e19f104c8c11161e4b525cd, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7475140227014579168, guid: e5e5a2ee8e19f104c8c11161e4b525cd, type: 3}
       propertyPath: m_RootOrder

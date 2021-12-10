@@ -66,7 +66,7 @@ public class EnemyController : MonoBehaviour
     [Header("Minimap")]
     public GameObject minimapIcon;
 
-    void Awake() 
+    void Awake()
     {
         this.CreatePatrolPositions();
     }
@@ -105,14 +105,29 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    void OnDrawGizmos()
+    {
+        // Gizmos.color = Color.red;
+        // Gizmos.DrawWireSphere(this.transform.position, this.lookRadius);
+        // Gizmos.color = Color.yellow;
+        // Gizmos.DrawWireSphere(this.transform.position, this.turnRadius);
+        // if (this.shooter && this.shooter.weapon)
+        // {
+        //     Gizmos.color = Color.green;
+        //     Gizmos.DrawWireSphere(this.transform.position, this.shooter.weapon.range);
+        // }
+    }
+
     //**************************************//
     //**********ENEMY PATROLLING************//
     //**************************************//
 
-    void CreatePatrolPositions() {
+    void CreatePatrolPositions()
+    {
         // add the starting position to the patrol
         this.patrolPositions = new Vector3[this.patrolPoints.Length + 1];
-        for (int i = 0; i < this.patrolPoints.Length; i++) {
+        for (int i = 0; i < this.patrolPoints.Length; i++)
+        {
             this.patrolPositions[i] = this.patrolPoints[i].position;
         }
         this.patrolPositions[this.patrolPositions.Length - 1] = this.transform.position;
@@ -120,7 +135,8 @@ public class EnemyController : MonoBehaviour
 
     void HandleEnemyPatrolling()
     {
-        if (this.isPatrolling) {
+        if (this.isPatrolling)
+        {
             // When patrolling, reach your target and walk slower
             this.agent.stoppingDistance = 0f;
             this.agent.speed = 1.5f;
@@ -131,14 +147,16 @@ public class EnemyController : MonoBehaviour
                 targetPatrolPos, this.transform.position
             );
             // If the target was reached, move to the next one
-            if (distance < 1f) {
+            if (distance < 1f)
+            {
                 this.targetPatrolIdx = (this.targetPatrolIdx + 1) % this.patrolPositions.Length;
                 targetPatrolPos = this.patrolPositions[this.targetPatrolIdx];
             }
             // Use the nav mesh to move to the patrol point
             this.agent.SetDestination(targetPatrolPos);
-        
-        } else {
+        }
+        else
+        {
             this.agent.stoppingDistance = this.targetStoppingDistance;
             this.agent.speed = this.targetChaseSpeed;
         }
@@ -149,37 +167,45 @@ public class EnemyController : MonoBehaviour
     //***********ENEMY MOVEMENT*************//
     //**************************************//
 
-    public float GetDistanceToTarget() {
+    public float GetDistanceToTarget()
+    {
         return Vector3.Distance(this.target.position, this.transform.position);
     }
-    
-    public bool TargetIsWithinRange() {
+
+    public bool TargetIsWithinRange()
+    {
         return this.distanceToTarget <= this.lookRadius;
     }
 
     void HandleEnemyMovement(float distance)
     {
         // If player is not visible to the NPC do nothing
-        if (this.playerIsVisible) {
+        if (this.playerIsVisible)
+        {
             this.isPatrolling = false;
-            if (distance <= this.lookRadius || this.enemyIsShot) {
+            if (distance <= this.lookRadius || this.enemyIsShot)
+            {
                 this.ReactToVisiblePlayer(distance);
-            } else {
+            }
+            else
+            {
                 this.CheckPlayerVisibilityTime();
-            } 
+            }
             // Only move vertically once spotted
             this.SetVerticalMovementAnimation();
             // Set the no visibility time to 0
-            this.resetNoVisibilityTimers();
-        } 
-        else if (distance <= this.turnRadius) {
+            this.ResetNoVisibilityTimers();
+        }
+        else if (distance <= this.turnRadius)
+        {
             this.isPatrolling = false;
             this.FaceTarget();
             this.CheckCloseProximityTime(distance);
         }
         // Not visible, not in turn radius, but not patrolling 
         // Means enemy was near me but did not see them
-        else if (!this.isPatrolling) {
+        else if (!this.isPatrolling)
+        {
             this.CheckRotatedNoVisibilityTime();
         }
 
@@ -187,7 +213,8 @@ public class EnemyController : MonoBehaviour
         this.SetMovementAnimation();
 
         // Player was shot, enemy knows his position
-        if (this.shootable.currentHealth < this.lastHealth) {
+        if (this.shootable.currentHealth < this.lastHealth)
+        {
             this.playerIsVisible = true;
             if (!this.enemyIsShot) this.FaceTarget();
             this.enemyIsShot = true;
@@ -218,7 +245,7 @@ public class EnemyController : MonoBehaviour
         Vector3 direction = (this.target.position - this.transform.position).normalized;
         // Rotation where we point to that target
         return Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-        
+
     }
 
     void CheckPlayerVisibilityTime()
@@ -241,14 +268,15 @@ public class EnemyController : MonoBehaviour
         // few seconds before starting patrol again in case they are not close.
         bool rotNoVisibilityTimeReached =
             this.currentRotationNoVisibilityTime >= this.rotationNoVisibilityTimeLimit;
-        
+
         // Reset the timer or keep adding to it
         this.currentRotationNoVisibilityTime = rotNoVisibilityTimeReached
             ? 0f
             : this.currentRotationNoVisibilityTime + Time.deltaTime;
 
         // If not within turn radius, continue patrolling
-        if (rotNoVisibilityTimeReached) {
+        if (rotNoVisibilityTimeReached)
+        {
             this.isPatrolling = true;
         }
     }
@@ -258,36 +286,41 @@ public class EnemyController : MonoBehaviour
         // Enemy turned when player was close. If close for long, follow the player.
         bool rotCloseProximityTimeReached =
             this.currentCloseProximityTime >= this.closeProximityTimeLimit;
-        
+
         // Reset the timer or keep adding to it
         this.currentCloseProximityTime = rotCloseProximityTimeReached
             ? 0f
             : this.currentCloseProximityTime + Time.deltaTime;
 
         // If within turn radius when limit reached, follow player
-        if (rotCloseProximityTimeReached) {
+        if (rotCloseProximityTimeReached)
+        {
             this.ReactToVisiblePlayer(distance);
             this.playerIsVisible = true;
         }
     }
 
-    void resetNoVisibilityTimers() {
+    void ResetNoVisibilityTimers()
+    {
         this.currentRotationNoVisibilityTime = 0f;
         this.currentCloseProximityTime = 0f;
     }
 
     void SetMovementAnimation()
     {
-        if (this.EnemyIsMoving()) {
+        if (this.EnemyIsMoving())
+        {
             this.shooter.SetWalkAnimation();
             this.shooter.SetWalkSound();
-        } else {
+        }
+        else
+        {
             this.shooter.SetIdleAnimation();
             this.shooter.SetIdleSound();
         }
     }
 
-    void SetVerticalMovementAnimation() 
+    void SetVerticalMovementAnimation()
     {
         // Direction of the player
         Vector3 directionToPlayer = Helper.GetEnemyRaycastDirection(this.transform, this.target);
@@ -317,26 +350,27 @@ public class EnemyController : MonoBehaviour
     //**************************************//
     //***********ENEMY SHOOTING*************//
     //**************************************//
-    
+
     void HandleEnemyShooting(float distance)
     {
-        if (this.EnemyCanShoot(distance)) {
+        if (this.EnemyCanShoot(distance))
+        {
             Vector3 rayOrigin = Helper.GetEnemyRaycastOrigin(this.transform, this.enemyCollider);
             Vector3 rayDirection = Helper.GetEnemyRaycastDirection(
-                this.transform, 
+                this.transform,
                 this.target,
                 this.axisAccuracyProbability,
                 this.axisAccuracyDelta
             );
             Ray ray = new Ray(rayOrigin, rayDirection);
             // Shoot logic
-            this.shooter.ShootWithMask(ray, LayerMask.GetMask("Player", "Default"));       
+            this.shooter.ShootWithMask(ray, LayerMask.GetMask("Player", "Default"));
         }
     }
 
     bool EnemyCanShoot(float distance)
     {
-        return this.playerIsVisible 
+        return this.playerIsVisible
             && distance < this.shooter.weapon.range
             && this.AngleAllowsShooting();
     }
@@ -353,13 +387,14 @@ public class EnemyController : MonoBehaviour
     //**************************************//
     //***********ENEMY RELOADING************//
     //**************************************//
-    
+
     void HandleEnemyReloading()
     {
         int ammo = this.shooter.weapon.currentAmmo;
         int ammoPerMag = this.shooter.weapon.ammoPerMag;
 
-        if (ammo == 0 || (!this.playerIsVisible && ammo < ammoPerMag/2)) {
+        if ((ammo == 0 || (!this.playerIsVisible && ammo < ammoPerMag / 2)) && this.shooter.CanReload())
+        {
             this.shooter.Reload();
         }
     }
@@ -368,7 +403,8 @@ public class EnemyController : MonoBehaviour
     //**************ENEMY STATE*************//
     //**************************************//
 
-    public bool IsDead() {
+    public bool IsDead()
+    {
         return this.shootable.IsDead();
     }
 }
