@@ -217,7 +217,7 @@ public class PlayerController : MonoBehaviour, IInteractable
                 this.shootingDirection = this.shooter.ApplyRecoil(this.shootingDirection, recoil);
             }
             // Shoot the weapon
-            this.shooter.ShootWithMask(new Ray(camaraTransform.position, this.shootingDirection), LayerMask.GetMask("Enemy", "Default"));
+            this.shooter.ShootWithMask(new Ray(camaraTransform.position, this.shootingDirection), LayerMask.GetMask("EnemyHead", "Enemy", "Default"));
         }
         // When shooting action is stopped
         else if (!this.shoot)
