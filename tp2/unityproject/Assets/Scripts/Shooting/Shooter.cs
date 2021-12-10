@@ -42,13 +42,19 @@ public class Shooter : MonoBehaviour
 
     private void ApplyCollisionDamage(RaycastHit hit)
     {
+        Shootable shootable = null;
+        int damage = this.weapon.damage;
+
         if (hit.collider.CompareTag("EnemyHead")) {
-            Shootable shootable = hit.collider.GetComponentInParent<Shootable>();
-            shootable.ApplyDamage((int)Mathf.Ceil(shootable.maxHealth));
-        } else if (hit.collider.CompareTag("Enemy")) {
-            Shootable shootable = hit.collider.GetComponent<Shootable>();
-            shootable.ApplyDamage(this.weapon.damage);
+            shootable = hit.collider.GetComponentInParent<Shootable>();
+            damage = (int)Mathf.Ceil(shootable.maxHealth);
+        } else {
+            shootable = hit.collider.GetComponent<Shootable>();
         } 
+
+        if (shootable != null) {
+            shootable.ApplyDamage(damage);
+        }
     }
 
     public bool CanShoot()
