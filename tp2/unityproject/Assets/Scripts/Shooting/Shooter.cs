@@ -45,14 +45,18 @@ public class Shooter : MonoBehaviour
         Shootable shootable = null;
         int damage = this.weapon.damage;
 
-        if (hit.collider.CompareTag("EnemyHead")) {
+        if (hit.collider.CompareTag("EnemyHead"))
+        {
             shootable = hit.collider.GetComponentInParent<Shootable>();
             damage = (int)Mathf.Ceil(shootable.maxHealth);
-        } else {
+        }
+        else
+        {
             shootable = hit.collider.GetComponent<Shootable>();
-        } 
+        }
 
-        if (shootable != null) {
+        if (shootable != null)
+        {
             shootable.ApplyDamage(damage);
         }
     }
@@ -96,7 +100,7 @@ public class Shooter : MonoBehaviour
                 this.ApplyCollisionDamage(hit);
                 // Instantiate bullet hole if not player or enemy hit
                 // No hole if with knife
-                if (!hit.collider.CompareTag("Enemy") && !hit.collider.CompareTag("Player") && this.weapon.hasBullets)
+                if (!hit.collider.CompareTag("Enemy") && !hit.collider.CompareTag("Player") && !hit.collider.CompareTag("EnemyHead") && this.weapon.hasBullets)
                 {
                     BulletHolePool.SharedInstance.ActivatePooledObject(hit.point + (hit.normal * 0.025f), Quaternion.FromToRotation(Vector3.forward, hit.normal));
                 }

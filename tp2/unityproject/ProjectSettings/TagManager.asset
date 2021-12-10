@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Bomb
   - UI
+  - EnemyHead
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Damageable
   - Player
   - Enemy
-  - 
+  - EnemyHead
   - 
   - 
   - 
