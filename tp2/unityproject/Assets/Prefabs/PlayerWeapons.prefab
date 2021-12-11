@@ -700,7 +700,7 @@ MonoBehaviour:
   shotSound: 5
   recoilRangeTime: 0.75
   cumulativeRecoilLimit: 5
-  verticalRecoilStrength: 0.35
+  verticalRecoilStrength: 0.25
   horizontalRecoilStrength: 0.1
 --- !u!1 &4160545319531737680
 GameObject:
