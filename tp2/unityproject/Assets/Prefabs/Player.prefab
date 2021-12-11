@@ -224,7 +224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   sprintSpeed: 10
-  verticalSpeed: 7
+  verticalSpeed: 8.5
   crouchSpeed: 1.5
   mouseSensitivity: 2
   upCameraLimit: -50

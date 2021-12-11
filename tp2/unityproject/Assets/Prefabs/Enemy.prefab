@@ -8153,7 +8153,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5546723747237932033, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: extraAmmo
-      value: 64
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5546723747237932033, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: gunEndPoint
@@ -8169,7 +8169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5546723747237932033, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: totalInitialAmmo
-      value: 64
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5843873087366336871, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: m_Layer

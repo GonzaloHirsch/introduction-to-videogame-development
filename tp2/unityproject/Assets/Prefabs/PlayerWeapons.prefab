@@ -682,8 +682,8 @@ MonoBehaviour:
   emitBulletEvent: 1
   currentAmmo: 6
   ammoPerMag: 6
-  extraAmmo: 32
-  totalInitialAmmo: 32
+  extraAmmo: 20
+  totalInitialAmmo: 20
   damage: 25
   fireRate: 0.5
   range: 40
