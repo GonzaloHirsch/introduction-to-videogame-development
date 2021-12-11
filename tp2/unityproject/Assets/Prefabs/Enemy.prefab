@@ -7023,7 +7023,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4936770459261397272}
   - component: {fileID: 8551847887409023112}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Head_jnt
   m_TagString: EnemyHead
   m_Icon: {fileID: 0}
@@ -8115,6 +8115,22 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 1737867109489108468, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1737867109489108472, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1737867109489108474, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1737867109489108476, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1851985354276251899, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -8162,7 +8178,7 @@ PrefabInstance:
     - target: {fileID: 5546723747237932033, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: muzzleFlash
       value: 
-      objectReference: {fileID: 561370425739868434}
+      objectReference: {fileID: 6269434557242926308}
     - target: {fileID: 5546723747237932033, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
       propertyPath: emitBulletEvent
       value: 0
@@ -8193,9 +8209,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
---- !u!198 &561370425739868434 stripped
+--- !u!198 &6269434557242926308 stripped
 ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 5248318658776064366, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1737867109469355160, guid: a9f67420cdf544481b89844d009bebc7, type: 3}
   m_PrefabInstance: {fileID: 5701457548927080572}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &312637003868451134 stripped

@@ -62,6 +62,7 @@ public class EnemyController : MonoBehaviour
     private Shootable shootable;
     private float lastHealth;
     private CapsuleCollider enemyCollider;
+    private Collider[] allEnemyColliders;
 
     [Header("Minimap")]
     public GameObject minimapIcon;
@@ -78,6 +79,7 @@ public class EnemyController : MonoBehaviour
         this.agent = this.GetComponent<NavMeshAgent>();
         this.shooter = this.GetComponent<Shooter>();
         this.shootable = this.GetComponent<Shootable>();
+        this.allEnemyColliders = this.GetComponentsInChildren<Collider>();
         this.enemyCollider = this.GetComponent<CapsuleCollider>();
         this.lastHealth = this.shootable.maxHealth;
         this.targetStoppingDistance = this.agent.stoppingDistance;
@@ -97,8 +99,10 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
-            // Disable collider to avoid bothering player movement
-            this.enemyCollider.enabled = false;
+            // Disable all colliders to avoid bothering player movement
+            for(int i = 0; i < this.allEnemyColliders.Length; i++) {
+                this.allEnemyColliders[i].enabled = false;
+            }
             this.agent.isStopped = true;
             // Disable map indicator
             this.minimapIcon.SetActive(false);
