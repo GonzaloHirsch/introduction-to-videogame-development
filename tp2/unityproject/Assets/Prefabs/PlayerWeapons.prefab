@@ -451,7 +451,7 @@ MonoBehaviour:
   extraAmmo: 1000
   totalInitialAmmo: 1000
   damage: 75
-  fireRate: 1
+  fireRate: 0.5
   range: 5
   hitForce: 100
   animationDuration: 0.284

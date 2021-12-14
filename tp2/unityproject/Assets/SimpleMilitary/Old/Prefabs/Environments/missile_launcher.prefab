@@ -425,7 +425,7 @@ GameObject:
   - component: {fileID: 400010}
   - component: {fileID: 3300010}
   - component: {fileID: 2300010}
-  - component: {fileID: -122410325606082692}
+  - component: {fileID: 450053031566069054}
   m_Layer: 0
   m_Name: missile_launcher
   m_TagString: Untagged
@@ -498,8 +498,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &-122410325606082692
-BoxCollider:
+--- !u!64 &450053031566069054
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -508,6 +508,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.7899208, y: 2.1134422, z: 1.7899227}
-  m_Center: {x: -0.0019035339, y: 1.0559117, z: 0.0004644394}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 316bcacf7f2fea9498b1d9e6b6cac59b, type: 3}
